@@ -2,8 +2,8 @@ name: 🇸🇰 SlovakiaNow — Auto Scraper
 
 on:
   schedule:
-    - cron: "0 */4 * * *"
-  workflow_dispatch:
+    - cron: "0 */4 * * *"   # každé 4 hodiny
+  workflow_dispatch:          # manuálne spustenie
 
 permissions:
   contents: write
@@ -11,7 +11,7 @@ permissions:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -21,6 +21,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
 
       - name: Inštalácia knižníc
         run: pip install -r requirements.txt
@@ -39,3 +40,5 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
