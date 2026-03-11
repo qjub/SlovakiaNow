@@ -1,6 +1,6 @@
 {
   "meta": {
-    "aktualizovane": "2026-03-11T20:33:58.101488+00:00",
+    "aktualizovane": "2026-03-11T20:44:17.463025+00:00",
     "verzia": "2.0.0",
     "zdroje": [
       {
@@ -461,43 +461,83 @@
     "nms": [],
     "politpro": [
       {
-        "title": "81Ipsos·20. február 2026PS18.8SMER18.4REP11.7S8.8SaS8.4HLAS7.4D6.2KDH6MA4.7SNS2.8Pravda1.3ZĽ1.1Ostat.4.4",
+        "agentura": "?",
+        "datum": "",
+        "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/ipsos-2026-02-20/parlamentne-volby",
+        "title": "81Ipsos·20. február 2026PS18.8SMER18.4REP11.7S8.8SaS8.4HLAS7.4D6.2KDH6MA4.7SNS2.8Pravda1.3ZĽ1.1Ostat.4.4",
         "source": "PolitPro / AKO"
       },
       {
-        "title": "77AKO·19. február 2026PS20.6SMER16.4S9.3HLAS8.8REP8.7SaS7.9KDH7.4D6.2SNS4.8MA4.6SR2.9Pravda2.2Ostat.0.2",
+        "agentura": "?",
+        "datum": "",
+        "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/ako-2026-02-19/parlamentne-volby",
+        "title": "77AKO·19. február 2026PS20.6SMER16.4S9.3HLAS8.8REP8.7SaS7.9KDH7.4D6.2SNS4.8MA4.6SR2.9Pravda2.2Ostat.0.2",
         "source": "PolitPro / AKO"
       },
       {
-        "title": "77FOCUS·09. február 2026PS19.3SMER17.7REP9.9S9.7HLAS8.1SaS7.6KDH6.9D5.6MA4.7SNS4.1SR2.3Pravda1.9ZĽ0.8KÚ0.5Ostat.0.9",
+        "agentura": "?",
+        "datum": "",
+        "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/focus-2026-02-09/parlamentne-volby",
+        "title": "77FOCUS·09. február 2026PS19.3SMER17.7REP9.9S9.7HLAS8.1SaS7.6KDH6.9D5.6MA4.7SNS4.1SR2.3Pravda1.9ZĽ0.8KÚ0.5Ostat.0.9",
         "source": "PolitPro / AKO"
       },
       {
-        "title": "68NMS·08. február 2026PS19.1SMER17.6REP13.4S7.5SaS7.4HLAS6.2D5.7KDH4.9MA4SR3.5SNS3ZĽ2.3Pravda2ĽSNS1.7KÚ0.8SV0.3Ostat.0.6",
+        "agentura": "?",
+        "datum": "",
+        "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/nms-2026-02-08/parlamentne-volby",
+        "title": "68NMS·08. február 2026PS19.1SMER17.6REP13.4S7.5SaS7.4HLAS6.2D5.7KDH4.9MA4SR3.5SNS3ZĽ2.3Pravda2ĽSNS1.7KÚ0.8SV0.3Ostat.0.6",
         "source": "PolitPro / AKO"
       },
       {
-        "title": "Ktoré inštitúty sú najspoľahlivejšie?Presnosť vo voľbách a preferencie strán",
+        "agentura": "?",
+        "datum": "",
+        "strany": [],
         "link": "https://politpro.eu/sk/slovensko/prieskumne-agentury",
+        "title": "Ktoré inštitúty sú najspoľahlivejšie?Presnosť vo voľbách a preferencie strán",
         "source": "PolitPro / AKO"
       },
       {
-        "title": "2026Výsledky prieskumov z roku 2026Všetkých 7 prieskumov verejnej mienky z roku 2026",
+        "agentura": "?",
+        "datum": "",
+        "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/2026",
+        "title": "2026Výsledky prieskumov z roku 2026Všetkých 7 prieskumov verejnej mienky z roku 2026",
         "source": "PolitPro / AKO"
       },
       {
-        "title": "2025Výsledky prieskumov z roku 2025Všetkých 34 prieskumov verejnej mienky z roku 2025",
+        "agentura": "?",
+        "datum": "",
+        "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/2025",
+        "title": "2025Výsledky prieskumov z roku 2025Všetkých 34 prieskumov verejnej mienky z roku 2025",
         "source": "PolitPro / AKO"
       },
       {
-        "title": "2024Výsledky prieskumov z roku 2024Všetkých 35 prieskumov verejnej mienky z roku 2024",
+        "agentura": "?",
+        "datum": "",
+        "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/2024",
+        "title": "2024Výsledky prieskumov z roku 2024Všetkých 35 prieskumov verejnej mienky z roku 2024",
+        "source": "PolitPro / AKO"
+      },
+      {
+        "agentura": "?",
+        "datum": "",
+        "strany": [],
+        "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/2023",
+        "title": "2023Výsledky prieskumov z roku 2023Všetkých 42 prieskumov verejnej mienky z roku 2023",
+        "source": "PolitPro / AKO"
+      },
+      {
+        "agentura": "?",
+        "datum": "",
+        "strany": [],
+        "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/2022",
+        "title": "2022Výsledky prieskumov z roku 2022Všetkých 28 prieskumov verejnej mienky z roku 2022",
         "source": "PolitPro / AKO"
       }
     ]
