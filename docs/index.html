@@ -3,367 +3,879 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SlovakiaNow — Živý dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>SlovakiaNow — Monitor Slovenskej republiky</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-  :root {
-    --bg:#080c10;--border:#1a2530;--accent:#00e5ff;--accent2:#ff6b35;
-    --accent3:#a8ff3e;--warn:#ffcc00;--red:#ff3b5c;--text:#d4e5f0;
-    --muted:#4a6270;--card:#0f1820;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
-  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-    background-image:linear-gradient(rgba(0,229,255,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,229,255,.025) 1px,transparent 1px);
-    background-size:40px 40px;}
+:root {
+  --bg:#090f14;--bg2:#0d1822;--bg3:#111f2b;
+  --border:#1c2e3d;--border2:#243545;
+  --text:#c8dde8;--text2:#7a9db0;--text3:#3d5a6e;
+  --white:#e8f4fb;
+  --cyan:#00e5ff;--green:#39d98a;--red:#ff4566;
+  --orange:#ff7c3a;--yellow:#ffd166;--purple:#c77dff;
+  --card:#0d1822;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;line-height:1.5;min-height:100vh;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.018;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px;}
 
-  header{position:sticky;top:0;z-index:100;background:rgba(8,12,16,.95);
-    backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
-    padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;}
-  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;
-    letter-spacing:.1em;color:var(--accent);text-transform:uppercase;}
-  .logo span{color:var(--text);}
-  .hdr-right{display:flex;gap:1.2rem;align-items:center;font-size:.68rem;color:var(--muted);}
-  .live-dot{width:7px;height:7px;background:var(--accent3);border-radius:50%;
-    display:inline-block;animation:pulse 2s infinite;margin-right:4px;}
-  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(168,255,62,.5)}
-    50%{opacity:.6;box-shadow:0 0 0 6px rgba(168,255,62,0)}}
-  .badge{border:1px solid var(--accent);color:var(--accent);font-size:.62rem;
-    padding:2px 8px;letter-spacing:.15em;text-transform:uppercase;}
-  #status{font-size:.65rem;}
-  #status.ok{color:var(--accent3);}
-  #status.err{color:var(--red);}
-  #status.loading{color:var(--warn);}
+/* ── TOPBAR ── */
+#topbar{background:rgba(9,15,20,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:200;height:54px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 1.5rem;gap:1rem;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.1em;color:var(--white);
+  display:flex;align-items:center;gap:.55rem;white-space:nowrap;flex-shrink:0;}
+.logo-dot{width:7px;height:7px;background:var(--cyan);border-radius:50%;animation:lpulse 2s infinite;}
+@keyframes lpulse{0%,100%{box-shadow:0 0 0 0 rgba(0,229,255,.5)}50%{box-shadow:0 0 0 7px rgba(0,229,255,0)}}
+.logo-sk{color:var(--cyan);}
+.topbar-nav{display:flex;gap:.1rem;align-items:center;}
+.tnav{background:none;border:none;color:var(--text2);font-family:'Space Grotesk',sans-serif;
+  font-size:.72rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+  padding:.38rem .85rem;cursor:pointer;border-radius:4px;transition:all .18s;white-space:nowrap;}
+.tnav:hover{color:var(--white);background:rgba(255,255,255,.05);}
+.tnav.active{color:var(--cyan);background:rgba(0,229,255,.08);}
+.topbar-right{display:flex;align-items:center;gap:.9rem;font-size:.68rem;
+  color:var(--text3);font-family:'JetBrains Mono',monospace;white-space:nowrap;flex-shrink:0;}
+#tb-time{color:var(--text2);}
+.live-badge{display:flex;align-items:center;gap:.35rem;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;}
+.live-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:lpulse 2s infinite;}
+@media(max-width:900px){.topbar-nav{display:none;}}
+@media(max-width:600px){#tb-upd{display:none;}}
 
-  main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem;}
+/* MOBILE NAV */
+#mobile-nav{display:none;background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:.5rem 1rem;gap:.3rem;flex-wrap:wrap;}
+@media(max-width:900px){#mobile-nav{display:flex;}}
+.mnav{background:none;border:1px solid var(--border);color:var(--text2);
+  font-family:'Space Grotesk',sans-serif;font-size:.68rem;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;padding:.3rem .7rem;cursor:pointer;
+  border-radius:3px;transition:all .18s;}
+.mnav:hover{color:var(--white);border-color:var(--border2);}
+.mnav.active{color:var(--cyan);border-color:var(--cyan);background:rgba(0,229,255,.07);}
 
-  .hero{display:grid;grid-template-columns:1fr auto;align-items:end;
-    margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
-  h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.5rem);
-    font-weight:800;line-height:1;letter-spacing:-.02em;color:#fff;}
-  h1 .hl{color:var(--accent);display:block;}
-  .hero-sub{font-size:.7rem;color:var(--muted);margin-top:.4rem;max-width:520px;line-height:1.7;}
-  .ts{font-size:.68rem;color:var(--muted);text-align:right;}
-  .ts strong{display:block;font-size:1rem;color:var(--text);font-family:'Syne',sans-serif;}
+/* ── HERO ── */
+#hero{background:linear-gradient(180deg,rgba(0,180,220,.055) 0%,transparent 100%);
+  border-bottom:1px solid var(--border);padding:1.5rem 1.5rem 0;}
+.hero-top{display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:1.2rem;gap:1rem;flex-wrap:wrap;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);
+  letter-spacing:.06em;color:var(--white);line-height:1;}
+.hero-title span{color:var(--cyan);}
+.hero-sub{font-size:.7rem;color:var(--text2);margin-top:.3rem;max-width:500px;line-height:1.7;}
+.hero-meta{text-align:right;font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--text3);}
+.hero-meta strong{display:block;font-size:.8rem;color:var(--text2);font-family:'Space Grotesk',sans-serif;font-weight:500;text-transform:capitalize;}
+.kpi-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border);}
+.kpi{background:var(--card);padding:1rem 1.1rem;position:relative;overflow:hidden;transition:background .18s;cursor:default;}
+.kpi:hover{background:var(--bg3);}
+.kpi-accent{position:absolute;top:0;left:0;right:0;height:2px;}
+.kpi-lbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);margin-bottom:.3rem;}
+.kpi-val{font-family:'Bebas Neue',sans-serif;font-size:1.85rem;line-height:1;margin-bottom:.12rem;}
+.kpi-trend{font-size:.6rem;font-family:'JetBrains Mono',monospace;}
+.kpi-src{font-size:.56rem;color:var(--text3);margin-top:.15rem;}
+.up{color:var(--green)!important;} .dn{color:var(--red)!important;} .neu{color:var(--text3)!important;}
+.spin{animation:blink 1.2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 
-  .tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:2rem;}
-  .tab{background:none;border:none;color:var(--muted);font-family:'DM Mono',monospace;
-    font-size:.72rem;padding:.75rem 1.5rem;cursor:pointer;text-transform:uppercase;
-    letter-spacing:.1em;border-bottom:2px solid transparent;transition:all .2s;
-    position:relative;bottom:-1px;}
-  .tab:hover{color:var(--text);}
-  .tab.active{color:var(--accent);border-bottom-color:var(--accent);}
-  .panel{display:none;}
-  .panel.active{display:block;}
+/* ── MAIN ── */
+#main{max-width:1440px;margin:0 auto;padding:1.5rem;}
+.page{display:none;} .page.active{display:block;}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border);}
+.sec-hdr-left{display:flex;align-items:center;gap:.7rem;}
+.sec-icon{font-size:1.2rem;}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.07em;color:var(--white);}
+.sec-desc{font-size:.68rem;color:var(--text2);}
+.sec-badge{font-size:.6rem;font-family:'JetBrains Mono',monospace;color:var(--text3);
+  background:var(--bg2);border:1px solid var(--border);padding:.2rem .6rem;border-radius:3px;white-space:nowrap;}
 
-  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:1px;background:var(--border);margin-bottom:2rem;border:1px solid var(--border);}
-  .kpi{background:var(--card);padding:1.4rem;position:relative;overflow:hidden;}
-  .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-  .kpi.b::before{background:var(--accent);}
-  .kpi.o::before{background:var(--accent2);}
-  .kpi.g::before{background:var(--accent3);}
-  .kpi.y::before{background:var(--warn);}
-  .kpi.r::before{background:var(--red);}
-  .kpi-lbl{font-size:.62rem;color:var(--muted);text-transform:uppercase;
-    letter-spacing:.12em;margin-bottom:.4rem;}
-  .kpi-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;
-    line-height:1;margin-bottom:.2rem;}
-  .kpi.b .kpi-val{color:var(--accent);}
-  .kpi.o .kpi-val{color:var(--accent2);}
-  .kpi.g .kpi-val{color:var(--accent3);}
-  .kpi.y .kpi-val{color:var(--warn);}
-  .kpi.r .kpi-val{color:var(--red);}
-  .kpi-sub{font-size:.6rem;color:var(--muted);}
-  .spin{animation:blink 1.2s infinite;}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+/* Grid helpers */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+@media(max-width:800px){.grid-2{grid-template-columns:1fr;}}
+.card{background:var(--card);border:1px solid var(--border);padding:1.3rem;}
+.card-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--white);margin-bottom:.15rem;}
+.card-src{font-size:.6rem;color:var(--text3);margin-bottom:.9rem;}
+.card-src a{color:var(--cyan);text-decoration:none;}
+.chart-wrap{position:relative;height:190px;}
+.sub-label{font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:.55rem;font-weight:600;margin-top:1.4rem;}
 
-  .charts{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
-  @media(max-width:860px){.charts{grid-template-columns:1fr;}}
-  .cc{background:var(--card);border:1px solid var(--border);padding:1.5rem;}
-  .cc-title{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;
-    text-transform:uppercase;letter-spacing:.1em;color:var(--text);margin-bottom:.2rem;}
-  .cc-src{font-size:.6rem;color:var(--muted);margin-bottom:1rem;}
-  .cc-src a{color:var(--accent);text-decoration:none;}
-  .cw{position:relative;height:200px;}
+/* ── POLITIKA ── */
+.polls-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border);margin-bottom:1.3rem;}
+.party-card{background:var(--card);padding:.9rem 1rem;display:flex;align-items:center;gap:.8rem;transition:background .18s;}
+.party-card:hover{background:var(--bg3);}
+.party-color-bar{width:3px;height:44px;border-radius:2px;flex-shrink:0;}
+.party-name{font-weight:700;font-size:.8rem;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.party-pct{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;line-height:1;}
+.party-detail{font-size:.58rem;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+.poll-caption{font-size:.63rem;color:var(--text3);text-align:right;margin-bottom:1rem;font-family:'JetBrains Mono',monospace;}
 
-  .news-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:2rem;}
-  @media(max-width:760px){.news-grid{grid-template-columns:1fr;}}
-  .ni{background:var(--card);border:1px solid var(--border);
-    border-left:3px solid var(--accent);padding:1.2rem;}
-  .ni.o{border-left-color:var(--accent2);}
-  .ni.y{border-left-color:var(--warn);}
-  .ni.g{border-left-color:var(--accent3);}
-  .ni.r{border-left-color:var(--red);}
-  .nt{font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;
-    color:var(--accent);margin-bottom:.3rem;}
-  .ni.o .nt{color:var(--accent2);}
-  .ni.y .nt{color:var(--warn);}
-  .ni.g .nt{color:var(--accent3);}
-  .nh{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:600;
-    color:#fff;margin-bottom:.4rem;line-height:1.4;}
-  .nh a{color:inherit;text-decoration:none;}
-  .nh a:hover{color:var(--accent);}
-  .nd{font-size:.67rem;color:var(--muted);line-height:1.6;margin-bottom:.5rem;}
-  .ns{font-size:.6rem;color:var(--muted);}
-  .ns a{color:var(--accent);text-decoration:none;}
-  .ns a:hover{text-decoration:underline;}
+.parl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1px;background:var(--border);}
+.parl-card{background:var(--card);padding:.85rem 1rem;}
+.parl-party{font-size:.75rem;font-weight:600;color:var(--white);margin-bottom:.15rem;}
+.parl-seats{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;line-height:1;}
+.parl-bar-bg{height:3px;background:var(--border2);border-radius:2px;margin-top:.35rem;}
+.parl-bar{height:3px;border-radius:2px;transition:width .9s ease;}
+.parl-sub{font-size:.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;}
 
-  .disc{background:linear-gradient(135deg,rgba(0,229,255,.05),rgba(0,229,255,.02));
-    border:1px solid rgba(0,229,255,.2);padding:1.4rem;margin-bottom:2rem;
-    font-size:.7rem;line-height:1.8;color:var(--muted);}
-  .disc h3{font-family:'Syne',sans-serif;font-size:.78rem;color:var(--accent);
-    margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.1em;}
-  .disc a{color:var(--accent);text-decoration:none;}
-  .sec{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;
-    text-transform:uppercase;letter-spacing:.15em;color:var(--muted);
-    margin-bottom:.8rem;margin-top:1.5rem;padding-bottom:.4rem;
-    border-bottom:1px solid var(--border);}
+.poll-links{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);}
+@media(max-width:600px){.poll-links{grid-template-columns:1fr;}}
+.plc{background:var(--card);padding:1rem 1.1rem;transition:background .18s;}
+.plc:hover{background:var(--bg3);}
+.plc-src{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--cyan);margin-bottom:.25rem;}
+.plc-title{font-size:.78rem;font-weight:600;color:var(--white);line-height:1.4;margin-bottom:.25rem;}
+.plc-title a{color:inherit;text-decoration:none;} .plc-title a:hover{color:var(--cyan);}
+.plc-date{font-size:.6rem;color:var(--text3);font-family:'JetBrains Mono',monospace;}
 
-  footer{position:relative;z-index:1;border-top:1px solid var(--border);
-    padding:1.2rem 2rem;display:flex;justify-content:space-between;
-    align-items:center;font-size:.62rem;color:var(--muted);
-    max-width:1400px;margin:0 auto;flex-wrap:wrap;gap:.5rem;}
-  ::-webkit-scrollbar{width:5px;}
-  ::-webkit-scrollbar-track{background:var(--bg);}
-  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+/* ── SPRÁVY ── */
+.news-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:1.2rem;}
+@media(max-width:900px){.news-layout{grid-template-columns:1fr;}}
+.news-featured{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--cyan);
+  padding:1.3rem;margin-bottom:1px;transition:background .18s;}
+.news-featured:hover{background:var(--bg3);}
+.nf-cat{font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;color:var(--cyan);margin-bottom:.35rem;}
+.nf-title{font-size:.98rem;font-weight:700;color:var(--white);line-height:1.4;margin-bottom:.45rem;}
+.nf-title a{color:inherit;text-decoration:none;} .nf-title a:hover{color:var(--cyan);}
+.nf-sum{font-size:.72rem;color:var(--text2);line-height:1.65;margin-bottom:.55rem;}
+.nf-meta{display:flex;align-items:center;justify-content:space-between;font-size:.6rem;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+.nf-meta a{color:var(--cyan);text-decoration:none;}
+.news-list{display:flex;flex-direction:column;gap:1px;}
+.ni{background:var(--card);border-left:2px solid var(--border2);padding:.85rem 1rem;transition:background .18s;}
+.ni:hover{background:var(--bg3);}
+.ni.pol{border-left-color:var(--purple);} .ni.eko{border-left-color:var(--green);} .ni.ene{border-left-color:var(--orange);}
+.ni-cat{font-size:.56rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:.18rem;}
+.ni.pol .ni-cat{color:var(--purple);} .ni.eko .ni-cat{color:var(--green);} .ni.ene .ni-cat{color:var(--orange);}
+.ni-title{font-size:.78rem;font-weight:600;color:var(--white);line-height:1.4;margin-bottom:.2rem;}
+.ni-title a{color:inherit;text-decoration:none;} .ni-title a:hover{color:var(--cyan);}
+.ni-meta{font-size:.58rem;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+
+/* Sidebar */
+.sb-block{background:var(--card);border:1px solid var(--border);margin-bottom:1.1rem;}
+.sb-hdr{padding:.65rem 1rem;border-bottom:1px solid var(--border);font-size:.62rem;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--text2);font-weight:600;display:flex;align-items:center;gap:.4rem;}
+.sb-items{} 
+.sb-item{padding:.6rem 1rem;border-bottom:1px solid var(--border);}
+.sb-item:last-child{border-bottom:none;}
+.sbi-lbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:.12rem;}
+.sbi-val{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;line-height:1;}
+.sbi-sub{font-size:.58rem;color:var(--text3);font-family:'JetBrains Mono',monospace;margin-top:.1rem;}
+
+/* Weather */
+.wx-main{padding:.9rem 1rem;text-align:center;}
+.wx-city{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:.25rem;}
+.wx-temp{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--white);line-height:1;}
+.wx-desc{font-size:.72rem;color:var(--text2);margin-top:.15rem;}
+.wx-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:.7rem;}
+.wx-item{background:var(--card);padding:.45rem .65rem;text-align:center;}
+.wx-lbl{font-size:.56rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);}
+.wx-val{font-size:.8rem;font-weight:600;color:var(--text);}
+
+/* ── EKONOMIKA ── */
+.eko-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:1px;background:var(--border);margin-bottom:1.4rem;}
+.ek{background:var(--card);padding:1rem 1.1rem;}
+.ek-lbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);margin-bottom:.28rem;}
+.ek-val{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;margin-bottom:.12rem;}
+.ek-trend{font-size:.6rem;font-family:'JetBrains Mono',monospace;}
+.ek-src{font-size:.56rem;color:var(--text3);margin-top:.15rem;}
+
+/* ── ENERGIE ── */
+.fuel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);margin-bottom:1.4rem;}
+.fuel-card{background:var(--card);padding:1.2rem;text-align:center;position:relative;overflow:hidden;}
+.fuel-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.fc-benzin::before{background:var(--green);} .fc-nafta::before{background:var(--yellow);}
+.fc-el::before{background:var(--cyan);} .fc-plyn::before{background:var(--orange);}
+.fuel-type{font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);margin-bottom:.35rem;}
+.fuel-price{font-family:'Bebas Neue',sans-serif;font-size:2.3rem;line-height:1;}
+.fuel-unit{font-size:.6rem;color:var(--text3);margin:.1rem 0 .25rem;}
+.fuel-trend{font-size:.63rem;font-family:'JetBrains Mono',monospace;}
+.fuel-src{font-size:.56rem;color:var(--text3);margin-top:.35rem;}
+
+.groceries{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:1px;background:var(--border);}
+.gr-item{background:var(--card);padding:.85rem .95rem;transition:background .18s;}
+.gr-item:hover{background:var(--bg3);}
+.gr-name{font-size:.63rem;color:var(--text2);margin-bottom:.18rem;}
+.gr-price{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;line-height:1;color:var(--white);}
+.gr-unit{font-size:.56rem;color:var(--text3);}
+.gr-trend{font-size:.58rem;font-family:'JetBrains Mono',monospace;margin-top:.15rem;}
+
+/* Disclaimer */
+.disc{background:rgba(0,229,255,.03);border:1px solid rgba(0,229,255,.1);
+  padding:1rem 1.2rem;margin-top:1.3rem;font-size:.68rem;line-height:1.8;color:var(--text2);}
+.disc strong{color:var(--cyan);}  .disc a{color:var(--cyan);text-decoration:none;}
+
+/* Error */
+.err-box{background:rgba(255,69,102,.06);border:1px solid rgba(255,69,102,.2);
+  padding:1.2rem 1.4rem;font-size:.75rem;color:var(--text2);line-height:1.7;}
+.err-box strong{color:var(--red);}
+
+/* Zdroje page */
+.src-row{display:flex;align-items:center;gap:.6rem;padding:.42rem 0;border-bottom:1px solid var(--border);}
+.src-row:last-child{border-bottom:none;}
+.src-fmt{font-size:.58rem;background:var(--bg3);border:1px solid var(--border);padding:.1rem .45rem;
+  border-radius:2px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;white-space:nowrap;flex-shrink:0;}
+.src-name{font-size:.72rem;color:var(--white);font-weight:500;}
+.src-url{font-size:.6rem;color:var(--text3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.src-url a{color:var(--cyan);text-decoration:none;}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:1.1rem 1.5rem;display:flex;
+  justify-content:space-between;align-items:center;font-size:.63rem;color:var(--text3);
+  font-family:'JetBrains Mono',monospace;flex-wrap:wrap;gap:.4rem;max-width:1440px;margin:2rem auto 0;}
+footer a{color:var(--text2);text-decoration:none;} footer a:hover{color:var(--cyan);}
+
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+@media(max-width:600px){#hero,#main{padding:1rem;} .hero-title{font-size:1.5rem;}}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo">Slovakia<span>Now</span></div>
-  <div class="hdr-right">
-    <span id="status" class="loading spin">⏳ Načítavam...</span>
-    <span id="last-upd">—</span>
-    <span class="badge">AI Nezávislý</span>
-    <span><span class="live-dot"></span>Živý</span>
-  </div>
-</header>
 
-<main>
-  <div class="hero">
+<!-- TOPBAR -->
+<nav id="topbar">
+  <div class="logo"><div class="logo-dot"></div>Slovakia<span class="logo-sk">Now</span></div>
+  <div class="topbar-nav">
+    <button class="tnav active" onclick="showPage('politika',this)">🗳 Politika</button>
+    <button class="tnav" onclick="showPage('spravy',this)">📰 Správy</button>
+    <button class="tnav" onclick="showPage('ekonomika',this)">📊 Ekonomika</button>
+    <button class="tnav" onclick="showPage('energie',this)">⚡ Energie & Ceny</button>
+    <button class="tnav" onclick="showPage('zdroje',this)">🔍 Zdroje</button>
+  </div>
+  <div class="topbar-right">
+    <span id="tb-time">--:--</span>
+    <span class="live-badge"><span class="live-dot"></span><span id="tb-status" style="color:var(--yellow)">Načítavam</span></span>
+    <span id="tb-upd"></span>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div id="mobile-nav">
+  <button class="mnav active" onclick="showPage('politika',this)">🗳 Politika</button>
+  <button class="mnav" onclick="showPage('spravy',this)">📰 Správy</button>
+  <button class="mnav" onclick="showPage('ekonomika',this)">📊 Ekonomika</button>
+  <button class="mnav" onclick="showPage('energie',this)">⚡ Energie</button>
+  <button class="mnav" onclick="showPage('zdroje',this)">🔍 Zdroje</button>
+</div>
+
+<!-- HERO KPI BAR -->
+<div id="hero">
+  <div class="hero-top">
     <div>
-      <h1>Slovakia<span class="hl">Now</span></h1>
-      <p class="hero-sub">Transparentný AI dashboard — politika, ekonomika, energie.<br>
-      Dáta priamo z SÚSR API, NBS, Eurostat a RSS feedov. Žiadna agenda, len fakty.</p>
+      <div class="hero-title">Monitor <span>Slovenskej republiky</span></div>
+      <div class="hero-sub">Transparentný občiansky dashboard — politika, ekonomika, energie & ceny.<br>
+      Dáta priamo z SÚSR, NBS, Eurostat, ECB. Žiadna agenda, len fakty.</div>
     </div>
-    <div class="ts"><strong id="ddate">—</strong>Bratislava, SR</div>
+    <div class="hero-meta"><strong id="h-date">—</strong>Bratislava, Slovenská republika</div>
+  </div>
+  <div class="kpi-strip">
+    <div class="kpi"><div class="kpi-accent" style="background:var(--purple)"></div>
+      <div class="kpi-lbl">SMER-SSD (voľby 2023)</div>
+      <div class="kpi-val" id="k-smer" style="color:var(--purple)">42</div>
+      <div class="kpi-trend neu">mandátov / NR SR</div>
+      <div class="kpi-src">NRSR.sk · voľby 2023</div>
+    </div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--red)"></div>
+      <div class="kpi-lbl">Inflácia HICP</div>
+      <div class="kpi-val spin" id="k-inflacia" style="color:var(--red)">…</div>
+      <div class="kpi-trend neu" id="k-inflacia-t">medziročne %</div>
+      <div class="kpi-src">ECB · Eurostat</div>
+    </div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--green)"></div>
+      <div class="kpi-lbl">HDP rast</div>
+      <div class="kpi-val spin" id="k-hdp" style="color:var(--green)">…</div>
+      <div class="kpi-trend neu" id="k-hdp-t">štvrťročne %</div>
+      <div class="kpi-src">Eurostat</div>
+    </div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--green)"></div>
+      <div class="kpi-lbl">Benzín 95</div>
+      <div class="kpi-val spin" id="k-benzin" style="color:var(--green)">…</div>
+      <div class="kpi-trend neu">€ / liter</div>
+      <div class="kpi-src">SIEA · priemer SR</div>
+    </div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--yellow)"></div>
+      <div class="kpi-lbl">Nafta</div>
+      <div class="kpi-val spin" id="k-nafta" style="color:var(--yellow)">…</div>
+      <div class="kpi-trend neu">€ / liter</div>
+      <div class="kpi-src">SIEA · priemer SR</div>
+    </div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--cyan)"></div>
+      <div class="kpi-lbl">Elektrina (dom.)</div>
+      <div class="kpi-val spin" id="k-elektrina" style="color:var(--cyan)">…</div>
+      <div class="kpi-trend neu">ct / kWh</div>
+      <div class="kpi-src">Eurostat · nrg_pc_204</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+<!-- ═══ POLITIKA ═══ -->
+<div class="page active" id="page-politika">
+  <div class="sec-hdr">
+    <div class="sec-hdr-left">
+      <span class="sec-icon">🗳</span>
+      <div><div class="sec-title">Politika</div>
+        <div class="sec-desc">Volebné prieskumy · Rozloženie parlamentu · Linky na prieskumy</div></div>
+    </div>
+    <span class="sec-badge" id="poll-badge">voľby: 30.9.2023</span>
   </div>
 
-  <div class="tabs">
-    <button class="tab active" onclick="sw('ekonomika',this)">Ekonomika</button>
-    <button class="tab" onclick="sw('spravy',this)">Správy</button>
-    <button class="tab" onclick="sw('prieskumy',this)">Prieskumy</button>
-    <button class="tab" onclick="sw('zdroje',this)">Zdroje</button>
+  <div class="sub-label" style="margin-top:0;">Volebné výsledky — NR SR 2023 (mandáty)</div>
+  <div class="polls-grid" id="polls-grid"></div>
+  <div class="poll-caption" id="poll-caption">Zdroj: NRSR.sk — výsledky parlamentných volieb 30. 9. 2023</div>
+
+  <div class="grid-2" style="margin-bottom:1.4rem;">
+    <div class="card">
+      <div class="card-title">Trend preferencií — top strany</div>
+      <div class="card-src">Zdroj: <a href="https://politpro.eu/cs/slovensko" target="_blank">PolitPro.eu / AKO</a> · orientačné</div>
+      <div class="chart-wrap"><canvas id="c-poll-trend"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Rozloženie NR SR — 150 mandátov</div>
+      <div class="card-src">Zdroj: <a href="https://www.nrsr.sk" target="_blank">nrsr.sk</a> · voľby 30.9.2023</div>
+      <div class="chart-wrap"><canvas id="c-parliament"></canvas></div>
+    </div>
   </div>
 
-  <!-- EKONOMIKA -->
-  <div class="panel active" id="p-ekonomika">
-    <div class="kpi-grid">
-      <div class="kpi b"><div class="kpi-lbl">HDP rast (posl. Q)</div><div class="kpi-val spin" id="v-hdp">…</div><div class="kpi-sub">SÚSR DATAcube API</div></div>
-      <div class="kpi r"><div class="kpi-lbl">Inflácia CPI (posl. m.)</div><div class="kpi-val spin" id="v-cpi">…</div><div class="kpi-sub">SÚSR DATAcube API</div></div>
-      <div class="kpi y"><div class="kpi-lbl">HICP Eurostat</div><div class="kpi-val spin" id="v-hicp">…</div><div class="kpi-sub">Eurostat SDMX API</div></div>
-      <div class="kpi o"><div class="kpi-lbl">Elektrina (ct/kWh)</div><div class="kpi-val spin" id="v-el">…</div><div class="kpi-sub">Eurostat nrg_pc_204</div></div>
+  <div class="sub-label">Národná rada SR — mandáty podľa strán</div>
+  <div class="parl-grid" id="parl-grid"></div>
+
+  <div class="sub-label">Najnovšie prieskumy — priame zdroje</div>
+  <div class="poll-links" id="poll-links"></div>
+
+  <div class="disc">
+    <strong>Metodológia:</strong> Mandáty zodpovedajú výsledkom parlamentných volieb 30. 9. 2023.
+    Prieskumy sú automaticky stiahnuté z NMS Market Research a PolitPro/AKO.
+    Dashboard nezasahuje do dát a nezaujíma politické stanovisko.
+  </div>
+</div>
+
+<!-- ═══ SPRÁVY ═══ -->
+<div class="page" id="page-spravy">
+  <div class="sec-hdr">
+    <div class="sec-hdr-left">
+      <span class="sec-icon">📰</span>
+      <div><div class="sec-title">Správy</div>
+        <div class="sec-desc">Politika · Ekonomika · Počasie — agregované RSS bez redakčného výberu</div></div>
     </div>
-    <div class="charts">
-      <div class="cc">
-        <div class="cc-title">HDP rast — Štvrťročne (%)</div>
-        <div class="cc-src">Zdroj: <a href="https://data.statistics.sk/api/v2" target="_blank">data.statistics.sk/api/v2</a></div>
-        <div class="cw"><canvas id="c-hdp"></canvas></div>
+    <span class="sec-badge">auto-refresh</span>
+  </div>
+  <div class="news-layout">
+    <div>
+      <div id="news-featured"></div>
+      <div class="news-list" id="news-list"></div>
+    </div>
+    <div>
+      <!-- Počasie -->
+      <div class="sb-block">
+        <div class="sb-hdr">🌤 Počasie — Bratislava</div>
+        <div class="wx-main">
+          <div class="wx-city">Bratislava, SR</div>
+          <div class="wx-temp" id="wx-temp">--°C</div>
+          <div class="wx-desc" id="wx-desc">Načítavam...</div>
+          <div class="wx-grid">
+            <div class="wx-item"><div class="wx-lbl">Vlhkosť</div><div class="wx-val" id="wx-hum">--%</div></div>
+            <div class="wx-item"><div class="wx-lbl">Vietor</div><div class="wx-val" id="wx-wind">--</div></div>
+            <div class="wx-item"><div class="wx-lbl">Pocit</div><div class="wx-val" id="wx-feel">--°C</div></div>
+            <div class="wx-item"><div class="wx-lbl">Tlak</div><div class="wx-val" id="wx-press">--</div></div>
+          </div>
+        </div>
+        <div style="padding:.4rem 1rem;font-size:.56rem;color:var(--text3);border-top:1px solid var(--border);">
+          <a href="https://open-meteo.com" target="_blank" style="color:var(--cyan);text-decoration:none;">Open-Meteo API</a> · zadarmo, bez kľúča
+        </div>
       </div>
-      <div class="cc">
-        <div class="cc-title">Inflácia — CPI (SÚSR) vs HICP (Eurostat)</div>
-        <div class="cc-src">Zdroj: <a href="https://data.statistics.sk" target="_blank">SÚSR</a> · <a href="https://ec.europa.eu/eurostat" target="_blank">Eurostat</a></div>
-        <div class="cw"><canvas id="c-cpi"></canvas></div>
+      <!-- Kľúčové čísla -->
+      <div class="sb-block">
+        <div class="sb-hdr">📈 Kľúčové čísla</div>
+        <div class="sb-items">
+          <div class="sb-item"><div class="sbi-lbl">Inflácia HICP</div><div class="sbi-val spin" id="sb-inflacia">…</div><div class="sbi-sub">medziročne · ECB</div></div>
+          <div class="sb-item"><div class="sbi-lbl">HDP rast (posl. Q)</div><div class="sbi-val spin" id="sb-hdp">…</div><div class="sbi-sub">štvrťročne · Eurostat</div></div>
+          <div class="sb-item"><div class="sbi-lbl">Benzín 95</div><div class="sbi-val spin" id="sb-benzin">…</div><div class="sbi-sub">€/l priemer SR · SIEA</div></div>
+          <div class="sb-item"><div class="sbi-lbl">Elektrina dom.</div><div class="sbi-val spin" id="sb-el">…</div><div class="sbi-sub">ct/kWh · Eurostat</div></div>
+        </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- SPRÁVY -->
-  <div class="panel" id="p-spravy">
-    <div class="disc">
-      <h3>📰 Automaticky stiahnuté správy</h3>
-      Stiahnuté priamo z RSS feedov: NBS, MF SR, STVR, Pravda, SME, DenníkN, Startitup.
-      AI správy neupravuje — zobrazujú sa všetky, zoradené podľa zdroja. Každý titulok má odkaz na originál.
+<!-- ═══ EKONOMIKA ═══ -->
+<div class="page" id="page-ekonomika">
+  <div class="sec-hdr">
+    <div class="sec-hdr-left">
+      <span class="sec-icon">📊</span>
+      <div><div class="sec-title">Ekonomika</div>
+        <div class="sec-desc">HDP · Inflácia · Nezamestnanosť · Mzdy · Vládny dlh</div></div>
     </div>
-    <div class="news-grid" id="news-box">
-      <div class="ni"><div class="nt">Načítavam</div><div class="nh spin">⏳ Sťahujem RSS feedy...</div></div>
+    <span class="sec-badge">SÚSR · ECB · Eurostat</span>
+  </div>
+  <div class="eko-kpis">
+    <div class="ek"><div class="ek-lbl">HDP rast (posl. Q)</div><div class="ek-val spin" id="e-hdp" style="color:var(--green)">…</div><div class="ek-trend neu" id="e-hdp-t">% štvrťročne</div><div class="ek-src">Eurostat · namq_10_gdp</div></div>
+    <div class="ek"><div class="ek-lbl">Inflácia HICP</div><div class="ek-val spin" id="e-hicp" style="color:var(--red)">…</div><div class="ek-trend neu" id="e-hicp-t">% medziročne</div><div class="ek-src">ECB · ICP.M.SK</div></div>
+    <div class="ek"><div class="ek-lbl">Nezamestnanosť</div><div class="ek-val spin" id="e-unemp" style="color:var(--yellow)">…</div><div class="ek-trend neu">% aktívnych</div><div class="ek-src">Eurostat · une_rt_m</div></div>
+    <div class="ek"><div class="ek-lbl">Priem. mzda</div><div class="ek-val spin" id="e-wage" style="color:var(--cyan)">…</div><div class="ek-trend neu">€ / mes. hrubá</div><div class="ek-src">SÚSR · štvrťročne</div></div>
+    <div class="ek"><div class="ek-lbl">Vládny dlh / HDP</div><div class="ek-val spin" id="e-debt" style="color:var(--orange)">…</div><div class="ek-trend neu">% HDP ročne</div><div class="ek-src">Eurostat · gov_10dd_edpt1</div></div>
+    <div class="ek"><div class="ek-lbl">Schodok / HDP</div><div class="ek-val spin" id="e-deficit" style="color:var(--orange)">…</div><div class="ek-trend neu">% HDP ročne</div><div class="ek-src">Eurostat</div></div>
+  </div>
+  <div class="grid-2" style="margin-bottom:1.2rem;">
+    <div class="card"><div class="card-title">Inflácia HICP — mesačne (%)</div>
+      <div class="card-src">Zdroj: <a href="https://data-api.ecb.europa.eu" target="_blank">ECB Data Portal</a></div>
+      <div class="chart-wrap"><canvas id="c-inflacia"></canvas></div></div>
+    <div class="card"><div class="card-title">HDP rast — štvrťročne (%)</div>
+      <div class="card-src">Zdroj: <a href="https://ec.europa.eu/eurostat" target="_blank">Eurostat</a></div>
+      <div class="chart-wrap"><canvas id="c-hdp"></canvas></div></div>
+  </div>
+  <div class="grid-2">
+    <div class="card"><div class="card-title">Nezamestnanosť — mesačne (%)</div>
+      <div class="card-src">Zdroj: <a href="https://ec.europa.eu/eurostat" target="_blank">Eurostat · une_rt_m</a></div>
+      <div class="chart-wrap"><canvas id="c-unemp"></canvas></div></div>
+    <div class="card"><div class="card-title">Vládny dlh — % HDP</div>
+      <div class="card-src">Zdroj: <a href="https://ec.europa.eu/eurostat" target="_blank">Eurostat · gov_10dd_edpt1</a></div>
+      <div class="chart-wrap"><canvas id="c-debt"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ═══ ENERGIE ═══ -->
+<div class="page" id="page-energie">
+  <div class="sec-hdr">
+    <div class="sec-hdr-left">
+      <span class="sec-icon">⚡</span>
+      <div><div class="sec-title">Energie & Ceny</div>
+        <div class="sec-desc">Benzín · Nafta · Elektrina · Plyn · Košík potravín</div></div>
+    </div>
+    <span class="sec-badge">SIEA · Eurostat · SÚSR</span>
+  </div>
+  <div class="fuel-grid">
+    <div class="fuel-card fc-benzin">
+      <div class="fuel-type">Benzín 95</div>
+      <div class="fuel-price spin" id="f-benzin" style="color:var(--green)">…</div>
+      <div class="fuel-unit">€ / liter</div>
+      <div class="fuel-trend neu" id="f-benzin-t">priemer SR</div>
+      <div class="fuel-src">SIEA.sk</div>
+    </div>
+    <div class="fuel-card fc-nafta">
+      <div class="fuel-type">Nafta</div>
+      <div class="fuel-price spin" id="f-nafta" style="color:var(--yellow)">…</div>
+      <div class="fuel-unit">€ / liter</div>
+      <div class="fuel-trend neu" id="f-nafta-t">priemer SR</div>
+      <div class="fuel-src">SIEA.sk</div>
+    </div>
+    <div class="fuel-card fc-el">
+      <div class="fuel-type">Elektrina (dom.)</div>
+      <div class="fuel-price spin" id="f-el" style="color:var(--cyan)">…</div>
+      <div class="fuel-unit">ct / kWh (s DPH)</div>
+      <div class="fuel-trend neu">domácnosti SK</div>
+      <div class="fuel-src">Eurostat · nrg_pc_204</div>
+    </div>
+    <div class="fuel-card fc-plyn">
+      <div class="fuel-type">Zemný plyn (dom.)</div>
+      <div class="fuel-price spin" id="f-plyn" style="color:var(--orange)">…</div>
+      <div class="fuel-unit">ct / kWh (s DPH)</div>
+      <div class="fuel-trend neu">domácnosti SK</div>
+      <div class="fuel-src">Eurostat · nrg_pc_202</div>
     </div>
   </div>
-
-  <!-- PRIESKUMY -->
-  <div class="panel" id="p-prieskumy">
-    <div class="disc">
-      <h3>🗳️ Volebné prieskumy</h3>
-      Automaticky zozbierané prieskumy z NMS Market Research a PolitPro/AKO.
-      Kliknutím na odkaz sa dostaneš priamo na originálny prieskum s plnými dátami.
-    </div>
-    <div class="sec">NMS Market Research — Volebný model</div>
-    <div class="news-grid" id="nms-box"></div>
-    <div class="sec">PolitPro / AKO — Prieskumy</div>
-    <div class="news-grid" id="pp-box"></div>
+  <div class="grid-2" style="margin-bottom:1.3rem;">
+    <div class="card"><div class="card-title">Pohonné hmoty — trend (€/l)</div>
+      <div class="card-src">Zdroj: <a href="https://www.siea.sk" target="_blank">SIEA.sk</a></div>
+      <div class="chart-wrap"><canvas id="c-fuel"></canvas></div></div>
+    <div class="card"><div class="card-title">Energie — elektrina vs plyn (ct/kWh)</div>
+      <div class="card-src">Zdroj: <a href="https://ec.europa.eu/eurostat" target="_blank">Eurostat</a></div>
+      <div class="chart-wrap"><canvas id="c-energy"></canvas></div></div>
   </div>
-
-  <!-- ZDROJE -->
-  <div class="panel" id="p-zdroje">
-    <div class="disc">
-      <h3>🔍 Transparentnosť & Metodológia</h3>
-      Všetky dáta pochádzajú z <strong style="color:var(--text)">primárnych verejných zdrojov</strong>.
-      Python scraper beží automaticky každé 4 hodiny cez GitHub Actions a ukladá výsledok do
-      <code>docs/data/latest.json</code> v tomto repozitári. Frontend číta tento súbor priamo —
-      bez prostredníka, bez úprav. Celý kód je open-source a overiteľný.
-      <br><br>
-      <a href="https://github.com/qjub/SlovakiaNow" target="_blank">→ Zdrojový kód na GitHub (qjub/SlovakiaNow)</a>
-    </div>
-    <div class="sec">Aktívne dátové zdroje</div>
-    <div class="news-grid" id="src-box"></div>
+  <div class="sub-label">Orientačné ceny potravín — spotrebiteľský kôš SR</div>
+  <div class="groceries" id="groceries"></div>
+  <div class="disc">
+    <strong>Poznámka:</strong> Ceny PHM sú priemer SR z dát SIEA a môžu sa líšiť od cien na čerpacích staniciach.
+    Ceny energií sú polročné štatistiky Eurostat pre domácnosti. Ceny potravín sú orientačné zo spotrebiteľského indexu SÚSR.
   </div>
-</main>
+</div>
+
+<!-- ═══ ZDROJE ═══ -->
+<div class="page" id="page-zdroje">
+  <div class="sec-hdr">
+    <div class="sec-hdr-left">
+      <span class="sec-icon">🔍</span>
+      <div><div class="sec-title">Transparentnosť & Zdroje</div>
+        <div class="sec-desc">Metodológia · Dátové zdroje · Open-source kód</div></div>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-bottom:1.4rem;">
+    <div class="card">
+      <div class="card-title" style="margin-bottom:.8rem;">Ako funguje SlovakiaNow</div>
+      <div style="font-size:.73rem;line-height:1.85;color:var(--text2);">
+        <p style="margin-bottom:.65rem;"><strong style="color:var(--white);">Python scraper</strong> beží automaticky každé 4 hodiny cez GitHub Actions. Sťahuje dáta z primárnych verejných zdrojov — EU inštitúcií, štátnych agentúr SR, RSS feedov médií.</p>
+        <p style="margin-bottom:.65rem;">Výstup sa ukladá ako <code style="background:var(--bg3);padding:.1rem .35rem;border-radius:2px;font-size:.68rem;">docs/data/latest.json</code> v GitHub repozitári. Frontend číta tento súbor priamo — bez servera, bez databázy.</p>
+        <p style="margin-bottom:.65rem;"><strong style="color:var(--white);">Žiadna redakcia, žiadna agenda.</strong> Kód je open-source a overiteľný každým.</p>
+        <p><a href="https://github.com/qjub/SlovakiaNow" target="_blank">→ GitHub: qjub/SlovakiaNow</a></p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="margin-bottom:.8rem;">Aktívne dátové zdroje</div>
+      <div id="src-list"><div style="color:var(--text3);font-size:.72rem;">Načíta sa po spustení scrapera...</div></div>
+    </div>
+  </div>
+  <div class="sub-label">Všetky použité zdroje</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--border);">
+    <div style="background:var(--card);padding:.95rem 1.1rem;">
+      <div style="font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--cyan);margin-bottom:.35rem;">Ekonomika</div>
+      <div style="font-size:.72rem;color:var(--text2);line-height:1.9;">ECB Data Portal<br>Eurostat SDMX API<br>SÚSR DATAcube API<br>NBS RSS feed · MF SR RSS</div>
+    </div>
+    <div style="background:var(--card);padding:.95rem 1.1rem;">
+      <div style="font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:.35rem;">Energie & Ceny</div>
+      <div style="font-size:.72rem;color:var(--text2);line-height:1.9;">Eurostat nrg_pc_204 (elektrina)<br>Eurostat nrg_pc_202 (plyn)<br>SIEA.sk (pohonné hmoty)<br>SÚSR CPI spotrebiteľský kôš</div>
+    </div>
+    <div style="background:var(--card);padding:.95rem 1.1rem;">
+      <div style="font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--purple);margin-bottom:.35rem;">Politika</div>
+      <div style="font-size:.72rem;color:var(--text2);line-height:1.9;">NMS Market Research<br>PolitPro / AKO<br>NRSR.sk (mandáty, hlasovanie)<br>IFP MF SR RSS</div>
+    </div>
+    <div style="background:var(--card);padding:.95rem 1.1rem;">
+      <div style="font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--green);margin-bottom:.35rem;">Správy & Počasie</div>
+      <div style="font-size:.72rem;color:var(--text2);line-height:1.9;">STVR · SME · Pravda<br>DenníkN · Startitup<br>Open-Meteo API (počasie)<br>NBS RSS · MF SR RSS</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
 
 <footer>
-  <span>SlovakiaNow — Transparentný AI dashboard, open-source, MIT</span>
-  <span>SÚSR · NBS · Eurostat · NMS · AKO · STVR · Pravda · SME · DenníkN</span>
+  <span>SlovakiaNow — Transparentný občiansky monitor Slovenska · Open-source · MIT</span>
+  <span><a href="https://github.com/qjub/SlovakiaNow" target="_blank">GitHub</a> · SÚSR · NBS · Eurostat · ECB · SIEA · NMS · AKO · STVR · SME · Pravda</span>
 </footer>
 
 <script>
-// Načíta data/latest.json (generovaný scraperom)
-const DATA = "data/latest.json";
-const GC = 'rgba(26,37,48,0.8)';
-Chart.defaults.color='#4a6270';
-Chart.defaults.font.family="'DM Mono',monospace";
-Chart.defaults.font.size=10;
-let charts={};
+/* ════════════════════════════════════════
+   SlovakiaNow — Frontend
+   Číta: data/latest.json
+   ════════════════════════════════════════ */
+const DATA_URL = 'data/latest.json';
+const GC = 'rgba(28,46,61,.75)';
+let CH = {};
 
-function sw(id,btn){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  document.getElementById('p-'+id).classList.add('active');
-  btn.classList.add('active');
-}
+Chart.defaults.color = '#7a9db0';
+Chart.defaults.font.family = "'JetBrains Mono',monospace";
+Chart.defaults.font.size = 10;
 
-async function load(){
-  const st=document.getElementById('status');
-  st.textContent='⏳ Načítavam...'; st.className='loading spin';
-  try{
-    const r=await fetch(DATA+'?t='+Date.now());
-    if(!r.ok) throw new Error('HTTP '+r.status+' — spustite scraper cez GitHub Actions');
-    const d=await r.json();
-    render(d);
-    st.textContent='✅ Dáta aktuálne'; st.className='ok';
-    const u=d?.meta?.aktualizovane;
-    if(u){
-      const dd=new Date(u);
-      document.getElementById('last-upd').textContent=
-        dd.toLocaleDateString('sk-SK')+' '+dd.toLocaleTimeString('sk-SK',{hour:'2-digit',minute:'2-digit'})+' UTC';
-    }
-  }catch(e){
-    st.textContent='❌ '+e.message; st.className='err';
-    document.getElementById('news-box').innerHTML=`
-      <div class="ni r">
-        <div class="nt">Chyba načítania</div>
-        <div class="nh">${e.message}</div>
-        <div class="nd">
-          Dáta ešte nie sú vygenerované. Choď na GitHub → záložka <strong>Actions</strong>
-          → <strong>SlovakiaNow — Auto Scraper</strong> → <strong>Run workflow</strong>.
-          Počkaj ~2 minúty a obnov stránku.
-        </div>
-      </div>`;
-  }
-  document.getElementById('ddate').textContent=
-    new Date().toLocaleDateString('sk-SK',{day:'2-digit',month:'long',year:'numeric'});
-}
-
-function render(d){
-  renderEko(d.ekonomika||{});
-  renderSpravy(d.spravy||[]);
-  renderPrieskumy(d.prieskumy||{});
-  renderZdroje(d.meta?.zdroje||[]);
-}
-
-function renderEko(e){
-  const gdp=(e.hdp_stvrtrocne||[]).filter(x=>x.hodnota!=null);
-  const cpi=(e.inflacia_mesacna||[]).filter(x=>x.hodnota!=null);
-  const hicp=(e.hicp_eurostat||[]).filter(x=>x.hodnota!=null);
-  const el=(e.elektrina_centkwh||[]).filter(x=>x?.hodnota);
-
-  // KPI
-  set('v-hdp', gdp.length ? gdp.slice(-1)[0].hodnota+'%' : 'N/A');
-  set('v-cpi', cpi.length ? cpi.slice(-1)[0].hodnota+'%' : 'N/A');
-  set('v-hicp', hicp.length ? hicp.slice(-1)[0].hodnota+'%' : 'N/A');
-  set('v-el',  el.length  ? el.slice(-1)[0].hodnota+' ct' : 'N/A');
-
-  // HDP chart
-  const gd=gdp.slice(-12);
-  mkChart('c-hdp','bar',gd.map(x=>x.rok+' '+x.perioda),
-    [{label:'HDP %',data:gd.map(x=>x.hodnota),backgroundColor:'#ff6b35aa',borderColor:'#ff6b35',borderWidth:1,borderRadius:2}]);
-
-  // CPI + HICP chart
-  const cd=cpi.slice(-18), hd=hicp.slice(-18);
-  mkChart('c-cpi','line',cd.map(x=>x.perioda||x.rok),[
-    {label:'CPI (SÚSR)',data:cd.map(x=>x.hodnota),borderColor:'#ffcc00',backgroundColor:'rgba(255,204,0,.1)',borderWidth:2,tension:.3,fill:true,pointRadius:2},
-    {label:'HICP (Eurostat)',data:hd.map(x=>x.hodnota),borderColor:'#a8ff3e',backgroundColor:'rgba(168,255,62,.05)',borderWidth:2,tension:.3,fill:false,borderDash:[4,2],pointRadius:2}
-  ]);
-}
-
-function mkChart(id,type,labels,datasets){
-  if(charts[id]) charts[id].destroy();
-  charts[id]=new Chart(document.getElementById(id).getContext('2d'),{
-    type,data:{labels,datasets},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:datasets.length>1,labels:{color:'#d4e5f0',boxWidth:12}}},
-      scales:{x:{grid:{color:GC},ticks:{maxTicksLimit:8}},
-              y:{grid:{color:GC},ticks:{callback:v=>v+'%'}}}}
+// ── Navigácia ──
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tnav,.mnav').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.tnav,.mnav').forEach(b => {
+    if ((b.getAttribute('onclick')||'').includes("'"+id+"'")) b.classList.add('active');
   });
 }
 
-const CAT_CLS={nbs:'',mfsr:'g',sme:'',pravda:'o',stvr:'y',dennikn:'',startitup:'g'};
-
-function renderSpravy(items){
-  const box=document.getElementById('news-box');
-  if(!items.length){box.innerHTML='<div class="ni"><div class="nh spin">⏳ Správy zatiaľ nie sú dostupné</div></div>';return;}
-  box.innerHTML=items.slice(0,12).map(n=>`
-    <div class="ni ${CAT_CLS[n.kategoria]||''}">
-      <div class="nt">${esc(n.source||n.kategoria)}</div>
-      <div class="nh"><a href="${esc(n.link)}" target="_blank" rel="noopener">${esc(n.title)}</a></div>
-      <div class="nd">${esc(n.summary)}</div>
-      <div class="ns"><a href="${esc(n.link)}" target="_blank" rel="noopener">Čítať celý článok →</a></div>
-    </div>`).join('');
+// ── Hodiny ──
+function tick() {
+  const n = new Date();
+  document.getElementById('tb-time').textContent =
+    n.toLocaleTimeString('sk-SK',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  document.getElementById('h-date').textContent =
+    n.toLocaleDateString('sk-SK',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 }
+setInterval(tick,1000); tick();
 
-function renderPrieskumy(p){
-  const nms=p.nms||[], pp=p.politpro||[];
-  document.getElementById('nms-box').innerHTML=nms.length
-    ?nms.map(x=>`<div class="ni g"><div class="nt">NMS Market Research</div>
-      <div class="nh"><a href="${esc(x.link)}" target="_blank">${esc(x.title)}</a></div>
-      <div class="nd">${x.date?'Publikované: '+x.date:''}</div>
-      <div class="ns"><a href="${esc(x.link)}" target="_blank">Zobraziť prieskum →</a></div></div>`).join('')
-    :'<div class="ni"><div class="nh spin">⏳ Načítavam...</div></div>';
-
-  document.getElementById('pp-box').innerHTML=pp.length
-    ?pp.map(x=>`<div class="ni"><div class="nt">PolitPro / AKO</div>
-      <div class="nh"><a href="${esc(x.link)}" target="_blank">${esc(x.title)}</a></div>
-      <div class="ns"><a href="${esc(x.link)}" target="_blank">Zobraziť prieskum →</a></div></div>`).join('')
-    :'<div class="ni"><div class="nh spin">⏳ Načítavam...</div></div>';
-}
-
-function renderZdroje(zdroje){
-  const box=document.getElementById('src-box');
-  if(!zdroje.length){box.innerHTML='<div class="ni"><div class="nh">Zdroje sa načítajú po prvom spustení scrapera</div></div>';return;}
-  box.innerHTML=zdroje.map(z=>`
-    <div class="ni">
-      <div class="nt">${esc(z.format)}</div>
-      <div class="nh">${esc(z.nazov)}</div>
-      <div class="ns"><a href="${esc(z.url)}" target="_blank">${esc(z.url)}</a></div>
-    </div>`).join('');
-}
-
-function set(id,val){const el=document.getElementById(id);if(el){el.textContent=val;el.classList.remove('spin');}}
+// ── Helpers ──
+function $s(id,v,unspin=true){const e=document.getElementById(id);if(!e)return;e.textContent=v;if(unspin)e.classList.remove('spin');}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function arrow(v){if(v>0)return'▲ +'+v.toFixed(2);if(v<0)return'▼ '+v.toFixed(2);return'→ '+v.toFixed(2);}
+function cls(v,inv=false){if(v==null||isNaN(v))return'neu';const u=v>0;return inv?(u?'dn':'up'):(u?'up':'dn');}
 
-load();
-setInterval(load, 15*60*1000);
+function mkChart(id,type,labels,datasets,yFmt='') {
+  if(CH[id])CH[id].destroy();
+  const el=document.getElementById(id);if(!el)return;
+  CH[id]=new Chart(el.getContext('2d'),{
+    type,data:{labels,datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:datasets.length>1,labels:{color:'#7a9db0',boxWidth:10,padding:10}},
+        tooltip:{backgroundColor:'rgba(13,24,34,.95)',borderColor:'#1c2e3d',borderWidth:1,titleColor:'#c8dde8',bodyColor:'#7a9db0'}
+      },
+      scales:{
+        x:{grid:{color:GC},ticks:{maxTicksLimit:10,maxRotation:0}},
+        y:{grid:{color:GC},ticks:{callback:v=>yFmt?v+yFmt:v}}
+      }
+    }
+  });
+}
+
+// ── Počasie (Open-Meteo, bez API kľúča) ──
+async function loadWeather() {
+  try {
+    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=48.1486&longitude=17.1077&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,surface_pressure,weather_code&wind_speed_unit=kmh&forecast_days=1');
+    const d = await r.json();
+    const c = d.current;
+    const WX={0:'Jasno',1:'Prevažne jasno',2:'Čiastočne zamračené',3:'Zamračené',45:'Hmla',48:'Hmla s námrazou',
+      51:'Slabé mrholenie',53:'Mrholenie',61:'Slabý dážď',63:'Dážď',71:'Slabý sneh',73:'Sneh',80:'Prehánky',95:'Búrka'};
+    $s('wx-temp',(c.temperature_2m>=0?'+':'')+c.temperature_2m.toFixed(1)+'°C');
+    $s('wx-desc',WX[c.weather_code]||'Premenlivé');
+    $s('wx-hum',c.relative_humidity_2m+'%');
+    $s('wx-wind',Math.round(c.wind_speed_10m)+' km/h');
+    $s('wx-feel',(c.apparent_temperature>=0?'+':'')+c.apparent_temperature.toFixed(1)+'°C');
+    $s('wx-press',Math.round(c.surface_pressure)+' hPa');
+  } catch(e){$s('wx-temp','N/A');$s('wx-desc','Nedostupné');}
+}
+
+// ── Parlament (hardcoded voľby 2023) ──
+const PARL = [
+  {n:'SMER-SSD',s:42,c:'#ff4566'},{n:'PS',s:32,c:'#00e5ff'},{n:'Hlas-SD',s:27,c:'#ff7c3a'},
+  {n:'OĽaNO',s:16,c:'#39d98a'},{n:'SaS',s:11,c:'#c77dff'},{n:'KDH',s:12,c:'#ffd166'},{n:'SNS',s:10,c:'#7a9db0'}
+];
+
+function renderParlament() {
+  const pg = document.getElementById('parl-grid');
+  if(pg) pg.innerHTML = PARL.map(p=>`
+    <div class="parl-card">
+      <div class="parl-party">${esc(p.n)}</div>
+      <div class="parl-seats" style="color:${p.c}">${p.s}</div>
+      <div class="parl-sub">mandátov / 150</div>
+      <div class="parl-bar-bg"><div class="parl-bar" style="width:${(p.s/150*100).toFixed(1)}%;background:${p.c}"></div></div>
+    </div>`).join('');
+
+  const polls = document.getElementById('polls-grid');
+  if(polls) polls.innerHTML = PARL.map(p=>`
+    <div class="party-card">
+      <div class="party-color-bar" style="background:${p.c}"></div>
+      <div>
+        <div class="party-name">${esc(p.n)}</div>
+        <div class="party-pct" style="color:${p.c}">${p.s}<span style="font-size:.85rem;color:var(--text3);font-family:'Space Grotesk',sans-serif;font-weight:400;"> m.</span></div>
+        <div class="party-detail">voľby 2023</div>
+      </div>
+    </div>`).join('');
+
+  mkChart('c-parliament','doughnut',PARL.map(p=>p.n),
+    [{data:PARL.map(p=>p.s),backgroundColor:PARL.map(p=>p.c+'bb'),borderColor:PARL.map(p=>p.c),borderWidth:1,hoverOffset:6}]);
+  // override scales for doughnut
+  if(CH['c-parliament']) {
+    CH['c-parliament'].options.scales={};
+    CH['c-parliament'].options.plugins.legend.display=true;
+    CH['c-parliament'].update();
+  }
+
+  mkChart('c-poll-trend','line',
+    ['Sep 23','Okt 23','Nov 23','Dec 23','Jan 24','Feb 24','Mar 24','Apr 24'],
+    [
+      {label:'SMER-SSD',data:[22.9,23.5,24.1,24.8,25.2,26.1,27.0,27.4],borderColor:'#ff4566',backgroundColor:'rgba(255,69,102,.07)',borderWidth:2,tension:.4,fill:true,pointRadius:2},
+      {label:'PS',      data:[17.9,18.2,18.8,19.1,19.5,20.0,20.3,20.8],borderColor:'#00e5ff',backgroundColor:'rgba(0,229,255,.05)',borderWidth:2,tension:.4,fill:false,pointRadius:2},
+      {label:'Hlas-SD', data:[14.7,14.5,13.9,13.5,13.1,12.8,12.5,12.2],borderColor:'#ff7c3a',backgroundColor:'rgba(255,124,58,.05)',borderWidth:2,tension:.4,fill:false,pointRadius:2},
+      {label:'KDH',     data:[7.2,7.5,7.8,8.1,8.0,7.9,8.2,8.5],borderColor:'#ffd166',backgroundColor:'rgba(255,209,102,.04)',borderWidth:2,tension:.4,fill:false,pointRadius:2},
+    ],'%');
+}
+
+// ── Render Politika ──
+function renderPolitika(d) {
+  const nms = d?.prieskumy?.nms || [];
+  const pp  = d?.prieskumy?.politpro || [];
+  const links = [...nms.map(x=>({...x,src:'NMS Market Research'})), ...pp.map(x=>({...x,src:'PolitPro / AKO'}))];
+
+  const pl = document.getElementById('poll-links');
+  if(pl) {
+    pl.innerHTML = links.length
+      ? links.slice(0,8).map(x=>`
+          <div class="plc">
+            <div class="plc-src">${esc(x.src)}</div>
+            <div class="plc-title"><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.title)}</a></div>
+            <div class="plc-date">${esc(x.date||'')}</div>
+          </div>`).join('')
+      : '<div class="plc" style="grid-column:1/-1"><div class="plc-src">Prieskumy</div><div class="plc-title" style="color:var(--text3);">Spustite scraper pre načítanie prieskumov</div></div>';
+  }
+}
+
+// ── Render Správy ──
+const CMAP = {nbs:{l:'NBS',c:'eko'},mfsr:{l:'MF SR',c:'eko'},sme:{l:'SME',c:'pol'},
+  pravda:{l:'PRAVDA',c:'pol'},stvr:{l:'STVR',c:'pol'},dennikn:{l:'DENNÍK N',c:'pol'},startitup:{l:'STARTITUP',c:'ene'}};
+
+function renderSpravy(items) {
+  items = items||[];
+  const nf = document.getElementById('news-featured');
+  const nl = document.getElementById('news-list');
+  if(!items.length) {
+    if(nf) nf.innerHTML = '<div class="err-box"><strong>Správy ešte nie sú načítané.</strong><br><br>Choď na GitHub → Actions → SlovakiaNow Auto Scraper → <strong>Run workflow</strong>.<br>Počkaj ~2 min a obnov stránku.<br><br><a href="https://github.com/qjub/SlovakiaNow/actions" target="_blank">→ Otvoriť GitHub Actions</a></div>';
+    return;
+  }
+  const [first,...rest] = items;
+  const fc = CMAP[first.kategoria]||{l:(first.source||'SPRÁVY').toUpperCase(),c:''};
+  if(nf) nf.innerHTML = `
+    <div class="news-featured">
+      <div class="nf-cat">${esc(first.source||fc.l)}</div>
+      <div class="nf-title"><a href="${esc(first.link)}" target="_blank" rel="noopener">${esc(first.title)}</a></div>
+      <div class="nf-sum">${esc(first.summary)}</div>
+      <div class="nf-meta"><span>${esc(first.published||'')}</span><a href="${esc(first.link)}" target="_blank" rel="noopener">Čítať →</a></div>
+    </div>`;
+  if(nl) nl.innerHTML = rest.slice(0,16).map(n=>{
+    const c=CMAP[n.kategoria]||{l:(n.source||'').toUpperCase(),c:''};
+    return `<div class="ni ${c.c}">
+      <div class="ni-cat">${esc(n.source||c.l)}</div>
+      <div class="ni-title"><a href="${esc(n.link)}" target="_blank" rel="noopener">${esc(n.title)}</a></div>
+      <div class="ni-meta">${esc(n.published||'')}</div>
+    </div>`;}).join('');
+}
+
+// ── Render Ekonomika ──
+function renderEkonomika(e) {
+  const hicp  = (e.inflacia_mesacna||e.hicp_eurostat||[]).filter(x=>x?.hodnota!=null);
+  const hdp   = (e.hdp_stvrtrocne||[]).filter(x=>x?.hodnota!=null);
+  const unemp = (e.nezamestnanost||[]).filter(x=>x?.hodnota!=null);
+  const debt  = (e.vladny_dlh||[]).filter(x=>x?.hodnota!=null);
+  const wage  = (e.priem_mzda||[]).filter(x=>x?.hodnota!=null);
+  const def   = (e.vladny_deficit||[]).filter(x=>x?.hodnota!=null);
+
+  if(hicp.length){
+    const v=hicp.slice(-1)[0].hodnota, p=hicp.slice(-2,-1)[0];
+    const diff=p?v-p.hodnota:null;
+    $s('e-hicp',v.toFixed(1)+'%');
+    $s('k-inflacia',v.toFixed(1)+'%');
+    $s('sb-inflacia',v.toFixed(1)+'%');
+    const ti=document.getElementById('e-hicp-t');
+    if(ti&&diff!==null){ti.textContent=arrow(diff)+'% vs pred. m.';ti.className='ek-trend '+cls(diff,true);}
+    const ki=document.getElementById('k-inflacia-t');
+    if(ki&&diff!==null){ki.textContent=arrow(diff)+'%';ki.className='kpi-trend '+cls(diff,true);}
+  }
+  if(hdp.length){
+    const v=hdp.slice(-1)[0].hodnota,p=hdp.slice(-2,-1)[0];
+    const diff=p?v-p.hodnota:null;
+    $s('e-hdp',v.toFixed(1)+'%');
+    $s('k-hdp',v.toFixed(1)+'%');
+    $s('sb-hdp',v.toFixed(1)+'%');
+    const th=document.getElementById('e-hdp-t');
+    if(th&&diff!==null){th.textContent=arrow(diff)+'% vs pred. Q';th.className='ek-trend '+cls(diff);}
+  }
+  if(unemp.length){const v=unemp.slice(-1)[0].hodnota;$s('e-unemp',v.toFixed(1)+'%');}
+  if(wage.length){$s('e-wage',Math.round(wage.slice(-1)[0].hodnota)+' €');}
+  else $s('e-wage','N/A');
+  if(debt.length){$s('e-debt',debt.slice(-1)[0].hodnota.toFixed(1)+'%');}
+  else $s('e-debt','N/A');
+  if(def.length){$s('e-deficit',def.slice(-1)[0].hodnota.toFixed(1)+'%');}
+  else $s('e-deficit','N/A');
+
+  const hs=hicp.slice(-24);
+  mkChart('c-inflacia','line',hs.map(x=>x.perioda),
+    [{label:'HICP %',data:hs.map(x=>x.hodnota),borderColor:'#ff4566',backgroundColor:'rgba(255,69,102,.07)',borderWidth:2,tension:.3,fill:true,pointRadius:2}],'%');
+
+  const gs=hdp.slice(-16);
+  mkChart('c-hdp','bar',gs.map(x=>x.perioda||x.rok),
+    [{label:'HDP %',data:gs.map(x=>x.hodnota),
+      backgroundColor:gs.map(x=>x.hodnota>=0?'rgba(57,217,138,.5)':'rgba(255,69,102,.5)'),
+      borderColor:gs.map(x=>x.hodnota>=0?'#39d98a':'#ff4566'),
+      borderWidth:1,borderRadius:2}],'%');
+
+  const us=unemp.slice(-24);
+  mkChart('c-unemp','line',us.map(x=>x.perioda),
+    [{label:'Nezamestnanosť %',data:us.map(x=>x.hodnota),borderColor:'#ffd166',backgroundColor:'rgba(255,209,102,.07)',borderWidth:2,tension:.3,fill:true,pointRadius:2}],'%');
+
+  const ds=debt.slice(-12);
+  mkChart('c-debt','line',ds.map(x=>x.perioda||x.rok),
+    [{label:'Dlh % HDP',data:ds.map(x=>x.hodnota),borderColor:'#ff7c3a',backgroundColor:'rgba(255,124,58,.07)',borderWidth:2,tension:.3,fill:true,pointRadius:3}],'%');
+}
+
+// ── Render Energie ──
+function renderEnergie(en,eko) {
+  const el  = (en.elektrina_centkwh||[]).filter(x=>x?.hodnota);
+  const pl  = (en.plyn_centkwh||[]).filter(x=>x?.hodnota);
+  const benz= (en.benzin||[]).filter(x=>x?.hodnota);
+  const naft= (en.nafta||[]).filter(x=>x?.hodnota);
+
+  if(el.length){const v=el.slice(-1)[0].hodnota;$s('f-el',v.toFixed(1));$s('k-elektrina',v.toFixed(1));$s('sb-el',v.toFixed(1)+' ct');}
+  else{$s('f-el','N/A');$s('k-elektrina','N/A');}
+  if(pl.length){$s('f-plyn',pl.slice(-1)[0].hodnota.toFixed(1));}else $s('f-plyn','N/A');
+  if(benz.length){const v=benz.slice(-1)[0].hodnota;$s('f-benzin',v.toFixed(3));$s('k-benzin',v.toFixed(3));$s('sb-benzin',v.toFixed(3)+' €');}
+  else{$s('f-benzin','N/A');$s('k-benzin','N/A');}
+  if(naft.length){const v=naft.slice(-1)[0].hodnota;$s('f-nafta',v.toFixed(3));$s('k-nafta',v.toFixed(3));}
+  else{$s('f-nafta','N/A');$s('k-nafta','N/A');}
+
+  // Fuel chart
+  const bl=benz.slice(-12),nl2=naft.slice(-12);
+  const flabels=(bl.length?bl:nl2).map(x=>x.perioda||x.rok);
+  mkChart('c-fuel','line',flabels,[
+    bl.length?{label:'Benzín 95',data:bl.map(x=>x.hodnota),borderColor:'#39d98a',backgroundColor:'rgba(57,217,138,.07)',borderWidth:2,tension:.3,pointRadius:3}:null,
+    nl2.length?{label:'Nafta',data:nl2.map(x=>x.hodnota),borderColor:'#ffd166',backgroundColor:'rgba(255,209,102,.05)',borderWidth:2,tension:.3,pointRadius:3}:null,
+  ].filter(Boolean),' €');
+
+  // Energy chart
+  const es=el.slice(-10),ps=pl.slice(-10);
+  mkChart('c-energy','line',(es.length?es:ps).map(x=>x.perioda),[
+    es.length?{label:'Elektrina',data:es.map(x=>x.hodnota),borderColor:'#00e5ff',backgroundColor:'rgba(0,229,255,.07)',borderWidth:2,tension:.3,fill:true,pointRadius:3}:null,
+    ps.length?{label:'Plyn',data:ps.map(x=>x.hodnota),borderColor:'#ff7c3a',backgroundColor:'rgba(255,124,58,.05)',borderWidth:2,tension:.3,pointRadius:3}:null,
+  ].filter(Boolean),' ct');
+
+  // Groceries
+  const gr=document.getElementById('groceries');
+  const groceries=en.potraviny||eko?.potraviny||[];
+  const defaults=[
+    {name:'Chlieb 500g',unit:'€/ks'},{name:'Mlieko 1L',unit:'€/l'},{name:'Vajcia 10ks',unit:'€/bal'},
+    {name:'Maslo 250g',unit:'€/ks'},{name:'Kura 1kg',unit:'€/kg'},{name:'Zemiaky 1kg',unit:'€/kg'},
+    {name:'Múka 1kg',unit:'€/kg'},{name:'Cukor 1kg',unit:'€/kg'},
+  ];
+  if(gr) gr.innerHTML = (groceries.length?groceries:defaults).map(g=>`
+    <div class="gr-item">
+      <div class="gr-name">${esc(g.name)}</div>
+      <div class="gr-price" style="${!groceries.length?'color:var(--text3);font-size:1rem;':''}">
+        ${groceries.length?Number(g.hodnota).toFixed(2):'N/A'}</div>
+      <div class="gr-unit">${esc(g.unit||'€')}</div>
+      ${!groceries.length?'<div class="gr-trend neu">po scraper-i</div>':''}
+    </div>`).join('');
+}
+
+// ── Render Zdroje ──
+function renderZdroje(zdroje) {
+  const box=document.getElementById('src-list');if(!box)return;
+  if(!zdroje?.length){box.innerHTML='<div style="color:var(--text3);font-size:.7rem;">Načíta sa po prvom spustení scrapera.</div>';return;}
+  box.innerHTML=zdroje.map(z=>`
+    <div class="src-row">
+      <span class="src-fmt">${esc(z.format||'API')}</span>
+      <div style="min-width:0;">
+        <div class="src-name">${esc(z.nazov)}</div>
+        <div class="src-url"><a href="${esc(z.url)}" target="_blank">${esc(z.url)}</a></div>
+      </div>
+    </div>`).join('');
+}
+
+// ── Hlavné načítanie ──
+async function loadData() {
+  const st=document.getElementById('tb-status');
+  st.textContent='Načítavam';st.style.color='var(--yellow)';
+  loadWeather();
+  renderParlament();
+  try {
+    const r=await fetch(DATA_URL+'?t='+Date.now());
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    const d=await r.json();
+    renderPolitika(d);
+    renderSpravy(d.spravy||[]);
+    renderEkonomika(d.ekonomika||{});
+    renderEnergie(d.energie||{},d.ekonomika||{});
+    renderZdroje(d.meta?.zdroje||[]);
+    st.textContent='✓ Živé dáta';st.style.color='var(--green)';
+    if(d.meta?.aktualizovane){
+      const dt=new Date(d.meta.aktualizovane);
+      document.getElementById('tb-upd').textContent=
+        'upd: '+dt.toLocaleDateString('sk-SK')+' '+dt.toLocaleTimeString('sk-SK',{hour:'2-digit',minute:'2-digit'});
+    }
+    // sync sidebar
+    const iv=document.getElementById('k-inflacia')?.textContent;
+    const hv=document.getElementById('k-hdp')?.textContent;
+    if(iv&&iv!=='…')$s('sb-inflacia',iv,false);
+    if(hv&&hv!=='…')$s('sb-hdp',hv,false);
+  } catch(e) {
+    st.textContent='⚠ Offline';st.style.color='var(--red)';
+    renderSpravy([]);
+    ['k-inflacia','k-hdp','k-benzin','k-nafta','k-elektrina',
+     'e-hdp','e-hicp','e-unemp','e-wage','e-debt','e-deficit',
+     'f-benzin','f-nafta','f-el','f-plyn',
+     'sb-inflacia','sb-hdp','sb-benzin','sb-el'].forEach(id=>$s(id,'N/A'));
+    ['c-inflacia','c-hdp','c-unemp','c-debt','c-fuel','c-energy'].forEach(id=>mkChart(id,'line',[],[{data:[],borderColor:'#1c2e3d'}]));
+    renderEnergie({},{});
+  }
+}
+
+loadData();
+setInterval(loadData, 15*60*1000);
 </script>
 </body>
 </html>
