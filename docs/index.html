@@ -276,17 +276,17 @@ async function load(){
 }
 
 function render(d){
-  renderEko(d.ekonomika||{}, d.energie||{});
+  renderEko(d.ekonomika||{});
   renderSpravy(d.spravy||[]);
   renderPrieskumy(d.prieskumy||{});
   renderZdroje(d.meta?.zdroje||[]);
 }
 
-function renderEko(e, en){
+function renderEko(e){
   const gdp=(e.hdp_stvrtrocne||[]).filter(x=>x.hodnota!=null);
   const cpi=(e.inflacia_mesacna||[]).filter(x=>x.hodnota!=null);
   const hicp=(e.hicp_eurostat||[]).filter(x=>x.hodnota!=null);
-  const el=(en.elektrina_centkwh||[]).filter(x=>x?.hodnota);
+  const el=(e.elektrina_centkwh||[]).filter(x=>x?.hodnota);
 
   // KPI
   set('v-hdp', gdp.length ? gdp.slice(-1)[0].hodnota+'%' : 'N/A');
@@ -296,8 +296,8 @@ function renderEko(e, en){
 
   // HDP chart
   const gd=gdp.slice(-12);
-  mkChart('c-hdp','bar',gd.map(x=>x.perioda),
-    [{label:'HDP YoY %',data:gd.map(x=>x.hodnota),backgroundColor:gd.map(x=>x.hodnota>=0?'#ff6b35aa':'#ff3b5caa'),borderColor:gd.map(x=>x.hodnota>=0?'#ff6b35':'#ff3b5c'),borderWidth:1,borderRadius:2}]);
+  mkChart('c-hdp','bar',gd.map(x=>x.rok+' '+x.perioda),
+    [{label:'HDP %',data:gd.map(x=>x.hodnota),backgroundColor:'#ff6b35aa',borderColor:'#ff6b35',borderWidth:1,borderRadius:2}]);
 
   // CPI + HICP chart
   const cd=cpi.slice(-18), hd=hicp.slice(-18);
@@ -314,7 +314,7 @@ function mkChart(id,type,labels,datasets){
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:datasets.length>1,labels:{color:'#d4e5f0',boxWidth:12}}},
       scales:{x:{grid:{color:GC},ticks:{maxTicksLimit:8}},
-              y:{grid:{color:GC},ticks:{callback:v=>parseFloat(v.toFixed(2))+'%'}}}}
+              y:{grid:{color:GC},ticks:{callback:v=>v+'%'}}}}
   });
 }
 
