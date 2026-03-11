@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SlovakiaNow — Živý dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:#080c10;--border:#1a2530;--accent:#00e5ff;--accent2:#ff6b35;
+    --accent3:#a8ff3e;--warn:#ffcc00;--red:#ff3b5c;--text:#d4e5f0;
+    --muted:#4a6270;--card:#0f1820;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:linear-gradient(rgba(0,229,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,229,255,.025) 1px,transparent 1px);
+    background-size:40px 40px;}
+
+  header{position:sticky;top:0;z-index:100;background:rgba(8,12,16,.95);
+    backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
+    padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;
+    letter-spacing:.1em;color:var(--accent);text-transform:uppercase;}
+  .logo span{color:var(--text);}
+  .hdr-right{display:flex;gap:1.2rem;align-items:center;font-size:.68rem;color:var(--muted);}
+  .live-dot{width:7px;height:7px;background:var(--accent3);border-radius:50%;
+    display:inline-block;animation:pulse 2s infinite;margin-right:4px;}
+  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(168,255,62,.5)}
+    50%{opacity:.6;box-shadow:0 0 0 6px rgba(168,255,62,0)}}
+  .badge{border:1px solid var(--accent);color:var(--accent);font-size:.62rem;
+    padding:2px 8px;letter-spacing:.15em;text-transform:uppercase;}
+  #status{font-size:.65rem;}
+  #status.ok{color:var(--accent3);}
+  #status.err{color:var(--red);}
+  #status.loading{color:var(--warn);}
+
+  main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem;}
+
+  .hero{display:grid;grid-template-columns:1fr auto;align-items:end;
+    margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+  h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.5rem);
+    font-weight:800;line-height:1;letter-spacing:-.02em;color:#fff;}
+  h1 .hl{color:var(--accent);display:block;}
+  .hero-sub{font-size:.7rem;color:var(--muted);margin-top:.4rem;max-width:520px;line-height:1.7;}
+  .ts{font-size:.68rem;color:var(--muted);text-align:right;}
+  .ts strong{display:block;font-size:1rem;color:var(--text);font-family:'Syne',sans-serif;}
+
+  .tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:2rem;}
+  .tab{background:none;border:none;color:var(--muted);font-family:'DM Mono',monospace;
+    font-size:.72rem;padding:.75rem 1.5rem;cursor:pointer;text-transform:uppercase;
+    letter-spacing:.1em;border-bottom:2px solid transparent;transition:all .2s;
+    position:relative;bottom:-1px;}
+  .tab:hover{color:var(--text);}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:1px;background:var(--border);margin-bottom:2rem;border:1px solid var(--border);}
+  .kpi{background:var(--card);padding:1.4rem;position:relative;overflow:hidden;}
+  .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+  .kpi.b::before{background:var(--accent);}
+  .kpi.o::before{background:var(--accent2);}
+  .kpi.g::before{background:var(--accent3);}
+  .kpi.y::before{background:var(--warn);}
+  .kpi.r::before{background:var(--red);}
+  .kpi-lbl{font-size:.62rem;color:var(--muted);text-transform:uppercase;
+    letter-spacing:.12em;margin-bottom:.4rem;}
+  .kpi-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;
+    line-height:1;margin-bottom:.2rem;}
+  .kpi.b .kpi-val{color:var(--accent);}
+  .kpi.o .kpi-val{color:var(--accent2);}
+  .kpi.g .kpi-val{color:var(--accent3);}
+  .kpi.y .kpi-val{color:var(--warn);}
+  .kpi.r .kpi-val{color:var(--red);}
+  .kpi-sub{font-size:.6rem;color:var(--muted);}
+  .spin{animation:blink 1.2s infinite;}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
+  @media(max-width:860px){.charts{grid-template-columns:1fr;}}
+  .cc{background:var(--card);border:1px solid var(--border);padding:1.5rem;}
+  .cc-title{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;
+    text-transform:uppercase;letter-spacing:.1em;color:var(--text);margin-bottom:.2rem;}
+  .cc-src{font-size:.6rem;color:var(--muted);margin-bottom:1rem;}
+  .cc-src a{color:var(--accent);text-decoration:none;}
+  .cw{position:relative;height:200px;}
+
+  .news-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:2rem;}
+  @media(max-width:760px){.news-grid{grid-template-columns:1fr;}}
+  .ni{background:var(--card);border:1px solid var(--border);
+    border-left:3px solid var(--accent);padding:1.2rem;}
+  .ni.o{border-left-color:var(--accent2);}
+  .ni.y{border-left-color:var(--warn);}
+  .ni.g{border-left-color:var(--accent3);}
+  .ni.r{border-left-color:var(--red);}
+  .nt{font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;
+    color:var(--accent);margin-bottom:.3rem;}
+  .ni.o .nt{color:var(--accent2);}
+  .ni.y .nt{color:var(--warn);}
+  .ni.g .nt{color:var(--accent3);}
+  .nh{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:600;
+    color:#fff;margin-bottom:.4rem;line-height:1.4;}
+  .nh a{color:inherit;text-decoration:none;}
+  .nh a:hover{color:var(--accent);}
+  .nd{font-size:.67rem;color:var(--muted);line-height:1.6;margin-bottom:.5rem;}
+  .ns{font-size:.6rem;color:var(--muted);}
+  .ns a{color:var(--accent);text-decoration:none;}
+  .ns a:hover{text-decoration:underline;}
+
+  .disc{background:linear-gradient(135deg,rgba(0,229,255,.05),rgba(0,229,255,.02));
+    border:1px solid rgba(0,229,255,.2);padding:1.4rem;margin-bottom:2rem;
+    font-size:.7rem;line-height:1.8;color:var(--muted);}
+  .disc h3{font-family:'Syne',sans-serif;font-size:.78rem;color:var(--accent);
+    margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.1em;}
+  .disc a{color:var(--accent);text-decoration:none;}
+  .sec{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;
+    text-transform:uppercase;letter-spacing:.15em;color:var(--muted);
+    margin-bottom:.8rem;margin-top:1.5rem;padding-bottom:.4rem;
+    border-bottom:1px solid var(--border);}
+
+  footer{position:relative;z-index:1;border-top:1px solid var(--border);
+    padding:1.2rem 2rem;display:flex;justify-content:space-between;
+    align-items:center;font-size:.62rem;color:var(--muted);
+    max-width:1400px;margin:0 auto;flex-wrap:wrap;gap:.5rem;}
+  ::-webkit-scrollbar{width:5px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Slovakia<span>Now</span></div>
+  <div class="hdr-right">
+    <span id="status" class="loading spin">⏳ Načítavam...</span>
+    <span id="last-upd">—</span>
+    <span class="badge">AI Nezávislý</span>
+    <span><span class="live-dot"></span>Živý</span>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div>
+      <h1>Slovakia<span class="hl">Now</span></h1>
+      <p class="hero-sub">Transparentný AI dashboard — politika, ekonomika, energie.<br>
+      Dáta priamo z SÚSR API, NBS, Eurostat a RSS feedov. Žiadna agenda, len fakty.</p>
+    </div>
+    <div class="ts"><strong id="ddate">—</strong>Bratislava, SR</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="sw('ekonomika',this)">Ekonomika</button>
+    <button class="tab" onclick="sw('spravy',this)">Správy</button>
+    <button class="tab" onclick="sw('prieskumy',this)">Prieskumy</button>
+    <button class="tab" onclick="sw('zdroje',this)">Zdroje</button>
+  </div>
+
+  <!-- EKONOMIKA -->
+  <div class="panel active" id="p-ekonomika">
+    <div class="kpi-grid">
+      <div class="kpi b"><div class="kpi-lbl">HDP rast (posl. Q)</div><div class="kpi-val spin" id="v-hdp">…</div><div class="kpi-sub">SÚSR DATAcube API</div></div>
+      <div class="kpi r"><div class="kpi-lbl">Inflácia CPI (posl. m.)</div><div class="kpi-val spin" id="v-cpi">…</div><div class="kpi-sub">SÚSR DATAcube API</div></div>
+      <div class="kpi y"><div class="kpi-lbl">HICP Eurostat</div><div class="kpi-val spin" id="v-hicp">…</div><div class="kpi-sub">Eurostat SDMX API</div></div>
+      <div class="kpi o"><div class="kpi-lbl">Elektrina (ct/kWh)</div><div class="kpi-val spin" id="v-el">…</div><div class="kpi-sub">Eurostat nrg_pc_204</div></div>
+    </div>
+    <div class="charts">
+      <div class="cc">
+        <div class="cc-title">HDP rast — Štvrťročne (%)</div>
+        <div class="cc-src">Zdroj: <a href="https://data.statistics.sk/api/v2" target="_blank">data.statistics.sk/api/v2</a></div>
+        <div class="cw"><canvas id="c-hdp"></canvas></div>
+      </div>
+      <div class="cc">
+        <div class="cc-title">Inflácia — CPI (SÚSR) vs HICP (Eurostat)</div>
+        <div class="cc-src">Zdroj: <a href="https://data.statistics.sk" target="_blank">SÚSR</a> · <a href="https://ec.europa.eu/eurostat" target="_blank">Eurostat</a></div>
+        <div class="cw"><canvas id="c-cpi"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPRÁVY -->
+  <div class="panel" id="p-spravy">
+    <div class="disc">
+      <h3>📰 Automaticky stiahnuté správy</h3>
+      Stiahnuté priamo z RSS feedov: NBS, MF SR, STVR, Pravda, SME, DenníkN, Startitup.
+      AI správy neupravuje — zobrazujú sa všetky, zoradené podľa zdroja. Každý titulok má odkaz na originál.
+    </div>
+    <div class="news-grid" id="news-box">
+      <div class="ni"><div class="nt">Načítavam</div><div class="nh spin">⏳ Sťahujem RSS feedy...</div></div>
+    </div>
+  </div>
+
+  <!-- PRIESKUMY -->
+  <div class="panel" id="p-prieskumy">
+    <div class="disc">
+      <h3>🗳️ Volebné prieskumy</h3>
+      Automaticky zozbierané prieskumy z NMS Market Research a PolitPro/AKO.
+      Kliknutím na odkaz sa dostaneš priamo na originálny prieskum s plnými dátami.
+    </div>
+    <div class="sec">NMS Market Research — Volebný model</div>
+    <div class="news-grid" id="nms-box"></div>
+    <div class="sec">PolitPro / AKO — Prieskumy</div>
+    <div class="news-grid" id="pp-box"></div>
+  </div>
+
+  <!-- ZDROJE -->
+  <div class="panel" id="p-zdroje">
+    <div class="disc">
+      <h3>🔍 Transparentnosť & Metodológia</h3>
+      Všetky dáta pochádzajú z <strong style="color:var(--text)">primárnych verejných zdrojov</strong>.
+      Python scraper beží automaticky každé 4 hodiny cez GitHub Actions a ukladá výsledok do
+      <code>docs/data/latest.json</code> v tomto repozitári. Frontend číta tento súbor priamo —
+      bez prostredníka, bez úprav. Celý kód je open-source a overiteľný.
+      <br><br>
+      <a href="https://github.com/qjub/SlovakiaNow" target="_blank">→ Zdrojový kód na GitHub (qjub/SlovakiaNow)</a>
+    </div>
+    <div class="sec">Aktívne dátové zdroje</div>
+    <div class="news-grid" id="src-box"></div>
+  </div>
+</main>
+
+<footer>
+  <span>SlovakiaNow — Transparentný AI dashboard, open-source, MIT</span>
+  <span>SÚSR · NBS · Eurostat · NMS · AKO · STVR · Pravda · SME · DenníkN</span>
+</footer>
+
+<script>
+// Načíta data/latest.json (generovaný scraperom)
+const DATA = "data/latest.json";
+const GC = 'rgba(26,37,48,0.8)';
+Chart.defaults.color='#4a6270';
+Chart.defaults.font.family="'DM Mono',monospace";
+Chart.defaults.font.size=10;
+let charts={};
+
+function sw(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('p-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+async function load(){
+  const st=document.getElementById('status');
+  st.textContent='⏳ Načítavam...'; st.className='loading spin';
+  try{
+    const r=await fetch(DATA+'?t='+Date.now());
+    if(!r.ok) throw new Error('HTTP '+r.status+' — spustite scraper cez GitHub Actions');
+    const d=await r.json();
+    render(d);
+    st.textContent='✅ Dáta aktuálne'; st.className='ok';
+    const u=d?.meta?.aktualizovane;
+    if(u){
+      const dd=new Date(u);
+      document.getElementById('last-upd').textContent=
+        dd.toLocaleDateString('sk-SK')+' '+dd.toLocaleTimeString('sk-SK',{hour:'2-digit',minute:'2-digit'})+' UTC';
+    }
+  }catch(e){
+    st.textContent='❌ '+e.message; st.className='err';
+    document.getElementById('news-box').innerHTML=`
+      <div class="ni r">
+        <div class="nt">Chyba načítania</div>
+        <div class="nh">${e.message}</div>
+        <div class="nd">
+          Dáta ešte nie sú vygenerované. Choď na GitHub → záložka <strong>Actions</strong>
+          → <strong>SlovakiaNow — Auto Scraper</strong> → <strong>Run workflow</strong>.
+          Počkaj ~2 minúty a obnov stránku.
+        </div>
+      </div>`;
+  }
+  document.getElementById('ddate').textContent=
+    new Date().toLocaleDateString('sk-SK',{day:'2-digit',month:'long',year:'numeric'});
+}
+
+function render(d){
+  renderEko(d.ekonomika||{});
+  renderSpravy(d.spravy||[]);
+  renderPrieskumy(d.prieskumy||{});
+  renderZdroje(d.meta?.zdroje||[]);
+}
+
+function renderEko(e){
+  const gdp=(e.hdp_stvrtrocne||[]).filter(x=>x.hodnota!=null);
+  const cpi=(e.inflacia_mesacna||[]).filter(x=>x.hodnota!=null);
+  const hicp=(e.hicp_eurostat||[]).filter(x=>x.hodnota!=null);
+  const el=(e.elektrina_centkwh||[]).filter(x=>x?.hodnota);
+
+  // KPI
+  set('v-hdp', gdp.length ? gdp.slice(-1)[0].hodnota+'%' : 'N/A');
+  set('v-cpi', cpi.length ? cpi.slice(-1)[0].hodnota+'%' : 'N/A');
+  set('v-hicp', hicp.length ? hicp.slice(-1)[0].hodnota+'%' : 'N/A');
+  set('v-el',  el.length  ? el.slice(-1)[0].hodnota+' ct' : 'N/A');
+
+  // HDP chart
+  const gd=gdp.slice(-12);
+  mkChart('c-hdp','bar',gd.map(x=>x.rok+' '+x.perioda),
+    [{label:'HDP %',data:gd.map(x=>x.hodnota),backgroundColor:'#ff6b35aa',borderColor:'#ff6b35',borderWidth:1,borderRadius:2}]);
+
+  // CPI + HICP chart
+  const cd=cpi.slice(-18), hd=hicp.slice(-18);
+  mkChart('c-cpi','line',cd.map(x=>x.perioda||x.rok),[
+    {label:'CPI (SÚSR)',data:cd.map(x=>x.hodnota),borderColor:'#ffcc00',backgroundColor:'rgba(255,204,0,.1)',borderWidth:2,tension:.3,fill:true,pointRadius:2},
+    {label:'HICP (Eurostat)',data:hd.map(x=>x.hodnota),borderColor:'#a8ff3e',backgroundColor:'rgba(168,255,62,.05)',borderWidth:2,tension:.3,fill:false,borderDash:[4,2],pointRadius:2}
+  ]);
+}
+
+function mkChart(id,type,labels,datasets){
+  if(charts[id]) charts[id].destroy();
+  charts[id]=new Chart(document.getElementById(id).getContext('2d'),{
+    type,data:{labels,datasets},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:datasets.length>1,labels:{color:'#d4e5f0',boxWidth:12}}},
+      scales:{x:{grid:{color:GC},ticks:{maxTicksLimit:8}},
+              y:{grid:{color:GC},ticks:{callback:v=>v+'%'}}}}
+  });
+}
+
+const CAT_CLS={nbs:'',mfsr:'g',sme:'',pravda:'o',stvr:'y',dennikn:'',startitup:'g'};
+
+function renderSpravy(items){
+  const box=document.getElementById('news-box');
+  if(!items.length){box.innerHTML='<div class="ni"><div class="nh spin">⏳ Správy zatiaľ nie sú dostupné</div></div>';return;}
+  box.innerHTML=items.slice(0,12).map(n=>`
+    <div class="ni ${CAT_CLS[n.kategoria]||''}">
+      <div class="nt">${esc(n.source||n.kategoria)}</div>
+      <div class="nh"><a href="${esc(n.link)}" target="_blank" rel="noopener">${esc(n.title)}</a></div>
+      <div class="nd">${esc(n.summary)}</div>
+      <div class="ns"><a href="${esc(n.link)}" target="_blank" rel="noopener">Čítať celý článok →</a></div>
+    </div>`).join('');
+}
+
+function renderPrieskumy(p){
+  const nms=p.nms||[], pp=p.politpro||[];
+  document.getElementById('nms-box').innerHTML=nms.length
+    ?nms.map(x=>`<div class="ni g"><div class="nt">NMS Market Research</div>
+      <div class="nh"><a href="${esc(x.link)}" target="_blank">${esc(x.title)}</a></div>
+      <div class="nd">${x.date?'Publikované: '+x.date:''}</div>
+      <div class="ns"><a href="${esc(x.link)}" target="_blank">Zobraziť prieskum →</a></div></div>`).join('')
+    :'<div class="ni"><div class="nh spin">⏳ Načítavam...</div></div>';
+
+  document.getElementById('pp-box').innerHTML=pp.length
+    ?pp.map(x=>`<div class="ni"><div class="nt">PolitPro / AKO</div>
+      <div class="nh"><a href="${esc(x.link)}" target="_blank">${esc(x.title)}</a></div>
+      <div class="ns"><a href="${esc(x.link)}" target="_blank">Zobraziť prieskum →</a></div></div>`).join('')
+    :'<div class="ni"><div class="nh spin">⏳ Načítavam...</div></div>';
+}
+
+function renderZdroje(zdroje){
+  const box=document.getElementById('src-box');
+  if(!zdroje.length){box.innerHTML='<div class="ni"><div class="nh">Zdroje sa načítajú po prvom spustení scrapera</div></div>';return;}
+  box.innerHTML=zdroje.map(z=>`
+    <div class="ni">
+      <div class="nt">${esc(z.format)}</div>
+      <div class="nh">${esc(z.nazov)}</div>
+      <div class="ns"><a href="${esc(z.url)}" target="_blank">${esc(z.url)}</a></div>
+    </div>`).join('');
+}
+
+function set(id,val){const el=document.getElementById(id);if(el){el.textContent=val;el.classList.remove('spin');}}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+load();
+setInterval(load, 15*60*1000);
+</script>
+</body>
+</html>
