@@ -105,8 +105,16 @@ def fetch_rss(url, max_items=5):
 
 
 def scrape_nms_polls():
-    url = "https://nms.global/sk/category/volebny-model/"
-    r = safe_get(url)
+    # Skúsime viacero URL variantov
+    r = None
+    for url in [
+        "https://nms.global/sk/category/volebny-model/",
+        "https://nms.global/category/volebny-model/",
+        "https://nms.global/sk/",
+    ]:
+        r = safe_get(url)
+        if r and r.status_code == 200:
+            break
     if not r:
         return []
     soup = BeautifulSoup(r.text, "html.parser")
@@ -165,66 +173,75 @@ def run_scraper():
         "errors": []
     }
 
-    # ── SÚSR — CPI ────────────────────────────────────────────────────────────
-    log.info("📊 SÚSR API — Inflácia (CPI)...")
-    r = safe_get("https://data.statistics.sk/api/v2/dataset/sp3002ms/SK/sp3002ms_rok/sp3002ms_mes/ALL?lang=sk&type=json")
+    # ── ECB API — Inflácia HICP Slovensko ─────────────────────────────────────
+    # ECB Data Portal: séria ICP.M.SK.N.000000.4.ANR (HICP YoY %)
+    log.info("📊 ECB API — Inflácia HICP Slovensko...")
+    r = safe_get("https://data-api.ecb.europa.eu/service/data/ICP/M.SK.N.000000.4.ANR?format=jsondata&lastNObservations=24")
     if r:
         try:
-            data = parse_jsonstat(r.json())
-            output["ekonomika"]["inflacia_mesacna"] = data[-24:]
-            output["meta"]["zdroje"].append({"nazov": "SÚSR — CPI", "url": "https://data.statistics.sk/api/v2", "format": "JSON-stat"})
-            log.info(f"  ✅ CPI: {len(data)} bodov")
+            d = r.json()
+            series = d["dataSets"][0]["series"]["0:0:0:0:0:0"]["observations"]
+            time_labels = list(d["structure"]["dimensions"]["observation"][0]["values"])
+            points = []
+            for i, tl in enumerate(time_labels):
+                val = series.get(str(i), [None])[0]
+                if val is not None:
+                    points.append({"perioda": tl["id"], "hodnota": round(val, 2)})
+            output["ekonomika"]["inflacia_mesacna"] = points
+            output["ekonomika"]["hicp_eurostat"] = points  # rovnaké dáta pre oba grafy
+            output["meta"]["zdroje"].append({"nazov": "ECB — HICP Inflácia SK", "url": "https://data-api.ecb.europa.eu", "format": "JSON"})
+            log.info(f"  ✅ Inflácia ECB: {len(points)} bodov")
         except Exception as e:
-            output["errors"].append(f"SÚSR CPI: {e}")
+            output["errors"].append(f"ECB inflácia: {e}")
+            log.error(f"  ❌ ECB parsovanie: {e}")
+            output["ekonomika"]["inflacia_mesacna"] = []
+            output["ekonomika"]["hicp_eurostat"] = []
     else:
         output["ekonomika"]["inflacia_mesacna"] = []
-        output["errors"].append("SÚSR CPI: nedostupné")
+        output["ekonomika"]["hicp_eurostat"] = []
+        output["errors"].append("ECB inflácia: nedostupné")
 
-    # ── SÚSR — HDP ────────────────────────────────────────────────────────────
-    log.info("📊 SÚSR API — HDP...")
-    r = safe_get("https://data.statistics.sk/api/v2/dataset/nu3004qs/SK/nu3004qs_rok/nu3004qs_stv/ALL?lang=sk&type=json")
+    # ── Eurostat — HDP rast Slovensko ─────────────────────────────────────────
+    # Správna URL pre Eurostat SDMX 2.1 REST API
+    log.info("📊 Eurostat — HDP rast SK...")
+    r = safe_get("https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/namq_10_gdp?geo=SK&unit=PCH_PRE_PER&na_item=B1GQ&freq=Q&format=JSON&lastTimePeriod=20")
     if r:
         try:
-            data = parse_jsonstat(r.json())
-            output["ekonomika"]["hdp_stvrtrocne"] = data[-20:]
-            log.info(f"  ✅ HDP: {len(data)} bodov")
+            d = r.json()
+            time_dim = d.get("dimension", {}).get("time", {})
+            time_labels = list(time_dim.get("category", {}).get("label", {}).values())
+            values_raw = list(d.get("value", {}).values()) if isinstance(d.get("value"), dict) else d.get("value", [])
+            points = [{"perioda": t, "hodnota": round(v, 2)} for t, v in zip(time_labels, values_raw) if v is not None]
+            output["ekonomika"]["hdp_stvrtrocne"] = points[-20:]
+            output["meta"]["zdroje"].append({"nazov": "Eurostat — HDP rast SK", "url": "https://ec.europa.eu/eurostat", "format": "SDMX JSON"})
+            log.info(f"  ✅ HDP Eurostat: {len(points)} bodov")
         except Exception as e:
-            output["errors"].append(f"SÚSR HDP: {e}")
+            output["errors"].append(f"Eurostat HDP: {e}")
+            log.error(f"  ❌ Eurostat HDP: {e}")
+            output["ekonomika"]["hdp_stvrtrocne"] = []
     else:
         output["ekonomika"]["hdp_stvrtrocne"] = []
-        output["errors"].append("SÚSR HDP: nedostupné")
+        output["errors"].append("Eurostat HDP: nedostupné")
 
-    # ── Eurostat — HICP ───────────────────────────────────────────────────────
-    log.info("📊 Eurostat — HICP...")
-    r = safe_get("https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_manr?geo=SK&coicop=CP00&freq=M&format=JSON")
-    if r:
-        try:
-            d = r.json()
-            time_labels = list(d.get("dimension", {}).get("time", {}).get("category", {}).get("label", {}).values())
-            values = d.get("value", [])
-            series = [{"perioda": t, "hodnota": v} for t, v in zip(time_labels[-24:], values[-24:]) if v is not None]
-            output["ekonomika"]["hicp_eurostat"] = series
-            log.info(f"  ✅ HICP: {len(series)} bodov")
-        except Exception as e:
-            output["errors"].append(f"Eurostat HICP: {e}")
-    else:
-        output["ekonomika"]["hicp_eurostat"] = []
-
-    # ── Eurostat — Ceny elektriny ─────────────────────────────────────────────
+    # ── Eurostat — Ceny elektriny (opravená URL) ──────────────────────────────
     log.info("⚡ Eurostat — Ceny elektriny...")
-    r = safe_get("https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?geo=SK&unit=KWH&currency=EUR&tax=I_TAX&consom=KWH2500-4999&freq=S&format=JSON")
+    # Správny parameter: siec=KWH2500-4999 (nie consom)
+    r = safe_get("https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/nrg_pc_204?geo=SK&unit=KWH&currency=EUR&tax=I_TAX&siec=KWH2500-4999&freq=S&format=JSON&lastTimePeriod=10")
     if r:
         try:
             d = r.json()
-            time_labels = list(d.get("dimension", {}).get("time", {}).get("category", {}).get("label", {}).values())
-            values = d.get("value", [])
-            series = [{"perioda": t, "hodnota": round(v * 100, 2)} for t, v in zip(time_labels[-10:], values[-10:]) if v]
-            output["energie"]["elektrina_centkwh"] = series
-            log.info(f"  ✅ Elektrina: {len(series)} bodov")
+            time_dim = d.get("dimension", {}).get("time", {})
+            time_labels = list(time_dim.get("category", {}).get("label", {}).values())
+            values_raw = list(d.get("value", {}).values()) if isinstance(d.get("value"), dict) else d.get("value", [])
+            points = [{"perioda": t, "hodnota": round(v * 100, 2)} for t, v in zip(time_labels, values_raw) if v]
+            output["energie"]["elektrina_centkwh"] = points
+            log.info(f"  ✅ Elektrina: {len(points)} bodov")
         except Exception as e:
             output["errors"].append(f"Eurostat energia: {e}")
+            output["energie"]["elektrina_centkwh"] = []
     else:
         output["energie"]["elektrina_centkwh"] = []
+        output["errors"].append("Eurostat energia: nedostupné")
 
     # ── RSS Feedy ─────────────────────────────────────────────────────────────
     all_news = []
