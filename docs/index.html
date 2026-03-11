@@ -622,69 +622,158 @@ async function loadWeather() {
   } catch(e){$s('wx-temp','N/A');$s('wx-desc','Nedostupné');}
 }
 
-// ── Parlament (hardcoded voľby 2023) ──
-const PARL = [
-  {n:'SMER-SSD',s:42,c:'#ff4566'},{n:'PS',s:32,c:'#00e5ff'},{n:'Hlas-SD',s:27,c:'#ff7c3a'},
-  {n:'OĽaNO',s:16,c:'#39d98a'},{n:'SaS',s:11,c:'#c77dff'},{n:'KDH',s:12,c:'#ffd166'},{n:'SNS',s:10,c:'#7a9db0'}
+// ── Farby strán ──
+const PARTY_COLORS = {
+  'SMER':    '#ff4566', 'SMER-SSD': '#ff4566', 'SMER-SD': '#ff4566',
+  'PS':      '#00e5ff', 'Progresívne Slovensko': '#00e5ff',
+  'HLAS':    '#ff7c3a', 'Hlas-SD': '#ff7c3a', 'HLAS-SD': '#ff7c3a',
+  'SaS':     '#c77dff',
+  'KDH':     '#ffd166',
+  'REP':     '#e63946', 'Republika': '#e63946',
+  'OĽaNO':   '#39d98a',
+  'SNS':     '#7a9db0',
+  'D':       '#06d6a0', 'Demokrati': '#06d6a0',
+  'MA':      '#8ecae6', 'Maďarská aliancia': '#8ecae6',
+  'SR':      '#adb5bd',
+};
+function partyColor(name) {
+  for(const [k,v] of Object.entries(PARTY_COLORS))
+    if(name.toUpperCase().includes(k.toUpperCase())) return v;
+  const h = [...name].reduce((a,c)=>a+c.charCodeAt(0),0);
+  return `hsl(${h%360},60%,55%)`;
+}
+
+// ── Parsovanie PolitPro title stringu ──
+// Formát: "81Ipsos·20. února 2026PS18.8SMER18.4REP11.7S8.8SaS8.4HLAS7.4..."
+function parsePolitproTitle(title, link) {
+  try {
+    const mAgent = title.match(/^\d+([A-Za-z]+)·/);
+    const mDate  = title.match(/·(.+?)(?=[A-ZÁÉÍÓÚÝČĎĚŇŘŠŤŽĽ]{2,}\d)/);
+    const agentura = mAgent ? mAgent[1] : '?';
+    const datum    = mDate  ? mDate[1].trim() : '';
+    // Extrahuj dvojice STRANA+PERCENTO
+    const pairs = [...title.matchAll(/([A-ZÁÉÍÓÚÝČĎĚŇŘŠŤŽĽ][A-ZÁÉÍÓÚÝČĎĚŇŘŠŤŽĽa-záéíóúýčďěňřšťžľ-]+)(\d+\.?\d*)/g)];
+    const skip = new Set(['Ost','Iné','Ostatné','Pravda','ZĽ','KÚ','SV','februára','marca',
+      'januára','apríla','mája','júna','júla','augusta','septembra','októbra','novembra','decembra',
+      'února','března','dubna','května','června','července','srpna','září','října','listopadu','prosince']);
+    const strany = [];
+    for(const [,n,p] of pairs) {
+      if(skip.has(n)) continue;
+      const pct = parseFloat(p);
+      if(pct >= 0.5 && pct <= 60) strany.push({strana: n, pct});
+    }
+    return {agentura, datum, strany: strany.slice(0,10), link, raw: title};
+  } catch(e) { return null; }
+}
+
+// ── Hardcoded výsledky volieb 2023 (záloha pre parlament) ──
+const PARL_2023 = [
+  {n:'SMER-SSD',s:42},{n:'PS',s:32},{n:'Hlas-SD',s:27},
+  {n:'OĽaNO',s:16},{n:'KDH',s:12},{n:'SaS',s:11},{n:'SNS',s:10}
 ];
 
-function renderParlament() {
+function renderParlament(pollData) {
+  // Použi najnovší prieskum ak existuje, inak výsledky 2023
+  const parsed = (pollData||[]).map(x => parsePolitproTitle(x.title||'', x.link||'')).filter(Boolean);
+  const latest = parsed.length ? parsed[0] : null;
+
+  const usePolls = latest && latest.strany.length >= 4;
+  const data = usePolls
+    ? latest.strany.map(s=>({n:s.strana, s:s.pct, c:partyColor(s.strana)}))
+    : PARL_2023.map(p=>({...p, c:partyColor(p.n)}));
+
+  const badge = document.getElementById('poll-badge');
+  const caption = document.getElementById('poll-caption');
+
+  if(usePolls) {
+    if(badge) badge.textContent = `prieskum: ${latest.agentura} · ${latest.datum}`;
+    if(caption) caption.textContent = `Zdroj: ${latest.agentura} cez PolitPro.eu · ${latest.datum} · % hlasov`;
+  } else {
+    if(badge) badge.textContent = 'voľby: 30.9.2023';
+    if(caption) caption.textContent = 'Zdroj: NRSR.sk — výsledky parlamentných volieb 30. 9. 2023';
+  }
+
   const pg = document.getElementById('parl-grid');
-  if(pg) pg.innerHTML = PARL.map(p=>`
+  if(pg) pg.innerHTML = data.map(p=>`
     <div class="parl-card">
       <div class="parl-party">${esc(p.n)}</div>
-      <div class="parl-seats" style="color:${p.c}">${p.s}</div>
-      <div class="parl-sub">mandátov / 150</div>
-      <div class="parl-bar-bg"><div class="parl-bar" style="width:${(p.s/150*100).toFixed(1)}%;background:${p.c}"></div></div>
+      <div class="parl-seats" style="color:${p.c}">${usePolls ? p.s.toFixed(1)+'%' : p.s}</div>
+      <div class="parl-sub">${usePolls ? '% hlasov' : 'mandátov / 150'}</div>
+      <div class="parl-bar-bg"><div class="parl-bar" style="width:${usePolls?(p.s/40*100).toFixed(1):(p.s/150*100).toFixed(1)}%;background:${p.c}"></div></div>
     </div>`).join('');
 
-  const polls = document.getElementById('polls-grid');
-  if(polls) polls.innerHTML = PARL.map(p=>`
+  const pollsGrid = document.getElementById('polls-grid');
+  if(pollsGrid) pollsGrid.innerHTML = data.map(p=>`
     <div class="party-card">
       <div class="party-color-bar" style="background:${p.c}"></div>
       <div>
         <div class="party-name">${esc(p.n)}</div>
-        <div class="party-pct" style="color:${p.c}">${p.s}<span style="font-size:.85rem;color:var(--text3);font-family:'Space Grotesk',sans-serif;font-weight:400;"> m.</span></div>
-        <div class="party-detail">voľby 2023</div>
+        <div class="party-pct" style="color:${p.c}">${usePolls ? p.s.toFixed(1) : p.s}<span style="font-size:.85rem;color:var(--text3);font-family:'Space Grotesk',sans-serif;font-weight:400;">${usePolls?' %':' m.'}</span></div>
+        <div class="party-detail">${usePolls ? latest.agentura+' '+latest.datum : 'voľby 2023'}</div>
       </div>
     </div>`).join('');
 
-  mkChart('c-parliament','doughnut',PARL.map(p=>p.n),
-    [{data:PARL.map(p=>p.s),backgroundColor:PARL.map(p=>p.c+'bb'),borderColor:PARL.map(p=>p.c),borderWidth:1,hoverOffset:6}]);
-  // override scales for doughnut
+  mkChart('c-parliament','doughnut',data.map(p=>p.n),
+    [{data:data.map(p=>p.s),backgroundColor:data.map(p=>p.c+'bb'),borderColor:data.map(p=>p.c),borderWidth:1,hoverOffset:6}]);
   if(CH['c-parliament']) {
     CH['c-parliament'].options.scales={};
     CH['c-parliament'].options.plugins.legend.display=true;
     CH['c-parliament'].update();
   }
 
-  mkChart('c-poll-trend','line',
-    ['Sep 23','Okt 23','Nov 23','Dec 23','Jan 24','Feb 24','Mar 24','Apr 24'],
-    [
-      {label:'SMER-SSD',data:[22.9,23.5,24.1,24.8,25.2,26.1,27.0,27.4],borderColor:'#ff4566',backgroundColor:'rgba(255,69,102,.07)',borderWidth:2,tension:.4,fill:true,pointRadius:2},
-      {label:'PS',      data:[17.9,18.2,18.8,19.1,19.5,20.0,20.3,20.8],borderColor:'#00e5ff',backgroundColor:'rgba(0,229,255,.05)',borderWidth:2,tension:.4,fill:false,pointRadius:2},
-      {label:'Hlas-SD', data:[14.7,14.5,13.9,13.5,13.1,12.8,12.5,12.2],borderColor:'#ff7c3a',backgroundColor:'rgba(255,124,58,.05)',borderWidth:2,tension:.4,fill:false,pointRadius:2},
-      {label:'KDH',     data:[7.2,7.5,7.8,8.1,8.0,7.9,8.2,8.5],borderColor:'#ffd166',backgroundColor:'rgba(255,209,102,.04)',borderWidth:2,tension:.4,fill:false,pointRadius:2},
-    ],'%');
+  // Trend graf — všetky prieskumy chronologicky
+  if(parsed.length >= 2) {
+    const allPolls = [...parsed].reverse(); // najstarší → najnovší
+    const labels = allPolls.map(p => p.agentura+' '+p.datum.replace(/\. [a-záéíóúý]+/,'').trim());
+    // Top 5 strán z najnovšieho prieskumu
+    const topStrany = parsed[0].strany.slice(0,5).map(s=>s.strana);
+    const datasets = topStrany.map(strana => ({
+      label: strana,
+      data: allPolls.map(poll => {
+        const f = poll.strany.find(s=>s.strana===strana);
+        return f ? f.pct : null;
+      }),
+      borderColor: partyColor(strana),
+      backgroundColor: partyColor(strana).replace(')',', 0.07)').replace('hsl','hsla').replace('rgb','rgba'),
+      borderWidth: 2, tension: .4, fill: false, pointRadius: 3, spanGaps: true,
+    }));
+    mkChart('c-poll-trend','line', labels, datasets, '%');
+  } else {
+    // Fallback — prázdny graf s popisom
+    mkChart('c-poll-trend','line',['Spustite scraper'],[{data:[null],borderColor:'#1c2e3d'}],'%');
+  }
 }
 
 // ── Render Politika ──
 function renderPolitika(d) {
   const nms = d?.prieskumy?.nms || [];
   const pp  = d?.prieskumy?.politpro || [];
-  const links = [...nms.map(x=>({...x,src:'NMS Market Research'})), ...pp.map(x=>({...x,src:'PolitPro / AKO'}))];
 
+  // Linky na prieskumy
+  const links = [
+    ...nms.map(x=>({...x, src:'NMS Market Research'})),
+    ...pp.map(x=>({...x, src:'PolitPro / AKO'}))
+  ];
   const pl = document.getElementById('poll-links');
   if(pl) {
     pl.innerHTML = links.length
-      ? links.slice(0,8).map(x=>`
-          <div class="plc">
+      ? links.slice(0,8).map(x=>{
+          // Ak je title škaredý PolitPro string, zobraz ho pekne
+          const parsed = parsePolitproTitle(x.title||'', x.link||'');
+          const label = parsed && parsed.strany.length
+            ? `${parsed.agentura} · ${parsed.datum} — ${parsed.strany.slice(0,3).map(s=>s.strana+' '+s.pct+'%').join(', ')}...`
+            : x.title;
+          return `<div class="plc">
             <div class="plc-src">${esc(x.src)}</div>
-            <div class="plc-title"><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.title)}</a></div>
+            <div class="plc-title"><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(label)}</a></div>
             <div class="plc-date">${esc(x.date||'')}</div>
-          </div>`).join('')
-      : '<div class="plc" style="grid-column:1/-1"><div class="plc-src">Prieskumy</div><div class="plc-title" style="color:var(--text3);">Spustite scraper pre načítanie prieskumov</div></div>';
+          </div>`;
+        }).join('')
+      : '<div class="plc" style="grid-column:1/-1"><div class="plc-src">Prieskumy</div><div class="plc-title" style="color:var(--text3);">Spustite scraper na GitHub Actions.</div></div>';
   }
+
+  // Renderuj parlament s prieskumovými dátami
+  renderParlament(pp.length ? pp : null);
 }
 
 // ── Render Správy ──
@@ -841,7 +930,7 @@ async function loadData() {
   const st=document.getElementById('tb-status');
   st.textContent='Načítavam';st.style.color='var(--yellow)';
   loadWeather();
-  renderParlament();
+  renderParlament(null); // záloha kým sa nenačítajú dáta
   try {
     const r=await fetch(DATA_URL+'?t='+Date.now());
     if(!r.ok)throw new Error('HTTP '+r.status);

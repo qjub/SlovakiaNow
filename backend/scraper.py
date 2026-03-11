@@ -162,23 +162,28 @@ def fetch_rss(url, max_items=5):
 
 def fetch_hdp():
     """
-    HDP rast Slovenska % medziročne (year-on-year).
-    Eurostat: namq_10_gdp, unit=PCH_PRE_PER = percentage change vs. same quarter previous year
-    Toto je správny ukazovateľ: napr. +1.5% = ekonomika rástla o 1.5% oproti rovnakému štvrťroku minulého roka.
+    HDP rast Slovenska % medziročne.
+    Eurostat namq_10_gdp:
+      unit=PCH_PRE_PER  = % zmena oproti rovnakému štvrťroku predchádzajúceho roka
+    Reálne hodnoty SK sú typicky -5% až +8%.
     """
     log.info("📊 Eurostat — HDP rast SK (% medziročne)...")
+
+    # Primárna URL — SDMX 2.1 endpoint
     url = (
         "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/namq_10_gdp"
         "?geo=SK&unit=PCH_PRE_PER&na_item=B1GQ&freq=Q&format=JSON&lastTimePeriod=20"
     )
     r = safe_get(url)
+
+    # Záloha — Statistics API endpoint (iný formát URL, rovnaké dáta)
     if not r:
-        # Záložná URL — iný endpoint
-        url2 = (
+        url = (
             "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/namq_10_gdp"
-            "?geo=SK&unit=PCH_PRE_PER&na_item=B1GQ&freq=Q&lang=SK"
+            "?geo=SK&unit=PCH_PRE_PER&na_item=B1GQ&freq=Q&lang=EN"
         )
-        r = safe_get(url2)
+        r = safe_get(url)
+
     if not r:
         log.error("❌ HDP: oba endpointy zlyhali")
         return []
@@ -186,10 +191,18 @@ def fetch_hdp():
     try:
         d = r.json()
         points = parse_eurostat_timeseries(d)
-        # Filter: len reálne percentuálne hodnoty (-20% až +20%)
-        points = [p for p in points if -20 <= p["hodnota"] <= 20]
-        log.info(f"  ✅ HDP: {len(points)} bodov, posledný: {points[-1] if points else 'N/A'}")
-        return points
+
+        # KĽÚČOVÝ FILTER: PCH_PRE_PER má byť -20% až +20%
+        # Ak dostaneme hodnoty >100, scraper dostal absolútne čísla (bug) — odmietneme ich
+        valid = [p for p in points if -20 <= p["hodnota"] <= 20]
+
+        if not valid and points:
+            log.error(f"❌ HDP: hodnoty sú mimo rozsahu percent (dostali sme napr. {points[-1]}). "
+                      f"API pravdepodobne vrátilo absolútne HDP namiesto rastu. Preskočím.")
+            return []
+
+        log.info(f"  ✅ HDP: {len(valid)} bodov, posledný: {valid[-1] if valid else 'N/A'}")
+        return valid
     except Exception as e:
         log.error(f"  ❌ HDP parsovanie: {e}")
         return []
@@ -462,63 +475,110 @@ def fetch_plyn():
 def fetch_phm():
     """
     Ceny pohonných hmôt SR — benzín 95 a nafta (€/liter).
-    Zdroj: GlobalPetrolPrices.com — má štruktúrované dáta pre SK.
-    Scraper číta tabuľku cien.
+    Zdroj: tankovnici.sk — slovenský agregátor, verejná tabuľka, bez blokovania.
+    Záloha: nafta.sk
     """
-    log.info("⛽ GlobalPetrolPrices — PHM SK...")
+    log.info("⛽ tankovnici.sk — PHM SK...")
     result = {"benzin": [], "nafta": []}
 
-    sources = [
-        ("benzin", "https://www.globalpetrolprices.com/Slovakia/gasoline_prices/"),
-        ("nafta",  "https://www.globalpetrolprices.com/Slovakia/diesel_prices/"),
-    ]
-
-    for typ, url in sources:
-        r = safe_get(url, timeout=20)
-        if not r:
-            continue
+    r = safe_get("https://www.tankovnici.sk/ceny-paliv", timeout=20)
+    if r:
         try:
             soup = BeautifulSoup(r.text, "html.parser")
 
-            # Hľadáme tabuľku s historickými cenami
-            table = soup.find("table", {"id": "tf"}) or soup.find("table", class_="graph_table")
-            if not table:
-                # Skúsime nájsť cenu priamo zo stránky
-                price_el = soup.find("span", {"class": "price_number"}) or \
-                           soup.find("h2", {"class": "price"})
-                if price_el:
-                    try:
-                        price = float(price_el.get_text().strip().replace(",", "."))
-                        if 0.5 <= price <= 3.0:
-                            from datetime import date
-                            result[typ] = [{"perioda": date.today().strftime("%Y-%m-%d"), "hodnota": price}]
-                            log.info(f"  ✅ PHM {typ} (aktuálna cena): {price}")
-                    except:
-                        pass
-                continue
-
-            rows = table.find_all("tr")[1:]  # skip header
-            prices = []
-            for row in rows[:24]:
+            # tankovnici.sk zobrazuje aktuálny priemer v tabulke
+            # Hľadáme riadky s "Natural 95" a "Nafta"
+            rows = soup.find_all("tr")
+            for row in rows:
                 cols = row.find_all("td")
-                if len(cols) >= 2:
+                if len(cols) < 2:
+                    continue
+                label = cols[0].get_text(strip=True).lower()
+                price_text = ""
+                for col in cols[1:]:
+                    t = col.get_text(strip=True).replace(",", ".").replace("€", "").strip()
                     try:
-                        date_str = cols[0].get_text(strip=True)
-                        price_str = cols[1].get_text(strip=True).replace(",", ".")
-                        price = float(price_str)
-                        if 0.5 <= price <= 3.0:
-                            prices.append({"perioda": date_str, "hodnota": price})
+                        price = float(t)
+                        if 0.8 <= price <= 3.0:
+                            price_text = price
+                            break
                     except:
                         continue
 
-            if prices:
-                result[typ] = list(reversed(prices))  # chronologicky
-                log.info(f"  ✅ PHM {typ}: {len(prices)} bodov, posledný: {prices[0]}")
-            else:
-                log.warning(f"  ⚠️  PHM {typ}: žiadne dáta v tabuľke")
+                if not price_text:
+                    continue
+
+                from datetime import date
+                dnes = date.today().strftime("%Y-%m-%d")
+
+                if "95" in label or "natural" in label or "benzín" in label:
+                    if not result["benzin"]:
+                        result["benzin"] = [{"perioda": dnes, "hodnota": price_text}]
+                        log.info(f"  ✅ Benzín: {price_text} €/l")
+                elif "nafta" in label or "diesel" in label:
+                    if not result["nafta"]:
+                        result["nafta"] = [{"perioda": dnes, "hodnota": price_text}]
+                        log.info(f"  ✅ Nafta: {price_text} €/l")
 
         except Exception as e:
-            log.error(f"  ❌ PHM {typ}: {e}")
+            log.warning(f"  ⚠️  tankovnici.sk parsovanie: {e}")
+
+    # Záloha: nafta.sk
+    if not result["benzin"] or not result["nafta"]:
+        log.info("  → Záloha: nafta.sk...")
+        r2 = safe_get("https://nafta.sk/ceny-pohonnych-hmot", timeout=20)
+        if r2:
+            try:
+                soup2 = BeautifulSoup(r2.text, "html.parser")
+                # Hľadáme ceny v rôznych elementoch
+                for el in soup2.find_all(["td", "span", "div", "p"]):
+                    txt = el.get_text(strip=True)
+                    parent_txt = (el.parent.get_text(strip=True) if el.parent else "").lower()
+                    try:
+                        price = float(txt.replace(",", ".").replace("€", "").strip())
+                        if 0.8 <= price <= 3.0:
+                            from datetime import date
+                            dnes = date.today().strftime("%Y-%m-%d")
+                            if ("95" in parent_txt or "natural" in parent_txt or "benzín" in parent_txt) and not result["benzin"]:
+                                result["benzin"] = [{"perioda": dnes, "hodnota": price}]
+                                log.info(f"  ✅ Benzín (nafta.sk): {price}")
+                            elif ("nafta" in parent_txt or "diesel" in parent_txt) and not result["nafta"]:
+                                result["nafta"] = [{"perioda": dnes, "hodnota": price}]
+                                log.info(f"  ✅ Nafta (nafta.sk): {price}")
+                    except:
+                        continue
+            except Exception as e:
+                log.warning(f"  ⚠️  nafta.sk: {e}")
+
+    # Posledná záloha: ŠTATP (Štatistický úrad)
+    if not result["benzin"] or not result["nafta"]:
+        log.info("  → Záloha: SÚSR energetika RSS...")
+        r3 = safe_get("https://susr.sk/rss/energetika", timeout=15)
+        if r3:
+            try:
+                import feedparser
+                feed = feedparser.parse(r3.text)
+                for entry in feed.entries[:10]:
+                    title = entry.get("title", "").lower()
+                    summary = entry.get("summary", "")
+                    import re
+                    prices = re.findall(r'(\d+[,\.]\d+)\s*€', summary)
+                    if prices and ("benzín" in title or "nafta" in title):
+                        from datetime import date
+                        dnes = date.today().strftime("%Y-%m-%d")
+                        price = float(prices[0].replace(",", "."))
+                        if 0.8 <= price <= 3.0:
+                            if "benzín" in title and not result["benzin"]:
+                                result["benzin"] = [{"perioda": dnes, "hodnota": price}]
+                            elif "nafta" in title and not result["nafta"]:
+                                result["nafta"] = [{"perioda": dnes, "hodnota": price}]
+            except Exception as e:
+                log.warning(f"  ⚠️  SÚSR RSS: {e}")
+
+    if not result["benzin"]:
+        log.error("  ❌ Benzín: všetky zdroje zlyhali")
+    if not result["nafta"]:
+        log.error("  ❌ Nafta: všetky zdroje zlyhali")
 
     return result
 
@@ -601,37 +661,81 @@ def scrape_nms_polls():
     return []
 
 
+def parse_politpro_title(title, link):
+    """
+    Parsuje PolitPro title string na štruktúrované dáta.
+    Príklad vstupu: '81Ipsos·20. února 2026PS18.8SMER18.4REP11.7...'
+    """
+    try:
+        m_agent = re.match(r'^\d+(\w+)·', title)
+        m_date  = re.match(r'^\d+\w+·(.+?)(?=[A-ZÁÉÍÓÚÝČĎĚŇŘŠŤŽĽ]{2,}\d)', title)
+        agentura = m_agent.group(1).strip() if m_agent else "?"
+        datum    = m_date.group(1).strip()  if m_date  else ""
+
+        pairs = re.findall(
+            r'([A-ZÁÉÍÓÚÝČĎĚŇŘŠŤŽĽ][A-ZÁÉÍÓÚÝČĎĚŇŘŠŤŽĽa-záéíóúýčďěňřšťžľ-]+)(\d+\.?\d*)',
+            title
+        )
+        skip = {'Ost','Iné','Ostatné','Pravda','ZĽ','KÚ','SV',
+                'februára','marca','januára','apríla','mája','júna',
+                'júla','augusta','septembra','októbra','novembra','decembra',
+                'února','března','dubna','května','června','července',
+                'srpna','září','října','listopadu','prosince'}
+        strany = []
+        for nazov, pct_str in pairs:
+            if nazov in skip:
+                continue
+            try:
+                pct = float(pct_str)
+                if 0.5 <= pct <= 60:
+                    strany.append({"strana": nazov, "pct": pct})
+            except:
+                pass
+
+        return {
+            "agentura": agentura,
+            "datum":    datum,
+            "strany":   strany[:10],
+            "link":     link,
+            "title":    title,
+            "source":   "PolitPro / AKO"
+        }
+    except Exception as e:
+        log.warning(f"parse_politpro_title: {e}")
+        return {"agentura": "?", "datum": "", "strany": [], "link": link, "title": title, "source": "PolitPro / AKO"}
+
+
 def scrape_politpro():
-    """PolitPro / AKO — prieskumy."""
+    """PolitPro — parsuje zoznam prieskumov vrátane % dát."""
     log.info("🗳  PolitPro / AKO...")
-    url = "https://politpro.eu/sk/slovensko/volebne-prieskumy"
-    r = safe_get(url)
-    if not r:
-        url = "https://politpro.eu/cs/slovensko/volebni-pruzkumy"
+    for url in [
+        "https://politpro.eu/sk/slovensko/volebne-prieskumy",
+        "https://politpro.eu/cs/slovensko/volebni-pruzkumy",
+    ]:
         r = safe_get(url)
-    if not r:
-        return []
-    soup = BeautifulSoup(r.text, "html.parser")
-    # Hľadáme linky na prieskumy
-    links = soup.select("a[href*='prieskum'], a[href*='pruzkum'], a[href*='parlamentn']")[:8]
-    polls = []
-    seen = set()
-    for lnk in links:
-        href = lnk.get("href", "")
-        title = lnk.get_text(strip=True)
-        if not title or not href or href in seen or len(title) < 10:
+        if not r:
             continue
-        seen.add(href)
-        polls.append({
-            "title":  title,
-            "link":   "https://politpro.eu" + href if href.startswith("/") else href,
-            "source": "PolitPro / AKO"
-        })
-    log.info(f"  ✅ PolitPro: {len(polls)} odkazov")
-    return polls
+        soup = BeautifulSoup(r.text, "html.parser")
+        links = soup.select("a[href*='prieskum'], a[href*='pruzkum'], a[href*='parlamentn']")[:10]
+        polls = []
+        seen = set()
+        for lnk in links:
+            href = lnk.get("href", "")
+            title = lnk.get_text(strip=True)
+            if not title or not href or href in seen or len(title) < 10:
+                continue
+            seen.add(href)
+            full_href = "https://politpro.eu" + href if href.startswith("/") else href
+            polls.append(parse_politpro_title(title, full_href))
+        if polls:
+            log.info(f"  ✅ PolitPro: {len(polls)} prieskumov, najnovší: {polls[0]['agentura']} {polls[0]['datum']}")
+            return polls
+
+    log.warning("  ⚠️  PolitPro: žiadne výsledky")
+    return []
 
 
-# ── RSS Feedy ─────────────────────────────────────────────────────────────────
+
 
 RSS_SOURCES = {
     "nbs":       ("https://nbs.sk/sk/rss", 4),
