@@ -1,6 +1,6 @@
 {
   "meta": {
-    "aktualizovane": "2026-03-12T16:56:31.006792+00:00",
+    "aktualizovane": "2026-03-12T19:16:02.891368+00:00",
     "verzia": "2.0.0",
     "zdroje": [
       {
@@ -464,6 +464,14 @@
         "agentura": "?",
         "datum": "",
         "strany": [],
+        "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/nms-2026-03-09/parlamentne-volby",
+        "title": "68NMS·09. marec 2026PS21.4SMER16.7REP13.5HLAS7.6SaS7.6S7.1D5.1KDH4.8MA4.2SR3.6SNS2.3ZĽ1.9Pravda1.6ĽSNS1.1KÚ0.6SV0.3Ostat.0.6",
+        "source": "PolitPro / AKO"
+      },
+      {
+        "agentura": "?",
+        "datum": "",
+        "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/ipsos-2026-02-20/parlamentne-volby",
         "title": "81Ipsos·20. február 2026PS18.8SMER18.4REP11.7S8.8SaS8.4HLAS7.4D6.2KDH6MA4.7SNS2.8Pravda1.3ZĽ1.1Ostat.4.4",
         "source": "PolitPro / AKO"
@@ -488,14 +496,6 @@
         "agentura": "?",
         "datum": "",
         "strany": [],
-        "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/nms-2026-02-08/parlamentne-volby",
-        "title": "68NMS·08. február 2026PS19.1SMER17.6REP13.4S7.5SaS7.4HLAS6.2D5.7KDH4.9MA4SR3.5SNS3ZĽ2.3Pravda2ĽSNS1.7KÚ0.8SV0.3Ostat.0.6",
-        "source": "PolitPro / AKO"
-      },
-      {
-        "agentura": "?",
-        "datum": "",
-        "strany": [],
         "link": "https://politpro.eu/sk/slovensko/prieskumne-agentury",
         "title": "Ktoré inštitúty sú najspoľahlivejšie?Presnosť vo voľbách a preferencie strán",
         "source": "PolitPro / AKO"
@@ -505,7 +505,7 @@
         "datum": "",
         "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/2026",
-        "title": "2026Výsledky prieskumov z roku 2026Všetkých 7 prieskumov verejnej mienky z roku 2026",
+        "title": "2026Výsledky prieskumov z roku 2026Všetkých 8 prieskumov verejnej mienky z roku 2026",
         "source": "PolitPro / AKO"
       },
       {
@@ -576,6 +576,38 @@
       "kategoria": "nbs"
     },
     {
+      "title": "Sysle pod Muránskym hradom sa prebúdzajú. Pre turistov sú lákadlom, odborníkov zase teší nárast ich populácie",
+      "link": "https://spravy.stvr.sk/2026/03/sysle-pod-muranskym-hradom-sa-prebudzaju-pre-turistov-su-lakadlom-odbornikov-zase-tesi-narast-ich-populacie/",
+      "published": "Thu, 12 Mar 2026 18:55:02 +0000",
+      "summary": "Stúpa vďaka ochranárom i genetike.\nThe post Sysle pod Muránskym hradom sa prebúdzajú. Pre turistov sú lákadlom, odborníkov zase teší nárast ich populácie appeared first on Správy STVR.",
+      "source": "Správy STVR",
+      "kategoria": "stvr"
+    },
+    {
+      "title": "Niektoré čerpacie stanice zavádzajú limity na benzín a naftu. Vodiči skúšajú šťastie v zahraničí",
+      "link": "https://spravy.stvr.sk/2026/03/niektore-cerpacie-stanice-zavadzaju-limity-na-benzin-a-naftu-slovaci-skusaju-stastie-v-zahranici-ceny-sa-vsak-vyrovnavaju/",
+      "published": "Thu, 12 Mar 2026 18:15:12 +0000",
+      "summary": "Poliaci sa zásobili už minulý týždeň.\nThe post Niektoré čerpacie stanice zavádzajú limity na benzín a naftu. Vodiči skúšajú šťastie v zahraničí appeared first on Správy STVR.",
+      "source": "Správy STVR",
+      "kategoria": "stvr"
+    },
+    {
+      "title": "Slovensko a Maďarsko prepojí nový produktovod, potrubie má zlepšiť prepraviť benzínu a nafty medzi krajinami",
+      "link": "https://spravy.stvr.sk/2026/03/vlada-schvalila-cezhranicny-produktovod-vyse-120-kilometrove-potrubie-spoji-slovensko-s-madarskou-rafineriou-mol/",
+      "published": "Thu, 12 Mar 2026 18:14:53 +0000",
+      "summary": "Slovnaft tiež pokračuje so zapojením Adrie.\nThe post Slovensko a Maďarsko prepojí nový produktovod, potrubie má zlepšiť prepraviť benzínu a nafty medzi krajinami appeared first on Správy STVR.",
+      "source": "Správy STVR",
+      "kategoria": "stvr"
+    },
+    {
+      "title": "Bizarná situácia na Zemplíne: Nové zastávky vybudovali aj na miestach, kde vlak už mesiace nezastavil",
+      "link": "https://spravy.stvr.sk/2026/03/bizarna-situacia-na-zempline-nove-zastavky-vybudovali-aj-na-miestach-kde-vlak-uz-mesiace-nestal/",
+      "published": "Thu, 12 Mar 2026 17:22:33 +0000",
+      "summary": "Zemplínsky región sa z modernej trate teší. \nThe post Bizarná situácia na Zemplíne: Nové zastávky vybudovali aj na miestach, kde vlak už mesiace nezastavil appeared first on Správy STVR.",
+      "source": "Správy STVR",
+      "kategoria": "stvr"
+    },
+    {
       "title": "Maturanti majú za sebou test z matematiky. V Košiciach niektorí očakávajú plný počet, iným úlohy nesadli",
       "link": "https://spravy.stvr.sk/2026/03/maturanti-maju-za-sebou-test-z-matematiky-v-kosiciach-niektori-ocakavaju-plny-pocet-inym-ulohy-nesadli/",
       "published": "Thu, 12 Mar 2026 16:53:13 +0000",
@@ -584,90 +616,58 @@
       "kategoria": "stvr"
     },
     {
-      "title": "Erdogan poslal premiérovi Ficovi list. Žiada ho v ňom, aby podporil zrušenie sankcií EÚ na ruského oligarchu",
-      "link": "https://spravy.stvr.sk/2026/03/erdogan-poslal-premierovi-ficovi-list-ziadal-aby-podporil-zrusenie-sankcii-eu-na-oligarchu-usmanova/",
-      "published": "Thu, 12 Mar 2026 16:43:09 +0000",
-      "summary": "Usmanov patrí medzi najbohatších ľudí v Rusku. \nThe post Erdogan poslal premiérovi Ficovi list. Žiada ho v ňom, aby podporil zrušenie sankcií EÚ na ruského oligarchu appeared first on Správy STVR.",
-      "source": "Správy STVR",
-      "kategoria": "stvr"
-    },
-    {
-      "title": "VIDEO: V odstavenom banskom areáli v Česku odstrelili 75 metrov vysokú ťažobnú vežu",
-      "link": "https://spravy.stvr.sk/2026/03/video-v-odstavenej-bani-v-cesku-odstrelili-zelezobetonovu-vezu-pred-zrutenim-sa-na-chvilu-naklonila/",
-      "published": "Thu, 12 Mar 2026 15:23:57 +0000",
-      "summary": "Použili viac než 140 kilogramov trhaviny.\nThe post VIDEO: V odstavenom banskom areáli v Česku odstrelili 75 metrov vysokú ťažobnú vežu appeared first on Správy STVR.",
-      "source": "Správy STVR",
-      "kategoria": "stvr"
-    },
-    {
-      "title": "Nový najvyšší vodca Iránu hrozí USA aj Izraelu. Modžtabá Chameneí vyzval na zatvorenie amerických základní v regióne",
-      "link": "https://spravy.stvr.sk/2026/03/novy-najvyssi-vodca-iranu-hrozi-usa-aj-izraelu-modztaba-chamenei-vyzval-na-zatvorenie-americkych-zakladni-v-regione/",
-      "published": "Thu, 12 Mar 2026 14:26:02 +0000",
-      "summary": "Jeho prejav prečítal v iránskej štátnej televízii moderátor.\nThe post Nový najvyšší vodca Iránu hrozí USA aj Izraelu. Modžtabá Chameneí vyzval na zatvorenie amerických základní v regióne appeared first on Správy STVR.",
-      "source": "Správy STVR",
-      "kategoria": "stvr"
-    },
-    {
-      "title": "EÚ navrhuje inšpekciu ropovodu Družba, cez ktorý od konca januára neprúdi ruská ropa. Čaká na odpoveď Kyjeva",
-      "link": "https://spravy.stvr.sk/2026/03/eu-navrhuje-inspekciu-ropovodu-druzba-cez-ktoru-od-konca-januara-neprudi-ruska-ropa-caka-na-odpoved-kyjeva/",
-      "published": "Thu, 12 Mar 2026 14:19:35 +0000",
-      "summary": "Komisia komunikuje s dotknutými krajinami.\nThe post EÚ navrhuje inšpekciu ropovodu Družba, cez ktorý od konca januára neprúdi ruská ropa. Čaká na odpoveď Kyjeva appeared first on Správy STVR.",
-      "source": "Správy STVR",
-      "kategoria": "stvr"
-    },
-    {
-      "title": "Odborník na elektromobily: Do pár rokov sa ceny elektrických áut vyrovnajú „spaľovákom“",
-      "link": "https://e.dennikn.sk/5195345/odbornik-na-elektromobily-do-par-rokov-sa-ceny-elektrickych-aut-vyrovnaju-spalovakom/",
-      "published": "Thu, 12 Mar 2026 16:33:11 +0000",
-      "summary": "Čínske automobilky dokážu dostať nové auto z rysovacej dosky do showroomu približne za dva roky, kým tradičným výrobcom to trvá viac než štyri roky, hovorí riaditeľ Slovenskej asociácie pre elektromobilitu Patrik Križanský. V rozhovore vysvetľuje, prečo Čína dominuje v elektromobilite, ako jej môže ",
+      "title": "Európska recyklácia plastov kolabuje. O oddlženie žiada aj inovatívny, no už odstavený závod z Nitry",
+      "link": "https://e.dennikn.sk/5195534/europska-recyklacia-plastov-kolabuje-o-oddlzenie-ziada-aj-inovativny-no-uz-odstaveny-zavod-z-nitry/",
+      "published": "Thu, 12 Mar 2026 18:07:36 +0000",
+      "summary": "Odpadový startup Eco Verde Recycling Slovakia naštartoval absentujúcu recykláciu tvrdších obalových plastov. Jeho nový závod v Nitre je v súčasnosti odstavený, pracovníci boli prepustení a firma žiada súdy o oddlženie. Európsky trh s plastovým recyklátom obsadzujú lacnejší producenti z Ázie a Európa",
       "source": "Denník N",
       "kategoria": "dennikn"
     },
     {
-      "title": "Z rozkopaného centra Bratislavy má do jesene vzniknúť Živé námestie. Obnova za 12 miliónov prinesie nový povrch i viac zelene",
-      "link": "https://dennikn.sk/5194803/z-rozkopaneho-centra-bratislavy-ma-do-jesene-vzniknut-zive-namestie-obnova-za-12-milionov-prinesie-novy-povrch-i-viac-zelene/",
-      "published": "Thu, 12 Mar 2026 16:19:48 +0000",
-      "summary": "„Prepáčte, kadiaľ sa dostanem na Námestie SNP?“ zisťuje turistka a sleduje pritom mobil s navigáciou, zatiaľ čo dav pred ňou sa pomaly preplieta úzkym koridorom medzi zelenými plachtami oplotenia. „Ste na ňom, len ho teraz nevidíte,“ odpovedá jej okoloidúca žena. Je začiatok marca, rušné bratislavsk",
+      "title": "Newsfilter: V Smere je už Republika samozrejmosťou a tokajú okolo nej ďalší",
+      "link": "https://dennikn.sk/5196205/newsfilter-v-smere-je-uz-republika-samozrejmostou-a-tokaju-okolo-nej-dalsi/",
+      "published": "Thu, 12 Mar 2026 17:36:44 +0000",
+      "summary": "1. Koalíciu s extrémistami u Fica považujú za prirodzenú záležitosť 2. S extrémistami už sa toká aj za verejné peniaze 3. Nový rozmer kampane strachom môže prejsť aj k nám",
       "source": "Denník N",
       "kategoria": "dennikn"
     },
     {
-      "title": "Dlhopisy pre ľudí sa nepredávajú tak rýchlo ako vlani",
-      "link": "https://e.dennikn.sk/5195847/dlhopisy-pre-ludi-sa-nepredavaju-tak-rychlo-ako-vlani/",
-      "published": "Thu, 12 Mar 2026 16:01:13 +0000",
-      "summary": "Štát za prvých desať dní predal dlhopisy pre ľudí za 385 miliónov eur. Predaj ide pomalšie ako vlani, najväčší dopyt bol prvé dva dni. Záujem o štátne dlhopisy pre ľudí nie je taký silný ako minulý rok. Vlani sa vypredali za tri a pol dňa, tentokrát sú aj po desiatich dňoch stále k dispozícii. Štát ",
+      "title": "Marek Adamov: Z Fondu na podporu umenia sa stal nástroj pomsty a korupcie",
+      "link": "https://dennikn.sk/5195413/marek-adamov-z-fondu-na-podporu-umenia-sa-stal-nastroj-pomsty-a-korupcie/",
+      "published": "Thu, 12 Mar 2026 17:18:08 +0000",
+      "summary": "Marek Adamov zažil ako organizátor kultúrnych akcií šiestich ministrov a štyri ministerky a tvrdí, že to nikdy nebolo ideálne, ale dnes je to také zlé, že horšie to už byť nemôže. „Ideme v konštantnom napätí tridsať rokov a sme zvyknutí na istú mieru nepohody. Vždy sme však našli dôvod, prečo pokrač",
       "source": "Denník N",
       "kategoria": "dennikn"
     },
     {
-      "title": "Shooty: Priority zahraničnej politiky",
-      "link": "https://dennikn.sk/5196014/shooty-priority-zahranicnej-politiky/",
-      "published": "Thu, 12 Mar 2026 15:53:02 +0000",
-      "summary": "Máte pripomienku alebo ste našli chybu? Prosíme, napíšte na pripomienky@dennikn.sk.",
+      "title": "Rusi chcú hrať hokej so Slovákmi a Maďarmi v Moskve. Žiadne rokovania neprebiehajú, reaguje SZĽH",
+      "link": "https://dennikn.sk/5196143/rusi-chcu-hrat-hokej-so-slovakmi-a-madarmi-v-moskve-ziadne-rokovania-neprebiehaju-reaguje-szlh/",
+      "published": "Thu, 12 Mar 2026 17:12:42 +0000",
+      "summary": "Rusko si praje zápasy so slovenskou hokejovou reprezentáciou v Moskve. V ruských médiách to vyhlásil vplyvný funkcionár Roman Rotenberg, ktorý je viceprezidentom ruského hokejového zväzu aj trénerom reprezentácie do 25 rokov. Hovoril o komunikácii nielen so slovenským, ale aj s maďarským hokejovým z",
       "source": "Denník N",
       "kategoria": "dennikn"
     },
     {
-      "title": "„Škoda, že si to ľudia na Slovensku nevážia.“ Huslista Richard získal vzácny nástroj, ktorým nás reprezentuje v zahraničí (ROZHOVOR)",
-      "link": "https://www.startitup.sk/skoda-ze-si-to-ludia-na-slovensku-nevazia-huslista-richard-ziskal-vzacny-nastroj-ktorym-nas-reprezentuje-v-zahranici-rozhovor/",
-      "published": "Thu, 12 Mar 2026 16:20:54 +0000",
-      "summary": "Zo Slovenska odišiel za hudbou do Viedne\nDnes hrá na vzácnych husliach a hovorí aj o sklamaní z domácej podpory\nThe post „Škoda, že si to ľudia na Slovensku nevážia.“ Huslista Richard získal vzácny nástroj, ktorým nás reprezentuje v zahraničí (ROZHOVOR) appeared first on Startitup.sk.",
+      "title": "Panika na pumpách: Slováci tankujú naftu do obrovských kontajnerov, známa sieť zavádza limity",
+      "link": "https://www.startitup.sk/panika-na-pumpach-slovaci-tankuju-naftu-do-obrovskych-kontajnerov-znama-siet-zavadza-limity/",
+      "published": "Thu, 12 Mar 2026 18:20:39 +0000",
+      "summary": "Čerpacie stanice na Slovensku čelia nečakanému náporu vodičov\nStrach z rastúcich cien vedie k hromadnému tankovaniu do kanistrov i kontajnerov\nThe post Panika na pumpách: Slováci tankujú naftu do obrovských kontajnerov, známa sieť zavádza limity appeared first on Startitup.sk.",
       "source": "Startitup.sk",
       "kategoria": "startitup"
     },
     {
-      "title": "Tragédia na strednom Slovensku: Ročné dieťa sa utopilo v záhradnom jazierku",
-      "link": "https://www.startitup.sk/tragedia-na-strednom-slovensku-rocne-dieta-sa-utopilo-v-zahradnom-jazierku/",
-      "published": "Thu, 12 Mar 2026 15:55:54 +0000",
-      "summary": "Nešťastie sa stalo vo štvrtok popoludní v jednej z obcí\nZáchranári sa pokúšali dieťa oživiť, no neúspešne\nPolícia už začala vyšetrovanie pre usmrtenie\nThe post Tragédia na strednom Slovensku: Ročné dieťa sa utopilo v záhradnom jazierku appeared first on Startitup.sk.",
+      "title": "AKTUÁLNE Útok v Bratislave: Dobodaný muž skončil v nemocnici, podozrivého zadržala polícia",
+      "link": "https://www.startitup.sk/aktualne-utok-v-bratislave-dobodany-muz-skoncil-v-nemocnici-podozriveho-zadrzala-policia/",
+      "published": "Thu, 12 Mar 2026 18:19:15 +0000",
+      "summary": "Rodinný dom na Komárovskej ulici sa stal dejiskom násilného konfliktu\nPo fyzickej potýčke dvoch mužov skončil 34-ročný poškodený v opatere lekárov\nThe post AKTUÁLNE Útok v Bratislave: Dobodaný muž skončil v nemocnici, podozrivého zadržala polícia appeared first on Startitup.sk.",
       "source": "Startitup.sk",
       "kategoria": "startitup"
     },
     {
-      "title": "Poslanec KDH zvažuje odchod z parlamentu. Otvorene priznal nezhody v hnutí",
-      "link": "https://www.startitup.sk/poslanec-kdh-zvazuje-odchod-z-parlamentu-otvorene-priznal-nezhody-v-hnuti/",
-      "published": "Thu, 12 Mar 2026 15:48:41 +0000",
-      "summary": "Poslanec KDH Jozef Hajko zvažuje koniec v parlamente\nNaznačil to na tlačovej konferencii\nRozdiely sú v názoroch na riešenie problémov Slovenska\nThe post Poslanec KDH zvažuje odchod z parlamentu. Otvorene priznal nezhody v hnutí appeared first on Startitup.sk.",
+      "title": "Turecký prezident napísal list Ficovi: Erdogan sa cez Slovensko snaží „zachrániť“ oligarchu s väzbami na Putina",
+      "link": "https://www.startitup.sk/turecky-prezident-napisal-list-ficovi-erdogan-sa-cez-slovensko-snazi-zachranit-oligarchu-s-vazbami-na-putina/",
+      "published": "Thu, 12 Mar 2026 17:45:15 +0000",
+      "summary": "Slovensko podmieňuje predĺženie sankcií EÚ vyradením ruských oligarchov\nErdogan lobuje za Usmanova listom premiérovi Ficovi\nThe post Turecký prezident napísal list Ficovi: Erdogan sa cez Slovensko snaží „zachrániť“ oligarchu s väzbami na Putina appeared first on Startitup.sk.",
       "source": "Startitup.sk",
       "kategoria": "startitup"
     }
