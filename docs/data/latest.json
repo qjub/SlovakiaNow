@@ -1,6 +1,6 @@
 {
   "meta": {
-    "aktualizovane": "2026-03-13T05:11:42.492501+00:00",
+    "aktualizovane": "2026-03-13T12:52:36.880528+00:00",
     "verzia": "2.0.0",
     "zdroje": [
       {
@@ -544,6 +544,14 @@
   },
   "spravy": [
     {
+      "title": "Korytnačka močiarna doplní faunu a flóru na Slovensku",
+      "link": "https://nbs.sk/aktuality/korytnacka-mociarna-doplni-faunu-a-floru-na-slovensku/",
+      "published": "",
+      "summary": "Dňa 17. marca 2026 začne Národná banka Slovenska predávať zberateľskú euromincu z obyčajných kovov v nominálnej hodnote 5 eur s tematikou „Fauna a flóra na Slovensku – korytnačka močiarna“.   Autorom návrhu zberateľskej euromince je Karol Ličko. Zberateľské euromince sú vyrobené  v celkovom množstvo",
+      "source": "Národná banka Slovenska",
+      "kategoria": "nbs"
+    },
+    {
       "title": "Komuniké z 5. rokovania Bankovej rady NBS",
       "link": "https://nbs.sk/aktuality/komunike-z-5-rokovania-bankovej-rady-nbs-15/",
       "published": "",
@@ -568,106 +576,98 @@
       "kategoria": "nbs"
     },
     {
-      "title": "Guvernér NBS P. Kažimír: Útok na Irán mení situáciu a môže priniesť zmeny úrokových sadzieb (bloomberg.com)",
-      "link": "https://nbs.sk/aktuality/utok-na-iran-meni-situaciu-a-moze-priniest-zmeny-urokovych-sadzieb/",
-      "published": "",
-      "summary": "Jana Randow, Mark Schroers and Alexander Weber Zvýšenie úrokových sadzieb pre vojnu v Iráne môže byť bližšie, než si mnohí myslia, hovorí Kažimír Vojna v Iráne a jej vplyv na infláciu môžu podľa člena Rady guvernérov ECB Petra Kažimíra prinútiť Európsku centrálnu banku k tomu, aby zvýšila úrokové sa",
-      "source": "Národná banka Slovenska",
-      "kategoria": "nbs"
-    },
-    {
-      "title": "Prešov rieši nerovnosť hlasov vo voľbách. Mesto chce zmeniť volebné obvody po výhradách ombudsmana",
-      "link": "https://spravy.stvr.sk/2026/03/presov-riesi-nerovnost-hlasov-vo-volbach-mesto-chce-zmenit-volebne-obvody-po-vyhradach-ombudsmana/",
-      "published": "Fri, 13 Mar 2026 05:00:00 +0000",
-      "summary": "Bude na poslancoch, ako sa k tomu postavia.\nThe post Prešov rieši nerovnosť hlasov vo voľbách. Mesto chce zmeniť volebné obvody po výhradách ombudsmana appeared first on Správy STVR.",
+      "title": "Zatiaľ sa plazia, no skúšajú už prvé kroky: Medvedie mláďatá z bojnickej ZOO priberajú a rastú im ďalšie zuby",
+      "link": "https://spravy.stvr.sk/2026/03/zatial-sa-plazia-no-skusaju-uz-prve-kroky-medvedie-mladata-z-bojnickej-zoo-priberaju-a-rastu-im-dalsie-zuby/",
+      "published": "Fri, 13 Mar 2026 12:37:18 +0000",
+      "summary": "Zvieratám sa naďalej darí. \nThe post Zatiaľ sa plazia, no skúšajú už prvé kroky: Medvedie mláďatá z bojnickej ZOO priberajú a rastú im ďalšie zuby appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Hizballáh za útoky na Izrael zaplatí vysokú cenu, varoval Netanjahu. Tiež chce zabrániť Iránu vyrábať jadrové zbrane",
-      "link": "https://spravy.stvr.sk/2026/03/hizballah-za-utoky-na-izrael-zaplati-vysoku-cenu-varoval-netanjahu-tiez-chce-zabranit-iranu-vyrabat-jadrove-zbrane/",
-      "published": "Thu, 12 Mar 2026 21:54:28 +0000",
-      "summary": "Izraelská armáda ostreľovala Bejrút.\nThe post Hizballáh za útoky na Izrael zaplatí vysokú cenu, varoval Netanjahu. Tiež chce zabrániť Iránu vyrábať jadrové zbrane appeared first on Správy STVR.",
+      "title": "Nový iránsky najvyšší vodca Modžtabá Chameneí je „zranený a zmrzačený“, vyhlásil americký minister obrany",
+      "link": "https://spravy.stvr.sk/2026/03/novy-iransky-najvyssi-vodca-modztaba-chamenei-je-zraneny-a-zmrzaceny-vyhlasil-americky-minister-obrany/",
+      "published": "Fri, 13 Mar 2026 12:35:26 +0000",
+      "summary": "Pete Hegseth to uviedol na brífingu.\nThe post Nový iránsky najvyšší vodca Modžtabá Chameneí je „zranený a zmrzačený“, vyhlásil americký minister obrany appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Sysle pod Muránskym hradom sa prebúdzajú. Pre turistov sú lákadlom, odborníkov zase teší nárast ich populácie",
-      "link": "https://spravy.stvr.sk/2026/03/sysle-pod-muranskym-hradom-sa-prebudzaju-pre-turistov-su-lakadlom-odbornikov-zase-tesi-narast-ich-populacie/",
-      "published": "Thu, 12 Mar 2026 18:55:02 +0000",
-      "summary": "Stúpa vďaka ochranárom i genetike.\nThe post Sysle pod Muránskym hradom sa prebúdzajú. Pre turistov sú lákadlom, odborníkov zase teší nárast ich populácie appeared first on Správy STVR.",
+      "title": "V Česku sa opäť začalo hovoriť o zrušení korešpondenčnej voľby. Zaviedli ju pritom len v minulom období",
+      "link": "https://spravy.stvr.sk/2026/03/v-cesku-sa-opat-zacalo-hovorit-o-zruseni-korespondencnej-volby-navrhuje-to-hnutie-spd-opozicia-je-proti/",
+      "published": "Fri, 13 Mar 2026 11:14:53 +0000",
+      "summary": "Opozícia je proti zrušeniu.\nThe post V Česku sa opäť začalo hovoriť o zrušení korešpondenčnej voľby. Zaviedli ju pritom len v minulom období appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Niektoré čerpacie stanice zavádzajú limity na benzín a naftu. Vodiči skúšajú šťastie v zahraničí",
-      "link": "https://spravy.stvr.sk/2026/03/niektore-cerpacie-stanice-zavadzaju-limity-na-benzin-a-naftu-slovaci-skusaju-stastie-v-zahranici-ceny-sa-vsak-vyrovnavaju/",
-      "published": "Thu, 12 Mar 2026 18:15:12 +0000",
-      "summary": "Poliaci sa zásobili už minulý týždeň.\nThe post Niektoré čerpacie stanice zavádzajú limity na benzín a naftu. Vodiči skúšajú šťastie v zahraničí appeared first on Správy STVR.",
+      "title": "Kým Irán sľuboval pomstu, v USA sa stali dva incidenty, ktoré môžu súvisieť s terorizmom",
+      "link": "https://spravy.stvr.sk/2026/03/po-vyhlaseni-iranskej-pomsty-spojenym-statom-sa-v-usa-stali-dva-incidenty-mozu-suvisiet-s-terorizmom/",
+      "published": "Fri, 13 Mar 2026 11:07:55 +0000",
+      "summary": "Prezident Donald Trump oznámil, že situáciu sleduje.\nThe post Kým Irán sľuboval pomstu, v USA sa stali dva incidenty, ktoré môžu súvisieť s terorizmom appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Slovensko a Maďarsko prepojí nový produktovod, potrubie má zlepšiť prepraviť benzínu a nafty medzi krajinami",
-      "link": "https://spravy.stvr.sk/2026/03/vlada-schvalila-cezhranicny-produktovod-vyse-120-kilometrove-potrubie-spoji-slovensko-s-madarskou-rafineriou-mol/",
-      "published": "Thu, 12 Mar 2026 18:14:53 +0000",
-      "summary": "Slovnaft tiež pokračuje so zapojením Adrie.\nThe post Slovensko a Maďarsko prepojí nový produktovod, potrubie má zlepšiť prepraviť benzínu a nafty medzi krajinami appeared first on Správy STVR.",
+      "title": "Pád amerického tankovacieho lietadla v Iraku si vyžiadal štyri obete, príčinu tragédie vyšetrujú",
+      "link": "https://spravy.stvr.sk/2026/03/pad-americkeho-tankovacieho-lietadla-v-iraku-si-vyziadal-styri-obete-pricinu-tragedie-vysetruju/",
+      "published": "Fri, 13 Mar 2026 10:43:19 +0000",
+      "summary": "Armáda vylúčila nepriateľský útok.\nThe post Pád amerického tankovacieho lietadla v Iraku si vyžiadal štyri obete, príčinu tragédie vyšetrujú appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Toto vystrihneme: Zrušte 3D!",
-      "link": "https://dennikn.sk/5196553/toto-vystrihneme-zruste-3d/",
-      "published": "Thu, 12 Mar 2026 19:46:50 +0000",
-      "summary": "Absurdný podcast Denníka N. Vyrieši imigráciu zníženie počtu pracovných miest? Je Slovensko blízky východ Európy. Je žralok od slova žrať? Prečo Braňo nevidel rožky? Prišlo Kimči na dovolenku za Zuzkou? Ja tanec pri tyči vertikálny limbo dance? Máte pripomienku alebo ste našli chybu? Prosíme, napíšt",
+      "title": "O slovenských hokejistoch v KHL a morálke",
+      "link": "https://dennikn.sk/5197450/o-slovenskych-hokejistoch-v-khl-a-moralke/",
+      "published": "Fri, 13 Mar 2026 12:42:45 +0000",
+      "summary": "Reprezentáciu netvorili len traja hráči z KHL. Je minimálne slušné oceniť, s akou chuťou prišli reprezentovať a akú radosť priniesli hráči z NHL, ktorí sa tam prepracovali vďaka vlastnej pracovitosti.",
       "source": "Denník N",
       "kategoria": "dennikn"
     },
     {
-      "title": "Výroba „legislatívnych mŕtvol“ Národnou radou a vydieračské praktiky Európskej komisie",
-      "link": "https://dennikn.sk/5195737/vyroba-legislativnych-mrtvol-narodnou-radou-a-vydieracske-praktiky-europskej-komisie/",
-      "published": "Thu, 12 Mar 2026 19:45:55 +0000",
-      "summary": "Silné vyjadrenia na adresu Európskej komisie z Národnej rady sú prejavom absolútnej nekompetentnosti, nepochopenia podstaty, hodnôt a cieľov Európskej únie. V skutočnosti sa autori takých odvážnych hodnotení zosmiešňujú a iba ventilujú svoju bezmocnosť.",
+      "title": "Geopolitika môže ruský rozpočet krátkodobo zachrániť",
+      "link": "https://dennikn.sk/5197767/geopolitika-moze-rusky-rozpocet-kratkodobo-zachranit/",
+      "published": "Fri, 13 Mar 2026 12:17:52 +0000",
+      "summary": "Vojna v Iráne môže Kremľu kúpiť čas. Prečo drahá ropa pomáha ruskému rozpočtu – ale vojnu na Ukrajine neukončí.",
       "source": "Denník N",
       "kategoria": "dennikn"
     },
     {
-      "title": "Václav Moravec: Neodišiel som kvôli Okamurovi. Od ČT už nechcem ani korunu",
-      "link": "https://dennikn.sk/5196087/vaclav-moravec-neodisiel-som-kvoli-okamurovi-od-ct-uz-nechcem-ani-korunu/",
-      "published": "Thu, 12 Mar 2026 19:19:37 +0000",
-      "summary": "Český moderátor Václav Moravec po viac než 21 rokoch skončil v Českej televízii. Oznámil to v nedeľu na záver svojej politickej diskusie s tým, že v aktuálnom stave už nemôže garantovať nezávislosť redakčnej práce. Dodal, že nechce dôveru divákov, ktorí robili z Otázok Václava Moravca najsledovanejš",
+      "title": "Tarabovo ministerstvo dáva spaľovni pri Dudinciach stopku. Odporcovia však ešte nevyhrali",
+      "link": "https://e.dennikn.sk/5197582/tarabove-ministerstvo-dava-spalovni-pri-dudinciach-stopku-odporcovia-vsak-este-nevyhrali/",
+      "published": "Fri, 13 Mar 2026 12:12:26 +0000",
+      "summary": "Ministerstvo životného prostredia vydalo nesúhlasné stanovisko k spaľovni pri Dudinciach. Projekt by podľa rezortu mohol ohroziť liečivé a minerálne vody v regióne. Investor sa ešte môže odvolať a konečné rozhodnutie bude na ministrovi. Odporcovia výstavby spaľovne neďaleko kúpeľného mestečka Dudinc",
       "source": "Denník N",
       "kategoria": "dennikn"
     },
     {
-      "title": "Európska recyklácia plastov kolabuje. O oddlženie žiada aj inovatívny, no už odstavený závod z Nitry",
-      "link": "https://e.dennikn.sk/5195534/europska-recyklacia-plastov-kolabuje-o-oddlzenie-ziada-aj-inovativny-no-uz-odstaveny-zavod-z-nitry/",
-      "published": "Thu, 12 Mar 2026 18:07:36 +0000",
-      "summary": "Odpadový startup Eco Verde Recycling Slovakia naštartoval absentujúcu recykláciu tvrdších obalových plastov. Jeho nový závod v Nitre je v súčasnosti odstavený, pracovníci boli prepustení a firma žiada súdy o oddlženie. Európsky trh s plastovým recyklátom obsadzujú lacnejší producenti z Ázie a Európa",
+      "title": "Otec bol gej a jej dieťa je nebinárne. Režisérka Sophie Hyde približuje svoj rodinný život vo filme Nehovorte mi dedo",
+      "link": "https://dennikn.sk/5195375/otec-bol-gej-a-jej-dieta-je-nebinarne-reziserka-sophie-hyde-priblizuje-svoj-rodinny-zivot-vo-filme-nehovorte-mi-dedo/",
+      "published": "Fri, 13 Mar 2026 11:40:41 +0000",
+      "summary": "Upozornenie: Článok obsahuje dejové spoilery.  Austrálska režisérka Sophie Hyde si dodnes pamätá, ako sa v detstve hrala s kamarátkou na ihrisku, keď sa rozhodla, že jej povie tajomstvo. „Môj otec je gej.“ Kamarátka len vypúlila oči. Sophie spätne hodnotí, že išlo o určitý druh coming-outu, ktorý sa",
       "source": "Denník N",
       "kategoria": "dennikn"
     },
     {
-      "title": "„Rusi, choďte domov.“ Líder maďarskej opozície varuje pred zásahom do volieb. Orbána má v kresle udržať Kremeľ",
-      "link": "https://www.startitup.sk/rusi-chodte-domov-lider-madarskej-opozicie-varuje-pred-zasahom-do-volieb-orbana-ma-v-kresle-udrzat-kremel/",
-      "published": "Thu, 12 Mar 2026 20:20:48 +0000",
-      "summary": "Péter Magyar varuje pred zásahom Ruska do volieb\nObviňuje Orbána z ústretovosti voči Moskve\nRuská ambasáda obvinenia odmieta\nThe post „Rusi, choďte domov.“ Líder maďarskej opozície varuje pred zásahom do volieb. Orbána má v kresle udržať Kremeľ appeared first on Startitup.sk.",
+      "title": "12 miliárd dolárov a roky zásob kritickej munície sú preč. USA míňajú drahé strely na lacné iránske drony",
+      "link": "https://www.startitup.sk/12-miliard-dolarov-a-roky-zasob-kritickej-municie-su-prec-usa-minaju-drahe-strely-na-lacne-iranske-drony/",
+      "published": "Fri, 13 Mar 2026 12:50:02 +0000",
+      "summary": "Americká armáda podľa dostupných odhadov spálila v úvode vojny s Iránom obrovské množstvo drahej munície\nNáklady sa už šplhajú k 12 miliardám dolárov\nThe post 12 miliárd dolárov a roky zásob kritickej munície sú preč. USA míňajú drahé strely na lacné iránske drony appeared first on Startitup.sk.",
       "source": "Startitup.sk",
       "kategoria": "startitup"
     },
     {
-      "title": "Slovenskí experti na vzácne ochorenia patria k európskej špičke. No narážajú na absurdný zákaz od štátu",
-      "link": "https://www.startitup.sk/slovenski-experti-na-vzacne-ochorenia-patria-k-europskej-spicke-no-narazaju-na-absurdny-zakaz-od-statu/",
-      "published": "Thu, 12 Mar 2026 20:02:42 +0000",
-      "summary": "Napriek pokroku čelia pacienti aj lekári prekážkam v legislatíve a financovaní\nNovorodenecký skríning\nZapojenie do európskych sietí prinášajú nádej\nThe post Slovenskí experti na vzácne ochorenia patria k európskej špičke. No narážajú na absurdný zákaz od štátu appeared first on Startitup.sk.",
+      "title": "67-ročná žena tvrdí, že vyzerá ako dvadsiatnička: „Nikto neverí, že som babka, používam kontroverzný hack na chudnutie“",
+      "link": "https://www.startitup.sk/67-rocna-zena-tvrdi-ze-vyzera-ako-dvadsiatnicka-nikto-neveri-ze-som-babka-pouzivam-kontroverzny-hack-na-chudnutie/",
+      "published": "Fri, 13 Mar 2026 12:20:52 +0000",
+      "summary": "67-ročná Američanka tvrdí, že vyzerá ako žena v dvadsiatke\nZa výsledkom stojí aj kontroverzné mikro­dávkovanie liekov\nThe post 67-ročná žena tvrdí, že vyzerá ako dvadsiatnička: „Nikto neverí, že som babka, používam kontroverzný hack na chudnutie“ appeared first on Startitup.sk.",
       "source": "Startitup.sk",
       "kategoria": "startitup"
     },
     {
-      "title": "Paradox generácie Z: Pracujú menej hodín, no trpia vyhorením. Odborníci vysvetľujú, prečo nie sú leniví",
-      "link": "https://www.startitup.sk/paradox-generacie-z-pracuju-menej-hodin-no-trpia-vyhorenim-odbornici-vysvetluju-preco-nie-su-lenivi/",
-      "published": "Thu, 12 Mar 2026 19:47:50 +0000",
-      "summary": "Mladí sú v práci stále online, čo vedie k vyčerpaniu\nEkonomická situácia im nedáva istotu ako starším\nSociálne siete a porovnávanie zvyšujú tlak\nThe post Paradox generácie Z: Pracujú menej hodín, no trpia vyhorením. Odborníci vysvetľujú, prečo nie sú leniví appeared first on Startitup.sk.",
+      "title": "Preplávať Hormuzom je čoraz riskantnejšie. Niektoré lode využívajú nenápadný trik, ako sa vyhnúť útokom",
+      "link": "https://www.startitup.sk/preplavat-hormuzom-je-coraz-riskantnejsie-niektore-lode-vyuzivaju-nenapadny-trik-ako-sa-vyhnut-utokom/",
+      "published": "Fri, 13 Mar 2026 12:10:59 +0000",
+      "summary": "Napätie v Perzskom zálive pokračuje\nNiektoré lode v Hormuze menia identitu, aby znížili riziko útoku\nThe post Preplávať Hormuzom je čoraz riskantnejšie. Niektoré lode využívajú nenápadný trik, ako sa vyhnúť útokom appeared first on Startitup.sk.",
       "source": "Startitup.sk",
       "kategoria": "startitup"
     }
