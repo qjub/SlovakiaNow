@@ -1,6 +1,6 @@
 {
   "meta": {
-    "aktualizovane": "2026-03-14T16:27:54.316992+00:00",
+    "aktualizovane": "2026-03-14T20:24:00.230666+00:00",
     "verzia": "2.0.0",
     "zdroje": [
       {
@@ -454,6 +454,7 @@
     "nafta": []
   },
   "urokove_sadzby": {
+    "ecb_sadzba": [],
     "euribor_3m": []
   },
   "prieskumy": {
@@ -575,44 +576,52 @@
       "kategoria": "nbs"
     },
     {
-      "title": "Sankcie EÚ za vojnu na Ukrajine zostávajú v platnosti, únia ich predĺžila do septembra",
-      "link": "https://spravy.stvr.sk/2026/03/sankcie-eu-za-vojnu-na-ukrajine-zostavaju-v-platnosti-unia-ich-predlzila-do-septembra/",
-      "published": "Sat, 14 Mar 2026 15:54:01 +0000",
-      "summary": "Pôvodne mala ich platnosť vypršať už v nedeľu. \nThe post Sankcie EÚ za vojnu na Ukrajine zostávajú v platnosti, únia ich predĺžila do septembra appeared first on Správy STVR.",
+      "title": "„Musela som to dať, veľmi som to chcela,“ reagovala Alexandra Rexová po ďalšom bronze na paralympiáde",
+      "link": "https://spravy.stvr.sk/2026/03/musela-som-to-dat-velmi-som-to-chcela-reagovala-alexandra-rexova-po-dalsom-bronze-na-paralympiade/",
+      "published": "Sat, 14 Mar 2026 19:42:15 +0000",
+      "summary": "Slovenská reprezentantka získala v hrách tretí kov.\nThe post „Musela som to dať, veľmi som to chcela,“ reagovala Alexandra Rexová po ďalšom bronze na paralympiáde appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Ukrajina sa podľa Iránu zapojila do vojny na Blízkom východe. Tvrdí, že dodala Izraelu drony",
-      "link": "https://spravy.stvr.sk/2026/03/ukrajina-sa-podla-iranu-zapojila-do-vojny-na-blizkom-vychode-tvrdi-ze-dodala-izraelu-drony/",
-      "published": "Sat, 14 Mar 2026 15:09:47 +0000",
-      "summary": "Ukrajina by tak mohla byť pre Irán \"legitímnym cieľom\". \nThe post Ukrajina sa podľa Iránu zapojila do vojny na Blízkom východe. Tvrdí, že dodala Izraelu drony appeared first on Správy STVR.",
+      "title": "Jedna injekcia na ochranu pred koronavírusom aj chrípkou: Nová vakcína je na ceste k schváleniu",
+      "link": "https://spravy.stvr.sk/2026/03/jedna-injekcia-na-ochranu-pred-koronavirusom-a-chripkou-europska-liekova-agentura-odporucila-schvalenie-novej-vakciny/",
+      "published": "Sat, 14 Mar 2026 18:36:16 +0000",
+      "summary": "Všeobecný lekár pre dospelých vidí v takejto očkovacej látke výhody.\nThe post Jedna injekcia na ochranu pred koronavírusom aj chrípkou: Nová vakcína je na ceste k schváleniu appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Biatlon-SP: Vittozziová vyhrala stíhačku v Otepää, Kapustová vyrovnala maximum",
-      "link": "https://spravy.stvr.sk/2026/03/biatlon-svetovy-pohar-stihacie-preteky-zien/",
-      "published": "Sat, 14 Mar 2026 14:55:00 +0000",
-      "summary": "Paulína Bátovská Fialková skončila na 28. mieste.\nThe post Biatlon-SP: Vittozziová vyhrala stíhačku v Otepää, Kapustová vyrovnala maximum appeared first on Správy STVR.",
+      "title": "Šeky s energopomocou môžu skončiť nedoručené, problémom sú neoznačené schránky. Pošta radí, na čo si dávať pozor",
+      "link": "https://spravy.stvr.sk/2026/03/seky-s-energopomocou-mozu-skoncit-nedorucene-problemom-su-neoznacene-schranky-posta-radi-na-co-si-davat-pozor/",
+      "published": "Sat, 14 Mar 2026 18:30:56 +0000",
+      "summary": "S problémami sa stretávajú poštári na celom Slovensku.\nThe post Šeky s energopomocou môžu skončiť nedoručené, problémom sú neoznačené schránky. Pošta radí, na čo si dávať pozor appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Chorvátsky JANAF obvinil MOL Group zo snahy profitovať zo zľavnenej ruskej ropy, spor rieši aj Európska komisia",
-      "link": "https://spravy.stvr.sk/2026/03/chorvatsky-janaf-obvinil-mol-group-zo-snahy-profitovat-zo-zlavnenej-ruskej-ropy-spor-riesi-aj-europska-komisia/",
-      "published": "Sat, 14 Mar 2026 13:16:07 +0000",
-      "summary": "Spološnosť JANAF je pripravená reagovať na sťažnosti.\nThe post Chorvátsky JANAF obvinil MOL Group zo snahy profitovať zo zľavnenej ruskej ropy, spor rieši aj Európska komisia appeared first on Správy STVR.",
+      "title": "Deti z vyučovania odchádzali v slzách: Vychovávateľka im ukazovala videá o konci sveta. Vedenie školy zasiahlo",
+      "link": "https://spravy.stvr.sk/2026/03/deti-z-vyucovania-odchadzali-v-slzach-vychovavatelka-im-ukazala-video-o-konci-sveta-vedenie-skoly-zasiahlo/",
+      "published": "Sat, 14 Mar 2026 18:21:39 +0000",
+      "summary": "K incidentu došlo na škole v bratislavskom Ružinove.\nThe post Deti z vyučovania odchádzali v slzách: Vychovávateľka im ukazovala videá o konci sveta. Vedenie školy zasiahlo appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Nór Laegreid vyhral stíhacie preteky v Otepää, Jakub Borguľa obsadil 55. miesto",
-      "link": "https://spravy.stvr.sk/2026/03/stihacie-preteky-muzov-biatlon-svetovy-pohar/",
-      "published": "Sat, 14 Mar 2026 12:25:00 +0000",
-      "summary": "Laegreid zvíťazil pred Francúzom Emilienom Jacquelinom.\nThe post Nór Laegreid vyhral stíhacie preteky v Otepää, Jakub Borguľa obsadil 55. miesto appeared first on Správy STVR.",
+      "title": "Andrej Danko na sneme kritizoval Roberta Fica: Ľudia od nás čakali riešenia. Vznikajú otázky, prečo sa tento štát neriadi",
+      "link": "https://spravy.stvr.sk/2026/03/andrej-danko-vycita-robertovi-ficovi-ze-sa-vlada-nevenuje-ludom-opozicia-mu-odkazuje-nech-odide/",
+      "published": "Sat, 14 Mar 2026 18:12:12 +0000",
+      "summary": "Danko však vládu povaliť nechce.\nThe post Andrej Danko na sneme kritizoval Roberta Fica: Ľudia od nás čakali riešenia. Vznikajú otázky, prečo sa tento štát neriadi appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
+    },
+    {
+      "title": "O samote a láske. Ako vojna ničí životy a nenávratne mení aj partnerské vzťahy",
+      "link": "https://dennikn.sk/5199502/o-samote-a-laske-ako-vojna-nici-zivoty-a-nenavratne-meni-aj-partnerske-vztahy/",
+      "published": "Sat, 14 Mar 2026 19:44:18 +0000",
+      "summary": "Vojaci na základni sa pomaly balia. Hromadia zásoby a muníciu, trieskajú dvere, zvonia mobily. Nie je nič dôležitejšie, ako pred rotáciou pripraviť každú drobnosť, od ktorých budú najbližšie dni, no pravdepodobnejšie celé týždne a v najhoršom mesiace, závisieť ich životy. Jeden zo starších chlapov, ",
+      "source": "Denník N",
+      "kategoria": "dennikn"
     },
     {
       "title": "Danko po sneme SNS opäť kritizoval Fica: Politika Smeru nemôže byť o pomste a kajúcnikoch",
@@ -639,34 +648,26 @@
       "kategoria": "dennikn"
     },
     {
-      "title": "Prvé slnečné dni nás väčšinou naštartujú. Ak príde jarná únava, nepovažujme ju za zlyhanie",
-      "link": "https://dennikn.sk/5198215/prve-slnecne-dni-nas-vacsinou-nastartuju-ak-pride-jarna-unava-nepovazujme-ju-za-zlyhanie/",
-      "published": "Sat, 14 Mar 2026 11:05:07 +0000",
-      "summary": "S pribúdajúcim slnkom sa v uliciach zvýšil počet ľudí, ktorí vyzerajú, že majú dobrú náladu. „S väčším množstvom svetla u nás dochádza k hormonálnym zmenám. Mení sa rovnováha medzi melatonínom a serotonínom a začína nás to ťahať k aktivite,“ hovorí klinický psychológ a psychoterapeut Adam Suchý. Dod",
-      "source": "Denník N",
-      "kategoria": "dennikn"
-    },
-    {
-      "title": "Svetoví experti vybrali elitu Slovenska: TOP 5 reštaurácií, kde tradičné jedlá chutia najlepšie (REBRÍČEK)",
-      "link": "https://www.startitup.sk/svetovi-experti-vybrali-elitu-slovenska-top-5-restauracii-kde-tradicne-jedla-chutia-najlepsie-rebricek/",
-      "published": "Sat, 14 Mar 2026 16:15:17 +0000",
-      "summary": "Taste Atlas zverejnil zoznam najlepších reštaurácií na Slovensku\nToto je top 5 podnikov, ktoré podľa odborníkov definujú našu kuchyňu\nThe post Svetoví experti vybrali elitu Slovenska: TOP 5 reštaurácií, kde tradičné jedlá chutia najlepšie (REBRÍČEK) appeared first on Startitup.sk.",
+      "title": "Vojna v Iráne má nečakaného víťaza. Rusko má vďaka chaosu s ropou zarábať stovky miliónov denne",
+      "link": "https://www.startitup.sk/vojna-v-irane-ma-necakaneho-vitaza-rusko-ma-vdaka-chaosu-s-ropou-zarabat-stovky-milionov-denne/",
+      "published": "Sat, 14 Mar 2026 17:41:19 +0000",
+      "summary": "Vojna v Iráne rozkolísala energetické trhy a vystrelila dopyt po ruskej rope\nMoskva tak podľa odhadov denne získava stovky miliónov navyše\nThe post Vojna v Iráne má nečakaného víťaza. Rusko má vďaka chaosu s ropou zarábať stovky miliónov denne appeared first on Startitup.sk.",
       "source": "Startitup.sk",
       "kategoria": "startitup"
     },
     {
-      "title": "Analytici odhalili 3 scenáre konfliktu v Iráne: Od mierových rokovaní až po najhoršiu verziu, ktorá zmení svet",
-      "link": "https://www.startitup.sk/analytici-odhalili-3-scenare-konfliktu-v-irane-od-mierovych-rokovani-az-po-najhorsiu-verziu-ktora-zmeni-svet/",
-      "published": "Sat, 14 Mar 2026 15:35:16 +0000",
-      "summary": "Vojna v Iráne môže nabrať viacero smerov\nAnalytici hovoria o troch scenároch, pričom dva z nich by mohli priniesť vážnu destabilizáciu regiónu\nThe post Analytici odhalili 3 scenáre konfliktu v Iráne: Od mierových rokovaní až po najhoršiu verziu, ktorá zmení svet appeared first on Startitup.sk.",
+      "title": "Lekár ťa môže nahlásiť polícii do 5 dní: Pokuta 50 eur hrozí vodičom, ktorí podcenia jednoduché pravidlá",
+      "link": "https://www.startitup.sk/lekar-ta-moze-nahlasit-policii-do-5-dni-pokuta-50-eur-hrozi-vodicom-ktori-podcenia-jednoduche-pravidla/",
+      "published": "Sat, 14 Mar 2026 17:39:16 +0000",
+      "summary": "Mnohí vodiči si myslia, že lekárske prehliadky riešia až v starobe\nZákon však ukladá povinnosti aj mladším vodičom a profesionálom\nThe post Lekár ťa môže nahlásiť polícii do 5 dní: Pokuta 50 eur hrozí vodičom, ktorí podcenia jednoduché pravidlá appeared first on Startitup.sk.",
       "source": "Startitup.sk",
       "kategoria": "startitup"
     },
     {
-      "title": "Koniec ikonického mosta v Európe: Slovákov čakajú dekády kolón, za obchádzanie hrozia pokuty 200 eur",
-      "link": "https://www.startitup.sk/koniec-ikonickeho-mosta-v-europe-slovakov-cakaju-dekady-kolon-za-obchadzanie-hrozia-pokuty-200-eur/",
-      "published": "Sat, 14 Mar 2026 14:55:39 +0000",
-      "summary": "Cesta zo Slovenska do Talianska sa môže výrazne predĺžiť\nRakúsko pripravuje veľkú rekonštrukciu Brennerskej diaľnice aj kľúčových mostov\nThe post Koniec ikonického mosta v Európe: Slovákov čakajú dekády kolón, za obchádzanie hrozia pokuty 200 eur appeared first on Startitup.sk.",
+      "title": "Warren Buffett odhalil vzorec na úspech: Zabudni na Excel a grafy, skutočným úspechom je len jedna vec",
+      "link": "https://www.startitup.sk/warren-buffett-odhalil-vzorec-na-uspech-zabudni-na-excel-a-grafy-skutocnym-uspechom-je-len-jedna-vec/",
+      "published": "Sat, 14 Mar 2026 17:35:12 +0000",
+      "summary": "Warren Buffett prekvapuje svojou definíciou úspechu\nZabudni na miliardy a drahé jachty\nNa konci dňa je najdôležitejšia len jedna vec\nThe post Warren Buffett odhalil vzorec na úspech: Zabudni na Excel a grafy, skutočným úspechom je len jedna vec appeared first on Startitup.sk.",
       "source": "Startitup.sk",
       "kategoria": "startitup"
     }
