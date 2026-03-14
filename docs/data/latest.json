@@ -1,6 +1,6 @@
 {
   "meta": {
-    "aktualizovane": "2026-03-14T08:30:50.806937+00:00",
+    "aktualizovane": "2026-03-14T12:42:51.717851+00:00",
     "verzia": "2.0.0",
     "zdroje": [
       {
@@ -453,10 +453,7 @@
     "benzin": [],
     "nafta": []
   },
-  "urokove_sadzby": {
-    "ecb_sadzba": [],
-    "euribor_3m": []
-  },
+  "urokove_sadzby": {},
   "prieskumy": {
     "nms": [],
     "politpro": [
@@ -465,7 +462,7 @@
         "datum": "",
         "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/nms-2026-03-09/parlamentne-volby",
-        "title": "68NMS·09. marec 2026PS21.4SMER16.7REP13.5HLAS7.6SaS7.6S7.1D5.1KDH4.8MA4.2SR3.6SNS2.3ZĽ1.9Pravda1.6ĽSNS1.1KÚ0.6SV0.3Ostat.0.6",
+        "title": "68NMS·09. marca 2026PS21.4SMER16.7REP13.5HLAS7.6SaS7.6S7.1D5.1KDH4.8MA4.2SR3.6SNS2.3ZĽ1.9Pravda1.6ĽSNS1.1KÚ0.6SV0.3Ostat.0.6",
         "source": "PolitPro / AKO"
       },
       {
@@ -473,7 +470,7 @@
         "datum": "",
         "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/ipsos-2026-02-20/parlamentne-volby",
-        "title": "81Ipsos·20. február 2026PS18.8SMER18.4REP11.7S8.8SaS8.4HLAS7.4D6.2KDH6MA4.7SNS2.8Pravda1.3ZĽ1.1Ostat.4.4",
+        "title": "81Ipsos·20. februára 2026PS18.8SMER18.4REP11.7S8.8SaS8.4HLAS7.4D6.2KDH6MA4.7SNS2.8Pravda1.3ZĽ1.1Ostat.4.4",
         "source": "PolitPro / AKO"
       },
       {
@@ -481,7 +478,7 @@
         "datum": "",
         "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/ako-2026-02-19/parlamentne-volby",
-        "title": "77AKO·19. február 2026PS20.6SMER16.4S9.3HLAS8.8REP8.7SaS7.9KDH7.4D6.2SNS4.8MA4.6SR2.9Pravda2.2Ostat.0.2",
+        "title": "77AKO·19. februára 2026PS20.6SMER16.4S9.3HLAS8.8REP8.7SaS7.9KDH7.4D6.2SNS4.8MA4.6SR2.9Pravda2.2Ostat.0.2",
         "source": "PolitPro / AKO"
       },
       {
@@ -489,7 +486,7 @@
         "datum": "",
         "strany": [],
         "link": "https://politpro.eu/sk/slovensko/volebne-prieskumy/focus-2026-02-09/parlamentne-volby",
-        "title": "77FOCUS·09. február 2026PS19.3SMER17.7REP9.9S9.7HLAS8.1SaS7.6KDH6.9D5.6MA4.7SNS4.1SR2.3Pravda1.9ZĽ0.8KÚ0.5Ostat.0.9",
+        "title": "77FOCUS·09. februára 2026PS19.3SMER17.7REP9.9S9.7HLAS8.1SaS7.6KDH6.9D5.6MA4.7SNS4.1SR2.3Pravda1.9ZĽ0.8KÚ0.5Ostat.0.9",
         "source": "PolitPro / AKO"
       },
       {
@@ -576,98 +573,98 @@
       "kategoria": "nbs"
     },
     {
-      "title": "Pacient s rakovinou uveril sľubu o rýchlom uzdravením, stálo ho to život. Deepfake videá kradnú lekárom identitu",
-      "link": "https://spravy.stvr.sk/2026/03/kradnu-lekarom-identitu-a-predavaju-falosne-lieky-deepfake-videa-su-nerozoznatelne-od-reality-pachatelov-sa-neda-vypatrat/",
-      "published": "Sat, 14 Mar 2026 08:00:00 +0000",
-      "summary": "Ich autori sú v praxi nevypátrateľní.\nThe post Pacient s rakovinou uveril sľubu o rýchlom uzdravením, stálo ho to život. Deepfake videá kradnú lekárom identitu appeared first on Správy STVR.",
+      "title": "Sledujte NAŽIVO biatlon: Stíhacie preteky mužov aj so Slovákom Jakubom Borguľom",
+      "link": "https://spravy.stvr.sk/2026/03/stihacie-preteky-muzov-biatlon-svetovy-pohar/",
+      "published": "Sat, 14 Mar 2026 12:25:00 +0000",
+      "summary": "Priamy prenos môžete sledovať na obrazovkách :Športu. \nThe post Sledujte NAŽIVO biatlon: Stíhacie preteky mužov aj so Slovákom Jakubom Borguľom appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Zrušené pokladnice na vlakových staniciach nahrádza nákup lístkov cez internet. Na mnohých však chýba Wi-Fi",
-      "link": "https://spravy.stvr.sk/2026/03/nakup-listkov-cez-internet-nahradi-chybajuce-pokladnice-na-vlakovych-staniciach-na-mnohych-z-nich-vsak-wi-fi-chyba/",
-      "published": "Sat, 14 Mar 2026 07:30:00 +0000",
-      "summary": "Časť cestujúcich by skôr privítala automaty.\nThe post Zrušené pokladnice na vlakových staniciach nahrádza nákup lístkov cez internet. Na mnohých však chýba Wi-Fi appeared first on Správy STVR.",
+      "title": "Predsedom strany SNS zostáva na ďalšie štyri roky Andrej Danko, rozhodli delegáti",
+      "link": "https://spravy.stvr.sk/2026/03/predsedom-strany-sns-zostava-na-dalsie-styri-roky-andrej-danko-rozhodli-delegati/",
+      "published": "Sat, 14 Mar 2026 12:20:58 +0000",
+      "summary": "Rozhodli o tom delegáti na zasadnutí 31. pracovného snemu SNS.\nThe post Predsedom strany SNS zostáva na ďalšie štyri roky Andrej Danko, rozhodli delegáti appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Ozbrojené sily USA úplne zničili všetky vojenské ciele na iránskom ostrove Charg, oznámil Donald Trump",
-      "link": "https://spravy.stvr.sk/2026/03/ozbrojene-sily-usa-uplne-znicili-vsetky-vojenske-ciele-na-iranskom-ostrove-charg-oznamil-donald-trump/",
-      "published": "Sat, 14 Mar 2026 07:09:11 +0000",
-      "summary": "Irán nedokáže brániť nič z toho, na čo chcú USA zaútočiť, vyhlásil.\nThe post Ozbrojené sily USA úplne zničili všetky vojenské ciele na iránskom ostrove Charg, oznámil Donald Trump appeared first on Správy STVR.",
+      "title": "Šutaj Eštok sa Blanára opýta na bohatých ruských podnikateľov. Na ceny palív na Slovensku má odlišný názor, ako Majerský",
+      "link": "https://spravy.stvr.sk/2026/03/sledujte-nazivo-hostami-sobotnych-dialogov-su-matus-sutaj-estok-a-milan-majersky/",
+      "published": "Sat, 14 Mar 2026 11:09:00 +0000",
+      "summary": "Podľa Majerského vláda v energetike kryje vlastné zlyhanie.\nThe post Šutaj Eštok sa Blanára opýta na bohatých ruských podnikateľov. Na ceny palív na Slovensku má odlišný názor, ako Majerský appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Románsky kostol v Leviciach je architektonickým unikátom s tisícročnou históriou a legendou o podzemnej chodbe",
-      "link": "https://spravy.stvr.sk/2026/03/romansky-kostol-v-leviciach-je-architektonickym-unikatom-s-tisicrocnou-historiou-a-legendou-o-podzemnej-chodbe/",
-      "published": "Sat, 14 Mar 2026 07:00:00 +0000",
-      "summary": "Postavili ho v dvanástom storočí. \nThe post Románsky kostol v Leviciach je architektonickým unikátom s tisícročnou históriou a legendou o podzemnej chodbe appeared first on Správy STVR.",
+      "title": "Iránska armáda varuje, že prístavy v Spojených arabských emirátoch považuje za legitímne ciele",
+      "link": "https://spravy.stvr.sk/2026/03/iranska-armada-varuje-ze-pristavy-v-spojenych-arabskych-emiratoch-povazuje-za-legitimne-ciele/",
+      "published": "Sat, 14 Mar 2026 10:38:55 +0000",
+      "summary": "Teherán tvrdí, že bráni svoju národnú suverenitu.\nThe post Iránska armáda varuje, že prístavy v Spojených arabských emirátoch považuje za legitímne ciele appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Chodia medzi bytovkami aj po námestí: V Tlmačoch sa pohybujú líšky, mesto vyzýva na opatrnosť",
-      "link": "https://spravy.stvr.sk/2026/03/chodia-medzi-bytovkami-aj-po-namesti-v-tlmacoch-sa-pohybuju-lisky-mesto-vyzyva-na-opatrnost/",
-      "published": "Sat, 14 Mar 2026 06:00:00 +0000",
-      "summary": "Odborníci radia nedotýkať sa líšok. \nThe post Chodia medzi bytovkami aj po námestí: V Tlmačoch sa pohybujú líšky, mesto vyzýva na opatrnosť appeared first on Správy STVR.",
+      "title": "Poliaci museli pre ruské útoky na Ukrajine nasadiť vojenské lietadlá",
+      "link": "https://spravy.stvr.sk/2026/03/poliaci-museli-pre-ruske-utoky-na-ukrajine-nasadit-vojenske-lietadla/",
+      "published": "Sat, 14 Mar 2026 09:31:52 +0000",
+      "summary": "Velenie poľských ozbrojených síl sa poďakovalo spojencom NATO.\nThe post Poliaci museli pre ruské útoky na Ukrajine nasadiť vojenské lietadlá appeared first on Správy STVR.",
       "source": "Správy STVR",
       "kategoria": "stvr"
     },
     {
-      "title": "Paralympionik Krupa prišiel výbušninou o časť ruky. Hendikep som nepriznával, vraví",
-      "link": "https://dennikn.sk/5196680/paralympionik-krupa-prisiel-vybusninou-o-cast-ruky-hendikep-som-nepriznaval-vravi/",
-      "published": "Sat, 14 Mar 2026 08:01:19 +0000",
-      "summary": "V živote existujú pre človeka koníčky, ktoré mu dokážu zmeniť život. Pre 36-ročného rodáka zo Žiliny Adama Krupu platí toto tvrdenie hneď dvojnásobne. Počas puberty mal veľkú záľubu v chémii, pričom práve po chemickom pokuse prišiel o časť ruky. Hendikep ho však časom naviedol k ďalšiemu hobby – špo",
+      "title": "Ukrajinský vojenský analytik: Američania rozbehli vojnu s Iránom veľmi zle",
+      "link": "https://dennikn.sk/5199212/ukrajinsky-vojensky-analytik-americania-rozbehli-vojnu-s-iranom-velmi-zle/",
+      "published": "Sat, 14 Mar 2026 12:01:02 +0000",
+      "summary": "Situačne teraz z konfliktu ťaží najviac Putin, no to sa môže zmeniť, hovorí ukrajinský vojenský analytik z Odesy Olexandr Kovalenko.",
       "source": "Denník N",
       "kategoria": "dennikn"
     },
     {
-      "title": "Zvrátenie vazektómie je extrémne náročné, ale deti môžete mať aj inak, vraví urologička Serátor",
-      "link": "https://dennikn.sk/5174451/zvratenie-vazektomie-je-extremne-narocne-ale-deti-mozete-mat-aj-inak-vravi-urologicka-serator/",
-      "published": "Sat, 14 Mar 2026 06:00:29 +0000",
-      "summary": "Na internete som našiel rôzne informácie o tom, či je vazektómia trvalý zákrok alebo sa dá zvrátiť. Aká je šanca, že ak sa rozhodnem pre vazektómiu, dokážem v budúcnosti ešte splodiť deti? Adrian, 24 Odpovedá urologička Martina Serátor Pokiaľ ide o medicínsku stránku veci a možnosť zvrátenia zákroku",
+      "title": "Prvé slnečné dni nás väčšinou naštartujú. Ak príde jarná únava, nepovažujme ju za zlyhanie",
+      "link": "https://dennikn.sk/5198215/prve-slnecne-dni-nas-vacsinou-nastartuju-ak-pride-jarna-unava-nepovazujme-ju-za-zlyhanie/",
+      "published": "Sat, 14 Mar 2026 11:05:07 +0000",
+      "summary": "S pribúdajúcim slnkom sa v uliciach zvýšil počet ľudí, ktorí vyzerajú, že majú dobrú náladu. „S väčším množstvom svetla u nás dochádza k hormonálnym zmenám. Mení sa rovnováha medzi melatonínom a serotonínom a začína nás to ťahať k aktivite,“ hovorí klinický psychológ a psychoterapeut Adam Suchý. Dod",
       "source": "Denník N",
       "kategoria": "dennikn"
     },
     {
-      "title": "Ráno s NHL: Čo stojí za zázrakom v Buffale? Klub, ktorý kazil imidž NHL, je najlepší a naháňa strach",
-      "link": "https://dennikn.sk/5197825/rano-s-nhl-co-stoji-za-zazrakom-v-buffale-klub-ktory-kazil-imidz-nhl-je-najlepsi-a-nahana-strach/",
-      "published": "Sat, 14 Mar 2026 05:50:01 +0000",
-      "summary": "We're going dancin' tonight #LetsGoBuffalo pic.twitter.com/m5LeruivUB — Buffalo Sabres (@BuffaloSabres) March 8, 2026 Keby vám niekto pred sezónou povedal, že v marci budete čítať článok, v ktorom bude napísané, že Buffalo Sabres je najlepším tímom v NHL, verili by ste tomu? Veľa takých ľudí by sa u",
+      "title": "Útok na ostrov Chárg mení logiku vojny s Iránom. Boj sa presúva k ropným tepnám sveta",
+      "link": "https://dennikn.sk/5199630/utok-na-ostrov-charg-meni-logiku-vojny-s-iranom-boj-sa-presuva-k-ropnym-tepnam-sveta/",
+      "published": "Sat, 14 Mar 2026 10:07:50 +0000",
+      "summary": "Americké bombardovanie iránskeho ostrova Chárg otvorilo novú fázu vojny medzi Washingtonom a Teheránom. Cieľom síce boli vojenské objekty, no útok sa odohral na mieste, ktoré je kľúčové pre vývoz iránskej ropy aj stabilitu svetového energetického trhu.",
       "source": "Denník N",
       "kategoria": "dennikn"
     },
     {
-      "title": "Tisíce námorníkov uviazli vo vojne v Hormuzskom prielive a čakajú, či ich lode zasiahnu drony",
-      "link": "https://dennikn.sk/5198566/tisice-namornikov-uviazli-vo-vojne-v-hormuzskom-prielive-a-cakaju-ci-ich-lode-zasiahnu-drony/",
-      "published": "Fri, 13 Mar 2026 20:18:53 +0000",
-      "summary": "V Hormuzskom prielive dnes stovky lodí stoja alebo čakajú na bezpečný prechod a tisíce námorníkov sa ocitli v konflikte, ktorý nemajú ako ovplyvniť.",
+      "title": "Stropkov posiela dar ukrajinskému mestu, ktoré zasiahli ruské drony. Zahlasovali aj poslanci za Smer a Republiku",
+      "link": "https://dennikn.sk/5197387/stropkov-posiela-dar-ukrajinskemu-mestu-ktore-zasiahli-ruske-drony-zahlasovali-aj-poslanci-za-smer-a-republiku/",
+      "published": "Sat, 14 Mar 2026 09:41:08 +0000",
+      "summary": "Vedenie Stropkova sa pripojilo k aktivistom, ktorí zbierali peniaze na humanitárnu pomoc. Obyvateľom oznámilo, že ich partnerské mesto trpí ruskými útokmi, a vyčlenilo mu 5000 eur.",
       "source": "Denník N",
       "kategoria": "dennikn"
     },
     {
-      "title": "Iránsky veľvyslanec varuje pred útokom na ciele v Európe. Rozhodne jediná podmienka",
-      "link": "https://www.startitup.sk/iransky-velvyslanec-varuje-pred-utokom-na-ciele-v-europe-rozhodne-jedina-podmienka/",
-      "published": "Sat, 14 Mar 2026 08:20:16 +0000",
-      "summary": "Irán nevylučuje útoky na európske základne\nPoľsko nevidelo v Iráne priamu hrozbu\nKonflikt má dopady na celú Európu\nThe post Iránsky veľvyslanec varuje pred útokom na ciele v Európe. Rozhodne jediná podmienka appeared first on Startitup.sk.",
+      "title": "Štát chystá pokuty až 900 eur a hromadné vyradzovanie áut. 600-tisíc vozidiel čakajú radikálne „čistky“",
+      "link": "https://www.startitup.sk/stat-chysta-pokuty-az-900-eur-a-hromadne-vyradzovanie-aut-600-tisic-vozidiel-cakaju-radikalne-cistky/",
+      "published": "Sat, 14 Mar 2026 12:15:47 +0000",
+      "summary": "Slovenských vodičov čakajú nové pravidlá a prísnejšia kontrola povinnosti pri autách\nAk ju zanedbajú dlhšie, pokuty sa môžu vyšplhať až na 900 eur a prídu opakovane\nThe post Štát chystá pokuty až 900 eur a hromadné vyradzovanie áut. 600-tisíc vozidiel čakajú radikálne „čistky“ appeared first on Star",
       "source": "Startitup.sk",
       "kategoria": "startitup"
     },
     {
-      "title": "EÚ chce predísť problémom, ktoré zažila s Maďarskom. Pre krajiny pripravuje nový plán",
-      "link": "https://www.startitup.sk/eu-chce-predist-problemom-ktore-zazila-s-madarskom-pre-krajiny-pripravuje-novy-plan/",
-      "published": "Fri, 13 Mar 2026 21:00:39 +0000",
-      "summary": "Európska únia chce zabrániť odklonu od demokracie\nČierna Hora bude prvý test nových pravidiel\nÚnia sa poučila z rozšírenia v roku 2004 aj na Slovensku\nThe post EÚ chce predísť problémom, ktoré zažila s Maďarskom. Pre krajiny pripravuje nový plán appeared first on Startitup.sk.",
+      "title": "Naše staré mamy vedeli, čo robia: Superbylina za pár centov podľa vedcov podporuje mozog a trávenie",
+      "link": "https://www.startitup.sk/nase-stare-mamy-vedeli-co-robia-superbylina-za-par-centov-podla-vedcov-podporuje-mozog-a-travenie/",
+      "published": "Sat, 14 Mar 2026 11:35:50 +0000",
+      "summary": "Voňavá bylina zo záhrad starých mám má viacero benefitov\nMôže pomôcť tráveniu, svalom aj vlasom a zároveň podporuje krvný obeh\nThe post Naše staré mamy vedeli, čo robia: Superbylina za pár centov podľa vedcov podporuje mozog a trávenie appeared first on Startitup.sk.",
       "source": "Startitup.sk",
       "kategoria": "startitup"
     },
     {
-      "title": "Slováci prišli o 4,5 milióna eur pri kúpe diaľničných známok. Mnohí netušia, že robia chybu",
-      "link": "https://www.startitup.sk/slovaci-prisli-o-45-miliona-eur-pri-kupe-dialnicnych-znamok-mnohi-netusia-ze-robia-chybu/",
-      "published": "Fri, 13 Mar 2026 20:20:40 +0000",
-      "summary": "Slováci prišli o 4,5 milióna eur\nVodiči zbytočne preplácajú diaľničné známky\nUkážeme ti, v čom je háčik \nThe post Slováci prišli o 4,5 milióna eur pri kúpe diaľničných známok. Mnohí netušia, že robia chybu appeared first on Startitup.sk.",
+      "title": "Tvrdý útok od ministra Migaľa: Hargašovi sme prekazili kšefty, svedčí o tom osem trestných oznámení",
+      "link": "https://www.startitup.sk/tvrdy-utok-od-ministra-migala-hargasovi-sme-prekazili-ksefty-svedci-o-tom-osem-trestnych-oznameni/",
+      "published": "Sat, 14 Mar 2026 11:17:08 +0000",
+      "summary": "Ministerstvo investícií reaguje na vyjadrenia opozičného poslanca\nZákladné fakty o obnove portálu slovensko.sk boli ignorované\nMinister kritizuje komunikáciu Úradu pre verejné obstarávanie\nThe post Tvrdý útok od ministra Migaľa: Hargašovi sme prekazili kšefty, svedčí o tom osem trestných oznámení ap",
       "source": "Startitup.sk",
       "kategoria": "startitup"
     }
